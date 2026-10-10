@@ -39,10 +39,6 @@ const metrics = [
           <span class="muted-heading">servidor.</span>
         </h2>
       </div>
-      <p>
-        Datos servidos por SpooderServerMetrics a través del portal. La dirección interna queda en
-        la configuración del contenedor.
-      </p>
     </div>
 
     <div class="tech-grid server-metric-grid">
@@ -52,9 +48,22 @@ const metrics = [
           <span class="eyebrow">USO ACTUAL</span>
           <h3>{metric.name}</h3>
           <p>{metric.description}</p>
-          <span class="server-metric-value" id={`metric-${index}`} aria-label="Cargando dato">
-            —
-          </span>
+          <div class="server-metric-readout">
+            <span class="server-metric-value" id={`metric-${index}`} aria-label="Cargando dato">
+              —
+            </span>
+          </div>
+          <div
+            class="server-metric-track"
+            role="progressbar"
+            aria-label={`Uso de ${metric.name}`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuetext="Esperando datos"
+            aria-busy="true"
+          >
+            <span class="server-metric-fill" id={`metric-bar-${index}`}></span>
+          </div>
         </article>
       ))}
     </div>
@@ -70,7 +79,6 @@ const metrics = [
         </h3>
         <p>
           <span id="metrics-timestamp">Esperando la hora de la última muestra.</span>
-          El contrato no publica identidad del host ni información de contenedores.
         </p>
       </div>
       <span class="coming-chip" id="metrics-freshness">
@@ -149,6 +157,15 @@ const metrics = [
     values.forEach((value, index) => {
       const target = document.querySelector<HTMLElement>(`#metric-${index}`);
       if (target) target.textContent = formatPercent(value);
+
+      const progress = document.querySelector<HTMLElement>(`#metric-bar-${index}`)?.parentElement;
+      if (progress) {
+        const boundedValue = Math.min(100, Math.max(0, value));
+        progress.setAttribute('aria-valuenow', String(boundedValue));
+        progress.setAttribute('aria-valuetext', formatPercent(value));
+        progress.setAttribute('aria-busy', 'false');
+        progress.style.setProperty('--metric-value', `${boundedValue}%`);
+      }
     });
 
     const sampledAt = new Date(data.sampled_at);
