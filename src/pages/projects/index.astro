@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { featuredProjects, projects } from '../../data/projects';
+
+const otherProjects = projects.filter((project) => !project.featured);
+---
+
+<BaseLayout
+  active="/projects"
+  title="Proyectos"
+  description="Proyectos de Francisco Valencia: SpiderFinance, Cliponomicon y otros desarrollos."
+>
+  <section class="page-hero wrap projects-page-hero">
+    <p class="eyebrow">FRANCISCO VALENCIA / PROYECTOS</p>
+    <h1>
+      Proyectos<span class="period">.</span>
+    </h1>
+    <p class="page-lede">Desarrollo backend, APIs, bases de datos y arquitectura de software.</p>
+    <div class="page-hero-line">
+      <span>PROYECTOS</span>
+      <span>DETALLES Y TECNOLOGÍAS</span>
+    </div>
+  </section>
+
+  <section class="section wrap featured-projects-section">
+    <div class="featured-project-grid">
+      {featuredProjects.map((project) => (
+        <article class="featured-project-card">
+          <div class="featured-project-visual">
+            <span class="featured-project-number">{project.number} / PROYECTO</span>
+            <img src={project.logo} alt={`Logo de ${project.name}`} loading="lazy" />
+            <span class="featured-project-type">{project.eyebrow}</span>
+          </div>
+          <div class="featured-project-content">
+            <div class="featured-project-title-row">
+              <div>
+                <p class="eyebrow">{project.status}</p>
+                <h2>{project.name}</h2>
+              </div>
+              <a
+                class="featured-project-arrow"
+                href={`/projects/${project.slug}`}
+                aria-label={`Ver ficha de ${project.name}`}
+              >
+                ↗
+              </a>
+            </div>
+            <p class="featured-project-summary">{project.summary}</p>
+            {project.contribution && (
+              <p class="project-contribution">
+                <span>Mi contribución</span>
+                {project.contribution}
+              </p>
+            )}
+            {project.team && (
+              <div class="project-team">
+                <p class="eyebrow">EQUIPO</p>
+                <ul>
+                  {project.team.map((member) => (
+                    <li>
+                      <span>{member.name}</span>
+                      <span>{member.role}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div class="tag-row featured-project-tags">
+              {project.stack.map((technology) => (
+                <span class="tag">{technology}</span>
+              ))}
+            </div>
+            <div class="featured-project-links">
+              <a href={`/projects/${project.slug}`}>
+                Ficha del proyecto <span aria-hidden="true">→</span>
+              </a>
+              {project.repository && (
+                <a href={project.repository} target="_blank" rel="noreferrer">
+                  Repositorio <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap other-projects-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">OTROS DESARROLLOS</p>
+        <h2>
+          Más proyectos<span class="period">.</span>
+        </h2>
+      </div>
+      <p class="section-intro">Otras aplicaciones y trabajos en desarrollo.</p>
+    </div>
+    <div class="other-project-list">
+      {otherProjects.map((project) => (
+        <article class="other-project-row">
+          <span class="other-project-number">{project.number}</span>
+          <div>
+            <h3>
+              <a href={`/projects/${project.slug}`}>
+                {project.name}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </h3>
+            <p>{project.summary}</p>
+            <div class="tag-row">
+              {project.stack.map((technology) => (
+                <span class="tag">{technology}</span>
+              ))}
+            </div>
+          </div>
+          {project.repository && (
+            <a
+              class="other-project-repository"
+              href={project.repository}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

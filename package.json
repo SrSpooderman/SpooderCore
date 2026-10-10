@@ -1,0 +1,27 @@
+{
+  "name": "spoodercore",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write \"**/*.{astro,css,js,mjs,ts,json,yml,md}\"",
+    "format:check": "prettier --check \"**/*.{astro,css,js,mjs,ts,json,yml,md}\""
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^7.3.8",
+    "typescript": "^5.8.2",
+    "ultrahtml": "1.7.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1"
+  }
+}

@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects, getProject } from '../../data/projects';
+import { getProjectPageContent } from '../../data/releases';
+
+export async function getStaticPaths() {
+  return Promise.all(
+    projects.map(async (project) => ({
+      params: { slug: project.slug },
+      props: {
+        slug: project.slug,
+        ...(await getProjectPageContent(project)),
+      },
+    })),
+  );
+}
+const project = getProject(Astro.props.slug)!;
+const { readmeHtml, releases } = Astro.props;
+
+function formatSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  const megabytes = bytes / (1024 * 1024);
+  return megabytes < 1 ? `${Math.round(bytes / 1024)} KB` : `${megabytes.toFixed(1)} MB`;
+}
+
+function formatDate(date: string): string {
+  return new Intl.DateTimeFormat('es', { dateStyle: 'medium' }).format(new Date(date));
+}
+---
+
+<BaseLayout title={project.name} description={project.summary} active="/projects">
+  <section class="detail-hero wrap">
+    <a class="back-link" href="/projects">
+      ← Todos los proyectos
+    </a>
+    <div class="detail-layout">
+      <div>
+        <p class="eyebrow">PROYECTO / {project.number}</p>
+        <h1>
+          {project.name}
+          <span class="period">.</span>
+        </h1>
+        <p class="detail-lede">{project.summary}</p>
+        <div class="detail-status">
+          <span class="status">
+            <i></i>
+            {project.status}
+          </span>
+          <span class="tag">{project.eyebrow}</span>
+        </div>
+      </div>
+      {project.logo ? (
+        <div class="detail-project-logo">
+          <img src={project.logo} alt={`Logo de ${project.name}`} />
+        </div>
+      ) : (
+        <div class="detail-glyph" aria-hidden="true">
+          <span>{project.name.slice(0, 1)}</span>
+          <b>SC—{project.number}</b>
+        </div>
+      )}
+    </div>
+  </section>
+  <section class="detail-body wrap">
+    <div class="detail-main">
+      <p class="eyebrow">ACERCA DEL PROYECTO</p>
+      <p class="detail-description">{project.description}</p>
+    </div>
+    <aside class="detail-aside">
+      <p class="eyebrow">DETALLES</p>
+      <div class="detail-row">
+        <span>Estado</span>
+        <span>{project.status}</span>
+      </div>
+      <div class="detail-row">
+        <span>Área</span>
+        <span>{project.eyebrow}</span>
+      </div>
+      <div class="detail-row">
+        <span>Tecnologías</span>
+        <span>{project.stack.join(', ')}</span>
+      </div>
+      {project.contribution && (
+        <div class="detail-row">
+          <span>Mi contribución</span>
+          <span>{project.contribution}</span>
+        </div>
+      )}
+      {project.repository && (
+        <a
+          class="detail-repository-link"
+          href={project.repository}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Abrir repositorio <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </aside>
+  </section>
+  {(readmeHtml || releases.length > 0) && (
+    <nav class="project-resource-nav wrap" aria-label="Contenido del proyecto">
+      {readmeHtml && (
+        <a href="#readme">
+          README <span aria-hidden="true">↓</span>
+        </a>
+      )}
+      {releases.length > 0 && (
+        <a href="#descargas">
+          Descargas <span aria-hidden="true">↓</span>
+        </a>
+      )}
+    </nav>
+  )}
+  {project.team && (
+    <section class="detail-team wrap">
+      <div class="detail-team-heading">
+        <p class="eyebrow">PROYECTO COLABORATIVO</p>
+        <h2>Equipo y contribuciones</h2>
+        <p>Cliponomicon se desarrolló con la participación de varias personas.</p>
+      </div>
+      <ul class="detail-team-list">
+        {project.team.map((member) => (
+          <li>
+            <span>{member.name}</span>
+            <span>{member.role}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  {readmeHtml && (
+    <section class="project-readme wrap" id="readme">
+      <div class="project-resource-heading">
+        <div>
+          <p class="eyebrow">DOCUMENTACIÓN DEL REPOSITORIO</p>
+          <h2>README</h2>
+        </div>
+        <a href={project.repository} target="_blank" rel="noreferrer">
+          Ver en GitHub ↗
+        </a>
+      </div>
+      <article class="project-readme-content" set:html={readmeHtml} />
+    </section>
+  )}
+  {releases.length > 0 && (
+    <section class="project-downloads wrap" id="descargas">
+      <div class="project-resource-heading">
+        <div>
+          <p class="eyebrow">ARCHIVOS ADJUNTOS A RELEASES</p>
+          <h2>Descargas</h2>
+        </div>
+        <a href={`${project.repository}/releases`} target="_blank" rel="noreferrer">
+          Todas las releases ↗
+        </a>
+      </div>
+      <div class="project-release-list">
+        {releases.map((release) => (
+          <article class="project-release">
+            <div class="project-release-heading">
+              <a href={release.url} target="_blank" rel="noreferrer">
+                {release.name}
+              </a>
+              <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
+            </div>
+            <ul class="project-release-assets">
+              {release.assets.map((asset) => (
+                <li>
+                  <a href={asset.url} target="_blank" rel="noreferrer" download>
+                    <span>{asset.name}</span>
+                    <span>{formatSize(asset.size)} · Descargar ↓</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+  <section class="detail-next wrap">
+    <p class="eyebrow">PROYECTOS</p>
+    <a href="/projects">
+      Volver al listado <span>↗</span>
+    </a>
+  </section>
+</BaseLayout>
