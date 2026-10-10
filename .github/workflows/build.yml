@@ -46,7 +46,8 @@ jobs:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
         run: |
-          curl --fail --silent --show-error --output /dev/null \
-            --write-out 'Coolify respondió HTTP %{http_code}\n' \
-            --request GET "$COOLIFY_WEBHOOK" \
-            --header "Authorization: Bearer $COOLIFY_TOKEN"
+          curl --fail --silent --show-error \
+            --request POST "$COOLIFY_WEBHOOK" \
+            --header "Authorization: Bearer $COOLIFY_TOKEN" \
+            --header "Content-Type: application/json" \
+            --data '{}'
