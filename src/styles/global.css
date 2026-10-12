@@ -34,6 +34,8 @@ html {
   scroll-padding-top: 90px;
 }
 body {
+  width: 80%;
+  zoom: 1.25;
   margin: 0;
   background: var(--bg);
   color: var(--ink);
