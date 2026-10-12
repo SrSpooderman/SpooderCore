@@ -2,7 +2,9 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const root = new URL('../src/i18n/messages/', import.meta.url);
-const config = JSON.parse(await readFile(new URL('../src/i18n/config.json', import.meta.url), 'utf8'));
+const config = JSON.parse(
+  await readFile(new URL('../src/i18n/config.json', import.meta.url), 'utf8'),
+);
 const locales = (await readdir(root, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)

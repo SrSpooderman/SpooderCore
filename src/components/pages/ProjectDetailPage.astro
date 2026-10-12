@@ -3,7 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProject } from '../../data/projects';
 import { messages, localizedPath, type Locale } from '../../i18n/locales';
 
-const { slug, readmeHtml, releases, locale } = Astro.props as { slug: string; readmeHtml: string | null; releases: import('../../data/releases').ProjectRelease[]; locale: Locale };
+const { slug, readmeHtml, releases, locale } = Astro.props as {
+  slug: string;
+  readmeHtml: string | null;
+  releases: import('../../data/releases').ProjectRelease[];
+  locale: Locale;
+};
 const sourceProject = getProject(slug)!;
 const t = messages(locale, 'projects');
 const prefix = sourceProject.slug.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
@@ -13,7 +18,8 @@ const project = {
   description: t[`${prefix}Description`],
   eyebrow: t[`${prefix}Eyebrow`],
   status: sourceProject.featured ? t.featured : t.catalog,
-  contribution: sourceProject.slug === 'cliponomicon-api' ? t.cliponomiconApiContribution : undefined,
+  contribution:
+    sourceProject.slug === 'cliponomicon-api' ? t.cliponomiconApiContribution : undefined,
   team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
 };
 
@@ -35,7 +41,9 @@ function formatDate(date: string): string {
     </a>
     <div class="detail-layout">
       <div>
-        <p class="eyebrow">{t.projectLabel} / {project.number}</p>
+        <p class="eyebrow">
+          {t.projectLabel} / {project.number}
+        </p>
         <h1>
           {project.name}
           <span class="period">.</span>
@@ -168,7 +176,9 @@ function formatDate(date: string): string {
                 <li>
                   <a href={asset.url} target="_blank" rel="noreferrer" download>
                     <span>{asset.name}</span>
-                    <span>{formatSize(asset.size)} · {t.download} ↓</span>
+                    <span>
+                      {formatSize(asset.size)} · {t.download} ↓
+                    </span>
                   </a>
                 </li>
               ))}

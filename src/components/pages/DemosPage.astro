@@ -8,7 +8,10 @@ const t = messages(locale, 'demos');
 <BaseLayout locale={locale} title={t.title} description={t.description}>
   <section class="page-hero wrap">
     <p class="eyebrow">{t.eyebrow}</p>
-    <h1>{t.heading.replace('.', '')}<span class="period">.</span></h1>
+    <h1>
+      {t.heading.replace('.', '')}
+      <span class="period">.</span>
+    </h1>
     <p class="page-lede">{t.lede}</p>
     <div class="page-hero-line">
       <span>{t.currentStatus}</span>
