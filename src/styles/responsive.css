@@ -84,7 +84,7 @@
     padding: 14px 0;
     border-top: 1px solid #292927;
     color: #d5d3cc;
-    font-size: 13px;
+    font-size: 15px;
   }
   .mobile-nav a span {
     color: var(--red);
@@ -93,10 +93,10 @@
     min-height: 45px;
     gap: 13px;
     padding-inline: 14px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .text-link {
-    font-size: 11px;
+    font-size: 14px;
   }
   .section {
     padding-top: 76px;
@@ -113,21 +113,25 @@
   }
   .section-intro {
     margin-top: 18px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .footer-top {
-    display: block;
-    padding-top: 37px;
-    padding-bottom: 32px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-top: 24px;
+    padding-bottom: 18px;
   }
   .footer-links {
-    gap: 65px;
-    margin-top: 30px;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+    margin-top: 0;
     padding-right: 0;
   }
   .footer-bottom {
-    gap: 15px;
-    font-size: 7px;
+    gap: 10px;
+    padding-top: 9px;
+    padding-bottom: 12px;
+    font-size: 10px;
   }
   .footer-bottom span:last-child {
     text-align: right;
@@ -137,7 +141,7 @@
     padding-bottom: 31px;
   }
   .page-hero .eyebrow {
-    font-size: 8px;
+    font-size: 12px;
     margin-bottom: 20px;
   }
   .page-hero h1 {
@@ -145,11 +149,11 @@
   }
   .page-lede {
     margin: 18px 0 35px;
-    font-size: 13px;
+    font-size: 15px;
   }
   .page-hero-line {
     gap: 12px;
-    font-size: 6px;
+    font-size: 11px;
   }
   .downloads-section,
   .lab-section,
@@ -162,7 +166,7 @@
   }
   .lab-heading > p {
     margin-top: 17px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .tech-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -178,7 +182,7 @@
     font-size: 20px;
   }
   .tech-card p {
-    font-size: 10px;
+    font-size: 14px;
   }
   .metrics-note {
     align-items: flex-start;
@@ -191,10 +195,10 @@
     font-size: 17px;
   }
   .metrics-note h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
   .metrics-note > div > p:last-child {
-    font-size: 10px;
+    font-size: 13px;
   }
   .coming-chip {
     display: none;
@@ -210,7 +214,7 @@
     font-size: 38px;
   }
   .demo-empty > div:last-child > p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 15px;
   }
   .detail-hero {
     padding-top: 33px;
@@ -224,7 +228,7 @@
   }
   .detail-lede {
     max-width: 270px;
-    font-size: 13px;
+    font-size: 15px;
   }
   .detail-glyph {
     flex: 0 0 104px;
@@ -254,7 +258,7 @@
     padding-bottom: 55px;
   }
   .detail-description {
-    font-size: 16px;
+    font-size: 18px;
   }
   .detail-next {
     align-items: flex-start;
@@ -274,7 +278,7 @@
     font-size: 42px;
   }
   .about-story > p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 15px;
   }
   .about-aside {
     padding: 23px;
@@ -296,7 +300,7 @@
   }
   .stack-list span {
     padding: 9px 11px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .about-connect {
     display: block;
@@ -310,7 +314,7 @@
     margin-top: 22px;
   }
   .about-connect > div:last-child p {
-    font-size: 12px;
+    font-size: 15px;
   }
   .not-found {
     min-height: 510px;

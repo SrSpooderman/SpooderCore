@@ -47,7 +47,7 @@
   max-width: 570px;
   margin: 17px 0 25px;
   color: #a5a39c;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.85;
 }
 .profile-actions {
@@ -66,9 +66,9 @@
 .profile-tech-list span {
   padding: 7px 10px;
   border: 1px solid #333330;
-  color: #a09e96;
+  color: #c3c0b8;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.025em;
 }
 .profile-card {
@@ -84,9 +84,9 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  color: #817e75;
+  color: #aaa69e;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.1em;
 }
 .profile-portrait-wrap {
@@ -150,9 +150,9 @@
 .profile-card-name,
 .profile-card-role {
   margin: 3px 0 0;
-  color: #918f88;
+  color: #b0ada5;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 .profile-card-specialties {
   display: grid;
@@ -163,10 +163,10 @@
 .profile-card-specialties span {
   padding: 9px 7px;
   border: 1px solid #302f2c;
-  color: #aaa79f;
+  color: #c3c0b8;
   text-align: center;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
 }
 .profile-card-specialties span:last-child {
   grid-column: 1 / -1;
@@ -177,7 +177,7 @@
   padding-top: 14px;
   border-top: 1px solid #302f2c;
   color: #d2cfc7;
-  font-size: 11px;
+  font-size: 14px;
 }
 .profile-card-link span {
   color: var(--red);
@@ -217,12 +217,12 @@
   margin: 0;
   color: #6f6d66;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 .profile-tech-group h3 {
   margin: 0 25px 14px 0;
   color: #dfdcd4;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -236,7 +236,7 @@
   border: 1px solid #302f2c;
   color: #a5a39c;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
 }
 .profile-work {
   padding-top: 105px;
@@ -261,7 +261,7 @@
   padding-top: 6px;
   color: #79776f;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 .profile-project-main h3 {
   margin: 0 0 4px;
@@ -278,13 +278,13 @@
 .profile-project-main p {
   margin: 0 0 8px;
   color: #97958e;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.7;
 }
 .profile-project-stack {
-  color: #77766f;
+  color: #aaa79f;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
 }
 .profile-project-arrow {
   padding-top: 5px;
@@ -298,7 +298,7 @@
   gap: 15px;
   margin-top: 25px;
   color: #c5c3bc;
-  font-size: 12px;
+  font-size: 15px;
 }
 .profile-all-projects span {
   color: var(--red);
@@ -330,7 +330,7 @@
   max-width: 470px;
   margin: 23px 0 0;
   color: #a09e97;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.9;
 }
 .profile-connect {
@@ -366,7 +366,7 @@
     font-size: clamp(64px, 17vw, 88px);
   }
   .profile-bio {
-    font-size: 13px;
+    font-size: 15px;
   }
   .profile-focus {
     margin-top: 23px;
@@ -395,12 +395,15 @@
     padding-inline: 0;
   }
   .profile-project-main h3 {
-    font-size: 18px;
+    font-size: 20px;
   }
   .profile-about-inner {
     grid-template-columns: 1fr;
     gap: 10px;
     padding-block: 56px;
+  }
+  .profile-about-inner > p {
+    font-size: 15px;
   }
   .profile-about h2,
   .profile-connect h2 {

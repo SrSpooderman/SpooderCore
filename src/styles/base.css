@@ -8,10 +8,6 @@
   height: 32px;
   object-fit: contain;
 }
-.footer-brand-logo {
-  width: 28px;
-  height: 28px;
-}
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
@@ -21,7 +17,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -96,7 +92,7 @@ button {
 .main-nav a,
 .header-github {
   color: #aaa9a2;
-  font-size: 13px;
+  font-size: 15px;
   transition: color 0.2s;
 }
 .main-nav a:hover,
@@ -121,7 +117,7 @@ button {
   margin: 0;
   color: #aaa8a0;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   line-height: 1.5;
 }
@@ -152,7 +148,7 @@ p {
   padding: 0 18px;
   border: 1px solid transparent;
   border-radius: 3px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   transition:
     transform 0.2s,
@@ -182,7 +178,7 @@ p {
 }
 .text-link {
   color: #d1cfc8;
-  font-size: 13px;
+  font-size: 15px;
 }
 .text-link span {
   padding-left: 9px;
@@ -213,7 +209,7 @@ p {
   max-width: 340px;
   margin: 0 0 5px;
   color: #96958e;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
 }
 .status,
@@ -222,7 +218,7 @@ p {
 .tech-index,
 .coming-chip {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.09em;
 }
 .status {
@@ -247,48 +243,54 @@ p {
   border: 1px solid #333330;
   border-radius: 2px;
   color: #a09e96;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.06em;
 }
 .site-footer {
   background: #10100f;
 }
 .footer-top {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 51px;
-  padding-bottom: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 32px;
+  padding-top: 26px;
+  padding-bottom: 24px;
 }
 .footer-wordmark {
   font-size: 16px;
 }
 .footer-top > div:first-child p {
-  margin: 16px 0 0;
-  color: #797871;
-  font-size: 12px;
-  line-height: 1.8;
+  max-width: 360px;
+  margin: 8px 0 0;
+  color: #aaa9a1;
+  font-size: 13px;
+  line-height: 1.55;
 }
 .footer-links {
-  display: flex;
-  gap: 94px;
-  padding-right: 30px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
 }
 .footer-links > div {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   align-content: start;
-  gap: 10px;
+  align-items: center;
+  gap: 8px 14px;
 }
 .footer-label {
-  margin-bottom: 4px;
-  color: #716f68;
+  flex-basis: 100%;
+  margin-bottom: 1px;
+  color: #aaa79f;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .footer-links a {
   color: #aaa9a1;
-  font-size: 12px;
+  font-size: 13px;
 }
 .footer-links a:hover {
   color: white;
@@ -296,11 +298,12 @@ p {
 .footer-bottom {
   display: flex;
   justify-content: space-between;
-  padding-top: 17px;
-  padding-bottom: 20px;
+  gap: 14px;
+  padding-top: 10px;
+  padding-bottom: 13px;
   border-top: 1px solid #292927;
   color: #6c6b65;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.06em;
 }

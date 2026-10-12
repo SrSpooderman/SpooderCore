@@ -38,9 +38,9 @@
 .featured-project-number,
 .featured-project-type {
   position: absolute;
-  color: #87847b;
+  color: #aaa69e;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.12em;
 }
 .featured-project-number {
@@ -72,7 +72,7 @@
 }
 .featured-project-title-row .eyebrow {
   color: #8d8a82;
-  font-size: 8px;
+  font-size: 12px;
 }
 .featured-project-title-row h2 {
   margin: 6px 0 0;
@@ -94,7 +94,7 @@
   min-height: 48px;
   margin: 17px 0 18px;
   color: #a3a199;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.8;
 }
 .project-contribution {
@@ -105,12 +105,12 @@
   border-left: 2px solid var(--red);
   background: #1d1b19;
   color: #d2cfc7;
-  font-size: 11px;
+  font-size: 14px;
 }
 .project-contribution span {
-  color: #89867e;
+  color: #b1ada5;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
@@ -120,7 +120,7 @@
 .project-team > .eyebrow {
   margin-bottom: 8px;
   color: #8d8a82;
-  font-size: 8px;
+  font-size: 12px;
 }
 .project-team ul,
 .detail-team-list {
@@ -135,7 +135,7 @@
   gap: 12px;
   padding: 9px 0;
   border-top: 1px solid #302f2c;
-  font-size: 10px;
+  font-size: 14px;
 }
 .project-team li span:first-child,
 .detail-team-list li span:first-child {
@@ -143,7 +143,7 @@
 }
 .project-team li span:last-child,
 .detail-team-list li span:last-child {
-  color: #8d8a82;
+  color: #b0ada5;
   text-align: right;
 }
 .featured-project-tags {
@@ -160,7 +160,7 @@
 .featured-project-links a,
 .other-project-repository {
   color: #c9c6be;
-  font-size: 10px;
+  font-size: 14px;
 }
 .featured-project-links a:hover,
 .other-project-repository:hover {
@@ -191,9 +191,9 @@
 .other-project-number {
   align-self: start;
   padding-top: 5px;
-  color: #79776f;
+  color: #aaa79f;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
 }
 .other-project-row h3 {
   margin: 0 0 5px;
@@ -208,8 +208,8 @@
 }
 .other-project-row p {
   margin: 0 0 10px;
-  color: #96948d;
-  font-size: 11px;
+  color: #b0ada5;
+  font-size: 14px;
   line-height: 1.65;
 }
 .other-project-row .tag {
@@ -238,7 +238,7 @@
   padding-top: 14px;
   border-top: 1px solid #343431;
   color: #d0cec7;
-  font-size: 11px;
+  font-size: 14px;
 }
 .detail-repository-link span {
   color: var(--red);
@@ -258,13 +258,13 @@
   letter-spacing: -0.05em;
 }
 .detail-team-heading > p:last-child {
-  color: #929088;
-  font-size: 11px;
+  color: #b0ada5;
+  font-size: 15px;
   line-height: 1.7;
 }
 .detail-team-list li {
   padding: 13px 0;
-  font-size: 11px;
+  font-size: 14px;
 }
 @media (max-width: 900px) {
   .detail-project-logo {
@@ -361,7 +361,7 @@
   border: 1px solid #383734;
   color: #c3c0b8;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 13px;
 }
 .project-resource-nav a span {
   color: var(--red);
@@ -382,7 +382,7 @@
 .project-resource-heading > a {
   padding-bottom: 5px;
   color: #aaa8a0;
-  font-size: 11px;
+  font-size: 14px;
 }
 .project-resource-heading > a:hover {
   color: white;
@@ -392,8 +392,8 @@
   padding: clamp(20px, 4vw, 42px);
   border: 1px solid #343431;
   background: #171716;
-  color: #c0beb7;
-  font-size: 13px;
+  color: #d0cec7;
+  font-size: 16px;
   line-height: 1.8;
 }
 .project-readme-content > div,
@@ -447,7 +447,7 @@
 .project-readme-content blockquote {
   padding: 2px 0 2px 17px;
   border-left: 2px solid #66514a;
-  color: #9d9a92;
+  color: #c0bdb5;
 }
 .project-readme-content pre {
   overflow-x: auto;
@@ -475,7 +475,7 @@
 .project-readme-content table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11px;
+  font-size: 14px;
 }
 .project-readme-content th,
 .project-readme-content td {
@@ -512,7 +512,7 @@
   flex: 0 0 auto;
   color: #89877f;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
 }
 .project-release-assets {
   display: grid;
@@ -528,7 +528,7 @@
   padding: 11px 13px;
   border: 1px solid #30302d;
   color: #c8c6bf;
-  font-size: 11px;
+  font-size: 14px;
 }
 .project-release-assets a:hover {
   border-color: #65504a;
@@ -537,7 +537,7 @@
   flex: 0 0 auto;
   color: #99968e;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
 }
 @media (max-width: 680px) {
   .project-readme,
@@ -558,7 +558,7 @@
   }
   .project-readme-content {
     padding: 18px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .project-readme-content h1 {
     font-size: 26px;
