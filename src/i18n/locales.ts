@@ -31,9 +31,10 @@ export function messages(locale: Locale, group: MessageGroup): Catalog {
   return catalog;
 }
 
-export function getLocalizedPaths(includeDefault = false) {
-  const localizedLocales = includeDefault ? locales : locales.filter((locale) => locale !== defaultLocale);
-  return localizedLocales.map((locale) => ({ params: { locale }, props: { locale } }));
+export function getLocalizedPaths() {
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((locale) => ({ params: { locale }, props: { locale } }));
 }
 
 export function localizedPath(locale: Locale, path: string): string {

@@ -96,33 +96,27 @@
   border-color: #c9c6be;
 }
 :root[data-theme='light'] .main-nav a:hover,
-:root[data-theme='light'] .main-nav a.active,
 :root[data-theme='light'] .header-github:hover {
   color: #111;
 }
 :root[data-theme='light'] .profile-stack-band,
 :root[data-theme='light'] .stack-band,
-:root[data-theme='light'] .manifesto,
 :root[data-theme='light'] .featured-project-card,
-:root[data-theme='light'] .explore-card,
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .profile-card,
 :root[data-theme='light'] .detail-aside,
 :root[data-theme='light'] .about-aside,
 :root[data-theme='light'] .metrics-note,
-:root[data-theme='light'] .empty-state,
 :root[data-theme='light'] .release-project,
 :root[data-theme='light'] .featured-project-visual {
   background-color: #fff;
 }
 :root[data-theme='light'] .profile-stack-band,
 :root[data-theme='light'] .stack-band,
-:root[data-theme='light'] .manifesto,
 :root[data-theme='light'] .profile-about,
 :root[data-theme='light'] .featured-project-card,
 :root[data-theme='light'] .featured-project-visual,
-:root[data-theme='light'] .explore-card,
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .profile-card,
@@ -139,8 +133,6 @@
 :root[data-theme='light'] .profile-project {
   border-color: #d8d5cd;
 }
-:root[data-theme='light'] .ticker,
-:root[data-theme='light'] .closing-cta,
 :root[data-theme='light'] .site-footer {
   background: #eeede8;
 }
@@ -193,8 +185,6 @@
 :root[data-theme='light'] .featured-project-visual,
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
-:root[data-theme='light'] .explore-card,
-:root[data-theme='light'] .empty-state,
 :root[data-theme='light'] .demo-visual,
 :root[data-theme='light'] .detail-aside,
 :root[data-theme='light'] .metrics-note,
@@ -207,16 +197,12 @@
 }
 :root[data-theme='light'] .profile-stack-band,
 :root[data-theme='light'] .stack-band,
-:root[data-theme='light'] .manifesto,
 :root[data-theme='light'] .profile-about,
-:root[data-theme='light'] .ticker,
-:root[data-theme='light'] .closing-cta,
 :root[data-theme='light'] .site-footer,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .project-contribution {
   background: #eeede8;
 }
-:root[data-theme='light'] .ticker-inner,
 :root[data-theme='light'] .eyebrow,
 :root[data-theme='light'] .profile-card-role,
 :root[data-theme='light'] .profile-card-name,
@@ -227,11 +213,8 @@
 :root[data-theme='light'] .featured-project-type,
 :root[data-theme='light'] .footer-label,
 :root[data-theme='light'] .footer-bottom,
-:root[data-theme='light'] .muted-heading,
 :root[data-theme='light'] .status,
-:root[data-theme='light'] .tag,
-:root[data-theme='light'] .release-no,
-:root[data-theme='light'] .release-status {
+:root[data-theme='light'] .tag {
   color: #625f58;
 }
 :root[data-theme='light'] .profile-project-main p,
@@ -288,7 +271,6 @@
 :root[data-theme='light'] .principle,
 :root[data-theme='light'] .profile-tech-group h3,
 :root[data-theme='light'] .metrics-note h3,
-:root[data-theme='light'] .empty-state h2,
 :root[data-theme='light'] .demo-empty h2 {
   color: #292824;
 }

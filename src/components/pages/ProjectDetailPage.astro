@@ -6,11 +6,7 @@ import { messages, localizedPath, type Locale } from '../../i18n/locales';
 const { slug, readmeHtml, releases, locale } = Astro.props as { slug: string; readmeHtml: string | null; releases: import('../../data/releases').ProjectRelease[]; locale: Locale };
 const sourceProject = getProject(slug)!;
 const t = messages(locale, 'projects');
-const prefixBySlug: Record<string, string> = {
-  spiderfinance: 'spiderfinance', 'cliponomicon-api': 'cliponomiconApi',
-  spiderportfolio: 'spiderportfolio', spidertomp3: 'spidertomp3', spiderawake: 'spiderawake', rehuse: 'rehuse',
-};
-const prefix = prefixBySlug[sourceProject.slug];
+const prefix = sourceProject.slug.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
 const project = {
   ...sourceProject,
   summary: t[`${prefix}Summary`],
