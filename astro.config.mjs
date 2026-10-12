@@ -12,14 +12,21 @@ export default defineConfig({
   },
   redirects: {
     '/es': '/',
-    '/es/about': '/about',
+    '/about': '/',
+    '/es/about': '/',
     '/es/projects': '/projects',
     '/es/downloads': '/downloads',
     '/es/demos': '/demos',
     '/es/lab': '/lab',
     ...Object.fromEntries(
-      ['spiderfinance', 'cliponomicon-api', 'spiderportfolio', 'spidertomp3', 'spiderawake', 'rehuse']
-        .map((slug) => [`/es/projects/${slug}`, `/projects/${slug}`]),
+      [
+        'spiderfinance',
+        'cliponomicon-api',
+        'spiderportfolio',
+        'spidertomp3',
+        'spiderawake',
+        'rehuse',
+      ].map((slug) => [`/es/projects/${slug}`, `/projects/${slug}`]),
     ),
   },
 });

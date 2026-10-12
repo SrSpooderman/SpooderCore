@@ -100,20 +100,17 @@
   color: #111;
 }
 :root[data-theme='light'] .profile-stack-band,
-:root[data-theme='light'] .stack-band,
 :root[data-theme='light'] .featured-project-card,
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .profile-card,
 :root[data-theme='light'] .detail-aside,
-:root[data-theme='light'] .about-aside,
 :root[data-theme='light'] .metrics-note,
 :root[data-theme='light'] .release-project,
 :root[data-theme='light'] .featured-project-visual {
   background-color: #fff;
 }
 :root[data-theme='light'] .profile-stack-band,
-:root[data-theme='light'] .stack-band,
 :root[data-theme='light'] .profile-about,
 :root[data-theme='light'] .featured-project-card,
 :root[data-theme='light'] .featured-project-visual,
@@ -121,7 +118,6 @@
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .profile-card,
 :root[data-theme='light'] .detail-aside,
-:root[data-theme='light'] .about-aside,
 :root[data-theme='light'] .metrics-note,
 :root[data-theme='light'] .release-project,
 :root[data-theme='light'] .project-readme-content,
@@ -144,7 +140,6 @@
 :root[data-theme='light'] .profile-project-main p,
 :root[data-theme='light'] .section-intro,
 :root[data-theme='light'] .page-lede,
-:root[data-theme='light'] .about-story > p:not(.eyebrow),
 :root[data-theme='light'] .detail-lede,
 :root[data-theme='light'] .detail-description,
 :root[data-theme='light'] .metrics-note > div > p:last-child,
@@ -181,7 +176,6 @@
   }
 }
 :root[data-theme='light'] .profile-card,
-:root[data-theme='light'] .about-aside,
 :root[data-theme='light'] .featured-project-visual,
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
@@ -196,7 +190,6 @@
   box-shadow: 0 14px 45px rgb(36 32 25 / 7%);
 }
 :root[data-theme='light'] .profile-stack-band,
-:root[data-theme='light'] .stack-band,
 :root[data-theme='light'] .profile-about,
 :root[data-theme='light'] .site-footer,
 :root[data-theme='light'] .profile-tech-group,
@@ -221,7 +214,6 @@
 :root[data-theme='light'] .profile-about-inner > p,
 :root[data-theme='light'] .profile-bio,
 :root[data-theme='light'] .page-lede,
-:root[data-theme='light'] .about-story > p:not(.eyebrow),
 :root[data-theme='light'] .detail-description,
 :root[data-theme='light'] .metrics-note > div > p:last-child,
 :root[data-theme='light'] .demo-empty > div:last-child > p:not(.eyebrow),
@@ -267,10 +259,10 @@
 :root[data-theme='light'] .project-readme-content h1,
 :root[data-theme='light'] .project-readme-content h2,
 :root[data-theme='light'] .project-readme-content h3,
-:root[data-theme='light'] .stack-list span,
-:root[data-theme='light'] .principle,
 :root[data-theme='light'] .profile-tech-group h3,
 :root[data-theme='light'] .metrics-note h3,
+:root[data-theme='light'] .metrics-note > div > p:not(:last-child),
+:root[data-theme='light'] .release-latest,
 :root[data-theme='light'] .demo-empty h2 {
   color: #292824;
 }

@@ -7,12 +7,26 @@ const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'downloads');
 
 const releaseLists = await getProjectReleases(projects);
-const downloadableProjects = releaseLists
-  .map((project) => ({
-    ...project,
-    releases: project.releases.filter((release) => release.assets.length > 0),
-  }))
-  .filter((project) => project.unavailable || project.releases.length > 0);
+const downloadableProjects = releaseLists.map((project) => {
+  const releases = project.releases.filter((release) => release.assets.length > 0);
+  const latestStable = releases
+    .filter((release) => !release.prerelease)
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))[0];
+
+  return { ...project, releases, latestStableUrl: latestStable?.url };
+});
+const totalDownloadableFiles = downloadableProjects.reduce(
+  (total, project) =>
+    total +
+    project.releases.reduce((projectTotal, release) => projectTotal + release.assets.length, 0),
+  0,
+);
+const projectsWithDownloads = downloadableProjects.filter(
+  (project) => project.releases.length > 0,
+).length;
+const downloadSummary = t.downloadSummary
+  .replace('{files}', String(totalDownloadableFiles))
+  .replace('{projects}', String(projectsWithDownloads));
 const formatSize = (bytes: number) =>
   bytes < 1_000_000
     ? `${Math.max(1, Math.round(bytes / 1_000))} KB`
@@ -26,29 +40,27 @@ const formatDate = (date: string) =>
   });
 ---
 
-<BaseLayout
-  locale={locale}
-  active="/downloads"
-  title={t.title}
-  description={t.description}
->
+<BaseLayout locale={locale} active="/downloads" title={t.title} description={t.description}>
   <section class="page-hero wrap">
     <p class="eyebrow">{t.eyebrow}</p>
     <h1>
-      {t.title}<span class="period">.</span>
+      {t.title}
+      <span class="period">.</span>
     </h1>
     <p class="page-lede">{t.lede}</p>
     <div class="page-hero-line">
-      <span>{t.available}</span>
+      <span>{downloadSummary}</span>
       <span>{t.source}</span>
     </div>
   </section>
   <section class="section wrap downloads-section">
-    {downloadableProjects.map((project) => (
-      <details class="release-project">
+    {downloadableProjects.map((project, projectIndex) => (
+      <details class="release-project" open={projectIndex === 0}>
         <summary class="release-project-heading">
           <div class="release-project-title">
-            <p class="eyebrow">{project.releases.length} {t.releasesWithAssets}</p>
+            <p class="eyebrow">
+              {project.releases.length} {t.releasesWithAssets}
+            </p>
             <h2>{project.projectName}</h2>
           </div>
           <span class="release-project-toggle" aria-hidden="true">
@@ -68,6 +80,10 @@ const formatDate = (date: string) =>
             <div class="release-message">
               <p>{t.unavailable}</p>
             </div>
+          ) : project.releases.length === 0 ? (
+            <div class="release-message">
+              <p>{t.noFiles}</p>
+            </div>
           ) : (
             <div class="release-list">
               {project.releases.map((release) => (
@@ -77,6 +93,9 @@ const formatDate = (date: string) =>
                       <a href={release.url} target="_blank" rel="noreferrer" class="release-tag">
                         {release.name}
                       </a>
+                      {release.url === project.latestStableUrl && (
+                        <span class="release-latest">{t.latestStable}</span>
+                      )}
                       <span class="release-version">{release.tag}</span>
                       {release.prerelease && <span class="release-prerelease">{t.prerelease}</span>}
                     </div>

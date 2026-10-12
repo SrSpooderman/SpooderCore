@@ -35,9 +35,6 @@
   .detail-glyph {
     margin-right: 20px;
   }
-  .about-section {
-    gap: 55px;
-  }
 }
 @media (max-width: 680px) {
   .wrap {
@@ -107,8 +104,7 @@
     margin-bottom: 28px;
   }
   .section-heading h2,
-  .lab-heading h2,
-  .stack-inner h2 {
+  .lab-heading h2 {
     font-size: 42px;
   }
   .section-intro {
@@ -152,6 +148,7 @@
     font-size: 15px;
   }
   .page-hero-line {
+    flex-wrap: wrap;
     gap: 12px;
     font-size: 11px;
   }
@@ -267,54 +264,6 @@
   }
   .detail-next > a {
     font-size: 18px;
-  }
-  .about-section {
-    grid-template-columns: 1fr;
-    gap: 37px;
-    padding-top: 66px;
-    padding-bottom: 70px;
-  }
-  .about-story h2 {
-    font-size: 42px;
-  }
-  .about-story > p:not(.eyebrow) {
-    font-size: 15px;
-  }
-  .about-aside {
-    padding: 23px;
-  }
-  .about-aside-symbol {
-    font-size: 90px;
-  }
-  .stack-inner {
-    grid-template-columns: 1fr;
-    gap: 27px;
-    padding-top: 49px;
-    padding-bottom: 52px;
-  }
-  .stack-inner h2 {
-    font-size: 39px;
-  }
-  .stack-list {
-    gap: 7px;
-  }
-  .stack-list span {
-    padding: 9px 11px;
-    font-size: 12px;
-  }
-  .about-connect {
-    display: block;
-    padding-top: 67px;
-    padding-bottom: 74px;
-  }
-  .about-connect h2 {
-    font-size: 41px;
-  }
-  .about-connect > div:last-child {
-    margin-top: 22px;
-  }
-  .about-connect > div:last-child p {
-    font-size: 15px;
   }
   .not-found {
     min-height: 510px;

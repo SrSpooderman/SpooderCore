@@ -93,8 +93,7 @@ const projects = [
   {
     number: '03',
     name: 'SpiderPortfolio',
-    description:
-      t.projectSpiderportfolio,
+    description: t.projectSpiderportfolio,
     stack: 'React · Puck · FastAPI · PostgreSQL',
     href: 'https://github.com/SrSpooderman/Portfolio/tree/develop',
   },
@@ -108,12 +107,7 @@ const projects = [
 ];
 ---
 
-<BaseLayout
-  locale={locale}
-  active="/"
-  title={t.title}
-  description={t.description}
->
+<BaseLayout locale={locale} active="/" title={t.title} description={t.description}>
   <section class="profile-hero wrap">
     <div class="profile-intro">
       <p class="eyebrow profile-kicker">
@@ -126,9 +120,7 @@ const projects = [
         <span>Valencia.</span>
       </h1>
       <p class="profile-role">Backend &amp; Software Developer</p>
-      <p class="profile-bio">
-        {t.bio}
-      </p>
+      <p class="profile-bio">{t.bio}</p>
       <div class="profile-actions">
         <a
           class="button button-primary"
@@ -195,7 +187,8 @@ const projects = [
       <div class="profile-stack-heading">
         <p class="eyebrow">{t.technologiesLabel}</p>
         <h2>
-          {t.stackTitle}<span class="period">.</span>
+          {t.stackTitle}
+          <span class="period">.</span>
         </h2>
       </div>
       <div class="profile-tech-groups">
@@ -218,13 +211,9 @@ const projects = [
     <div class="section-heading">
       <div>
         <p class="eyebrow">{t.selectedWork}</p>
-        <h2>
-          {t.projectsHeading}
-        </h2>
+        <h2>{t.projectsHeading}</h2>
       </div>
-      <p class="section-intro">
-        {t.projectsIntro}
-      </p>
+      <p class="section-intro">{t.projectsIntro}</p>
     </div>
     <div class="profile-project-list">
       {projects.map((project) => (
@@ -253,13 +242,9 @@ const projects = [
     <div class="wrap profile-about-inner">
       <div>
         <p class="eyebrow">{t.howIWork}</p>
-        <h2>
-          {t.architectureHeading}
-        </h2>
+        <h2>{t.architectureHeading}</h2>
       </div>
-      <p>
-        {t.architectureIntro}
-      </p>
+      <p>{t.architectureIntro}</p>
     </div>
   </section>
 
@@ -267,8 +252,11 @@ const projects = [
     <p class="eyebrow">{t.professionalContact}</p>
     <h2>{t.contactHeading}</h2>
     <div class="profile-actions">
+      <a class="button button-primary" href="mailto:francisco.valeespa@hotmail.com">
+        {t.emailContact} <span aria-hidden="true">↗</span>
+      </a>
       <a
-        class="button button-primary"
+        class="button button-outline"
         href="https://linkedin.com/in/franciscovaleespa"
         target="_blank"
         rel="noreferrer"

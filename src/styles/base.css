@@ -196,8 +196,7 @@ p {
   margin-bottom: 46px;
 }
 .section-heading h2,
-.lab-heading h2,
-.stack-inner h2 {
+.lab-heading h2 {
   margin: 16px 0 0;
   font-family: var(--display);
   font-size: clamp(37px, 5vw, 55px);
