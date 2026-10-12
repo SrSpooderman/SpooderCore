@@ -1,0 +1,8 @@
+{
+  "defaultLocale": "es",
+  "locales": ["es", "en"],
+  "localeNames": {
+    "es": "Español",
+    "en": "English"
+  }
+}

@@ -1,0 +1,7 @@
+---
+import ProjectsIndexPage from '../../../components/pages/ProjectsIndexPage.astro';
+import { getLocalizedPaths } from '../../../i18n/locales';
+export const getStaticPaths = () => getLocalizedPaths();
+---
+
+<ProjectsIndexPage locale={Astro.props.locale} />

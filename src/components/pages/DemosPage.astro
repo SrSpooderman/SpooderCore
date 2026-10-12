@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { messages, localizedPath, type Locale } from '../../i18n/locales';
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'demos');
+---
+
+<BaseLayout locale={locale} title={t.title} description={t.description}>
+  <section class="page-hero wrap">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h1>{t.heading.replace('.', '')}<span class="period">.</span></h1>
+    <p class="page-lede">{t.lede}</p>
+    <div class="page-hero-line">
+      <span>{t.currentStatus}</span>
+      <span>{t.nonePublished}</span>
+    </div>
+  </section>
+  <section class="section wrap demos-section">
+    <div class="demo-empty">
+      <div class="demo-visual">
+        <span class="demo-circle circle-a"></span>
+        <span class="demo-circle circle-b"></span>
+        <span class="demo-plus">+</span>
+        <span class="demo-coordinate">DEMO_001 / STANDBY</span>
+      </div>
+      <div>
+        <p class="eyebrow">{t.unavailable}</p>
+        <h2>{t.emptyHeading}</h2>
+        <p>{t.emptyDescription}</p>
+        <a class="button button-outline" href={localizedPath(locale, '/projects')}>
+          {t.viewProjects} <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

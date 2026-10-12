@@ -1,0 +1,7 @@
+---
+import DemosPage from '../../components/pages/DemosPage.astro';
+import { getLocalizedPaths } from '../../i18n/locales';
+export const getStaticPaths = () => getLocalizedPaths();
+---
+
+<DemosPage locale={Astro.props.locale} />

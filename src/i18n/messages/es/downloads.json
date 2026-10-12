@@ -1,0 +1,15 @@
+{
+  "title": "Descargas",
+  "description": "Archivos publicados para descargar desde las releases de cada proyecto.",
+  "eyebrow": "PROYECTOS / ARCHIVOS",
+  "lede": "Archivos publicados para descargar desde las releases de cada proyecto.",
+  "source": "FUENTE: GITHUB",
+  "downloadSummary": "{files} archivos descargables · {projects} proyectos",
+  "releasesWithAssets": "VERSIONES CON ARCHIVOS",
+  "latestStable": "VERSIÓN ESTABLE MÁS RECIENTE",
+  "noFiles": "Este proyecto todavía no tiene archivos descargables publicados.",
+  "repository": "Repositorio",
+  "allReleases": "Todas las releases",
+  "unavailable": "No se pudieron cargar las releases en esta compilación.",
+  "prerelease": "Pre-release"
+}

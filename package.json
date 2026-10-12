@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run check:i18n && astro check && astro build",
+    "check:i18n": "node scripts/check-i18n.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier --write \"**/*.{astro,css,js,mjs,ts,json,yml,md}\"",

@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { messages, type Locale } from '../../i18n/locales';
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'lab');
+
+const metrics = [
+  { name: t.cpu, description: t.cpuDescription },
+  { name: t.memory, description: t.memoryDescription },
+  { name: t.storage, description: t.storageDescription },
+];
+---
+
+<BaseLayout locale={locale} active="/lab" title={t.title} description={t.description}>
+  <section class="page-hero wrap">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h1>{t.heading}</h1>
+    <p class="page-lede">{t.lede}</p>
+    <div class="page-hero-line">
+      <span>{t.source}</span>
+      <span>{t.freshness}</span>
+    </div>
+  </section>
+
+  <section class="section wrap lab-section" data-messages={JSON.stringify(t)}>
+    <div class="lab-heading">
+      <div>
+        <p class="eyebrow">{t.resources}</p>
+        <h2>{t.usageHeading}</h2>
+      </div>
+    </div>
+
+    <div class="tech-grid server-metric-grid">
+      {metrics.map((metric, index) => (
+        <article class="tech-card server-metric-card">
+          <span class="tech-index">0{index + 1} / HOST</span>
+          <span class="eyebrow">{t.currentUsage}</span>
+          <h3>{metric.name}</h3>
+          <p>{metric.description}</p>
+          <div class="server-metric-readout">
+            <span class="server-metric-value" id={`metric-${index}`} aria-label={t.loadingData}>
+              —
+            </span>
+          </div>
+          <div
+            class="server-metric-track"
+            role="progressbar"
+            aria-label={`${t.usageOf} ${metric.name}`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuetext={t.waitingForData}
+            aria-busy="true"
+          >
+            <span class="server-metric-fill" id={`metric-bar-${index}`}></span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="metrics-note">
+      <span class="metrics-mark" aria-hidden="true">
+        ◎
+      </span>
+      <div>
+        <p class="eyebrow">{t.sourceStatus}</p>
+        <h3 id="metrics-status" aria-live="polite">
+          {t.checkingServer}
+        </h3>
+        <p>
+          <time id="metrics-timestamp">{t.waitingTimestamp}</time>
+        </p>
+        <p class="metrics-detail" id="metrics-detail" aria-live="polite">
+          {t.checkingServer}
+        </p>
+      </div>
+      <span class="coming-chip" id="metrics-freshness">
+        {t.loading}
+      </span>
+    </div>
+
+    <div class="metrics-note services-note">
+      <span class="metrics-mark" aria-hidden="true">
+        ⌁
+      </span>
+      <div>
+        <p class="eyebrow">{t.services}</p>
+        <h3>{t.noServiceMetrics}</h3>
+        <p>{t.servicesDescription}</p>
+      </div>
+      <a
+        class="metrics-source-link"
+        href="https://github.com/SrSpooderman/SpooderServerMetrics"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {t.contract} ↗
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  interface MetricsSummary {
+    schema_version: string;
+    sampled_at: string;
+    stale: boolean;
+    host: {
+      cpu_percent: number;
+      memory_percent: number;
+      storage_percent: number;
+    };
+  }
+
+  const status = document.querySelector<HTMLElement>('#metrics-status');
+  const freshness = document.querySelector<HTMLElement>('#metrics-freshness');
+  const timestamp = document.querySelector<HTMLTimeElement>('#metrics-timestamp');
+  const detail = document.querySelector<HTMLElement>('#metrics-detail');
+  const copy = JSON.parse(
+    document.querySelector<HTMLElement>('.lab-section')?.dataset.messages ?? '{}',
+  ) as Record<string, string>;
+
+  function formatPercent(value: number): string {
+    const locale = document.documentElement.lang;
+    return `${value.toLocaleString(locale, { maximumFractionDigits: 1 })}%`;
+  }
+
+  function showUnavailable(): void {
+    if (status) status.textContent = copy.unavailable;
+    if (freshness) freshness.textContent = copy.offline;
+    if (timestamp) timestamp.textContent = copy.sampleUnavailable;
+    if (detail) detail.textContent = copy.unavailableDescription;
+    [0, 1, 2].forEach((index) => {
+      const target = document.querySelector<HTMLElement>(`#metric-${index}`);
+      if (target) target.setAttribute('aria-label', copy.unavailable);
+
+      const progress = document.querySelector<HTMLElement>(`#metric-bar-${index}`)?.parentElement;
+      if (progress) {
+        progress.removeAttribute('aria-valuenow');
+        progress.setAttribute('aria-valuetext', copy.unavailable);
+        progress.setAttribute('aria-busy', 'false');
+      }
+    });
+  }
+
+  try {
+    const response = await fetch('/api/metrics/summary', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Metrics endpoint unavailable');
+
+    const data = (await response.json()) as MetricsSummary;
+    if (
+      data.schema_version !== '1.0' ||
+      typeof data.sampled_at !== 'string' ||
+      typeof data.stale !== 'boolean' ||
+      ![data.host?.cpu_percent, data.host?.memory_percent, data.host?.storage_percent].every(
+        (value) => typeof value === 'number' && Number.isFinite(value),
+      )
+    ) {
+      throw new Error('Invalid metrics response');
+    }
+
+    const sampledAt = new Date(data.sampled_at);
+    if (Number.isNaN(sampledAt.valueOf())) throw new Error('Invalid sample timestamp');
+
+    const values = [data.host.cpu_percent, data.host.memory_percent, data.host.storage_percent];
+    values.forEach((value, index) => {
+      const target = document.querySelector<HTMLElement>(`#metric-${index}`);
+      if (target) {
+        target.textContent = formatPercent(value);
+        target.setAttribute('aria-label', formatPercent(value));
+      }
+
+      const progress = document.querySelector<HTMLElement>(`#metric-bar-${index}`)?.parentElement;
+      if (progress) {
+        const boundedValue = Math.min(100, Math.max(0, value));
+        progress.setAttribute('aria-valuenow', String(boundedValue));
+        progress.setAttribute('aria-valuetext', formatPercent(value));
+        progress.setAttribute('aria-busy', 'false');
+        progress.style.setProperty('--metric-value', `${boundedValue}%`);
+      }
+    });
+
+    if (timestamp) {
+      const dateLocale = document.documentElement.lang;
+      timestamp.dateTime = data.sampled_at;
+      timestamp.textContent = `${copy.lastSample}: ${sampledAt.toLocaleString(dateLocale)}.`;
+    }
+    if (status) status.textContent = data.stale ? copy.stale : copy.current;
+    if (freshness) freshness.textContent = data.stale ? copy.staleLabel : copy.currentLabel;
+    if (detail) detail.textContent = data.stale ? copy.staleDescription : copy.currentDescription;
+  } catch {
+    showUnavailable();
+  }
+</script>

@@ -1,0 +1,7 @@
+---
+import LabPage from '../../components/pages/LabPage.astro';
+import { getLocalizedPaths } from '../../i18n/locales';
+export const getStaticPaths = () => getLocalizedPaths();
+---
+
+<LabPage locale={Astro.props.locale} />

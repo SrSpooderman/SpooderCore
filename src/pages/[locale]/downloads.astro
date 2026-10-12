@@ -1,0 +1,7 @@
+---
+import DownloadsPage from '../../components/pages/DownloadsPage.astro';
+import { getLocalizedPaths } from '../../i18n/locales';
+export const getStaticPaths = () => getLocalizedPaths();
+---
+
+<DownloadsPage locale={Astro.props.locale} />

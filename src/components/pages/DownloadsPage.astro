@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data/projects';
+import { getProjectReleases } from '../../data/releases';
+import { messages, type Locale } from '../../i18n/locales';
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'downloads');
+
+const releaseLists = await getProjectReleases(projects);
+const downloadableProjects = releaseLists.map((project) => {
+  const releases = project.releases.filter((release) => release.assets.length > 0);
+  const latestStable = releases
+    .filter((release) => !release.prerelease)
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))[0];
+
+  return { ...project, releases, latestStableUrl: latestStable?.url };
+});
+const totalDownloadableFiles = downloadableProjects.reduce(
+  (total, project) =>
+    total +
+    project.releases.reduce((projectTotal, release) => projectTotal + release.assets.length, 0),
+  0,
+);
+const projectsWithDownloads = downloadableProjects.filter(
+  (project) => project.releases.length > 0,
+).length;
+const downloadSummary = t.downloadSummary
+  .replace('{files}', String(totalDownloadableFiles))
+  .replace('{projects}', String(projectsWithDownloads));
+const formatSize = (bytes: number) =>
+  bytes < 1_000_000
+    ? `${Math.max(1, Math.round(bytes / 1_000))} KB`
+    : `${(bytes / 1_000_000).toFixed(1)} MB`;
+const formatDate = (date: string) =>
+  new Date(date).toLocaleDateString(locale, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+---
+
+<BaseLayout locale={locale} active="/downloads" title={t.title} description={t.description}>
+  <section class="page-hero wrap">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h1>
+      {t.title}
+      <span class="period">.</span>
+    </h1>
+    <p class="page-lede">{t.lede}</p>
+    <div class="page-hero-line">
+      <span>{downloadSummary}</span>
+      <span>{t.source}</span>
+    </div>
+  </section>
+  <section class="section wrap downloads-section">
+    {downloadableProjects.map((project, projectIndex) => (
+      <details class="release-project" open={projectIndex === 0}>
+        <summary class="release-project-heading">
+          <div class="release-project-title">
+            <p class="eyebrow">
+              {project.releases.length} {t.releasesWithAssets}
+            </p>
+            <h2>{project.projectName}</h2>
+          </div>
+          <span class="release-project-toggle" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <div class="release-project-content">
+          <div class="release-project-links">
+            <a href={project.repositoryUrl} target="_blank" rel="noreferrer">
+              {t.repository} ↗
+            </a>
+            <a href={`${project.repositoryUrl}/releases`} target="_blank" rel="noreferrer">
+              {t.allReleases} ↗
+            </a>
+          </div>
+          {project.unavailable ? (
+            <div class="release-message">
+              <p>{t.unavailable}</p>
+            </div>
+          ) : project.releases.length === 0 ? (
+            <div class="release-message">
+              <p>{t.noFiles}</p>
+            </div>
+          ) : (
+            <div class="release-list">
+              {project.releases.map((release) => (
+                <article class="release-item">
+                  <div class="release-item-heading">
+                    <div>
+                      <a href={release.url} target="_blank" rel="noreferrer" class="release-tag">
+                        {release.name}
+                      </a>
+                      {release.url === project.latestStableUrl && (
+                        <span class="release-latest">{t.latestStable}</span>
+                      )}
+                      <span class="release-version">{release.tag}</span>
+                      {release.prerelease && <span class="release-prerelease">{t.prerelease}</span>}
+                    </div>
+                    <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
+                  </div>
+                  <ul class="release-assets">
+                    {release.assets.map((asset) => (
+                      <li>
+                        <a href={asset.url} target="_blank" rel="noreferrer">
+                          <span>{asset.name}</span>
+                          <span>{formatSize(asset.size)} ↓</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </details>
+    ))}
+  </section>
+</BaseLayout>
