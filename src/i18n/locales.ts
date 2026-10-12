@@ -4,14 +4,7 @@ export const defaultLocale = config.defaultLocale;
 export const locales = config.locales;
 export const localeNames = config.localeNames;
 export type Locale = (typeof locales)[number];
-export type MessageGroup =
-  | 'common'
-  | 'home'
-  | 'about'
-  | 'demos'
-  | 'projects'
-  | 'downloads'
-  | 'lab';
+export type MessageGroup = 'common' | 'home' | 'about' | 'demos' | 'projects' | 'downloads' | 'lab';
 
 type Catalog = Record<string, string>;
 const catalogFiles = import.meta.glob('./messages/*/*.json', {
