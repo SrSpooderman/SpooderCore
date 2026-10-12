@@ -5,17 +5,25 @@ interface Props {
   title?: string;
   description?: string;
   active?: string;
+  locale?: 'es' | 'en';
 }
-const { title = site.name, description = site.description, active = '' } = Astro.props;
+const { title = site.name, description = site.description, active = '', locale = 'es' } = Astro.props;
+const english = locale === 'en';
 const pageTitle = title === site.name ? title : `${title} — ${site.name}`;
-const canonical = new URL(Astro.url.pathname, siteUrl()).toString();
+const path = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+const canonicalPath = english ? `/en${path === '/' ? '' : path}` : path;
+const canonical = new URL(canonicalPath, siteUrl()).toString();
+const nav = english
+  ? [{ href: '/', label: 'Profile' }, { href: '/projects', label: 'Projects' }, { href: '/downloads', label: 'Downloads' }, { href: '/lab', label: 'Lab' }, { href: '/about', label: 'About' }]
+  : site.navigation;
+const localized = (href: string) => english ? `/en${href === '/' ? '' : href}` : href;
 function siteUrl() {
   return 'https://www.spoodercore.com';
 }
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,49 +43,55 @@ function siteUrl() {
     <meta property="og:image:height" content="1254" />
     <meta property="og:image:alt" content="Logo de SpooderCore" />
     <meta name="twitter:card" content="summary" />
+    <link rel="alternate" hreflang="es" href={new URL(path, siteUrl()).toString()} />
+    <link rel="alternate" hreflang="en" href={new URL(`/en${path === '/' ? '' : path}`, siteUrl()).toString()} />
     <title>{pageTitle}</title>
   </head>
   <body>
     <a class="skip-link" href="#contenido">
-      Saltar al contenido
+      {english ? 'Skip to content' : 'Saltar al contenido'}
     </a>
     <header class="site-header">
       <div class="header-inner wrap">
-        <a class="wordmark" href="/" aria-label="SpooderCore, inicio">
+        <a class="wordmark" href={localized('/')} aria-label={english ? 'SpooderCore, home' : 'SpooderCore, inicio'}>
           <img class="brand-logo" src="/brand/spoodercore.png" alt="" width="32" height="32" />
           <span>
             spooder<span class="wordmark-light">core</span>
           </span>
         </a>
-        <nav class="main-nav" aria-label="Navegación principal">
-          {site.navigation.map((item) => (
+        <nav class="main-nav" aria-label={english ? 'Main navigation' : 'Navegación principal'}>
+          {nav.map((item) => (
             <a
-              href={item.href}
+              href={localized(item.href)}
               class:list={{ active: active === item.href }}
               aria-current={active === item.href ? 'page' : undefined}
             >
-              {item.label}
+              <span>{item.label}</span>
             </a>
           ))}
         </nav>
-        <a class="header-github" href={site.github} target="_blank" rel="noreferrer">
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
+        <div class="header-controls">
+          <button class="header-control" type="button" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">☼</button>
+          <a class="header-control language-toggle" href={english ? path : `/en${path === '/' ? '' : path}`} aria-label={english ? 'Cambiar a español' : 'Switch to English'} title={english ? 'Español' : 'English'}>{english ? 'ES' : 'EN'}</a>
+          <a class="header-github" href={site.github} target="_blank" rel="noreferrer">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </div>
         <button
           class="menu-toggle"
           type="button"
           aria-expanded="false"
           aria-controls="mobile-nav"
-          aria-label="Abrir menú"
+          aria-label={english ? 'Open menu' : 'Abrir menú'}
         >
           <span></span>
           <span></span>
         </button>
       </div>
-      <nav id="mobile-nav" class="mobile-nav wrap" aria-label="Navegación móvil" hidden>
-        {site.navigation.map((item) => (
-          <a href={item.href}>
-            {item.label}
+      <nav id="mobile-nav" class="mobile-nav wrap" aria-label={english ? 'Mobile navigation' : 'Navegación móvil'} hidden>
+        {nav.map((item) => (
+          <a href={localized(item.href)}>
+            <span>{item.label}</span>
             <span aria-hidden="true">↗</span>
           </a>
         ))}
@@ -92,7 +106,7 @@ function siteUrl() {
     <footer class="site-footer">
       <div class="wrap footer-top">
         <div>
-          <a class="wordmark footer-wordmark" href="/">
+          <a class="wordmark footer-wordmark" href={localized('/')}>
             <img
               class="brand-logo footer-brand-logo"
               src="/brand/spoodercore.png"
@@ -105,22 +119,22 @@ function siteUrl() {
             </span>
           </a>
           <p>
-            Francisco Valencia · Desarrollador de software.
+            <span>{english ? 'Francisco Valencia · Software developer.' : 'Francisco Valencia · Desarrollador de software.'}</span>
             <br />
-            SrSpooderman en GitHub.
+            <span>{english ? 'SrSpooderman on GitHub.' : 'SrSpooderman en GitHub.'}</span>
           </p>
         </div>
         <div class="footer-links">
           <div>
-            <span class="footer-label">Explora</span>
-            <a href="/">Perfil</a>
-            <a href="/projects">Proyectos</a>
-            <a href="/downloads">Descargas</a>
-            <a href="/lab">Laboratorio</a>
+            <span class="footer-label">{english ? 'Explore' : 'Explora'}</span>
+            <a href={localized('/')} >{english ? 'Profile' : 'Perfil'}</a>
+            <a href={localized('/projects')}>{english ? 'Projects' : 'Proyectos'}</a>
+            <a href={localized('/downloads')}>{english ? 'Downloads' : 'Descargas'}</a>
+            <a href={localized('/lab')}>{english ? 'Lab' : 'Laboratorio'}</a>
           </div>
           <div>
-            <span class="footer-label">Conecta</span>
-            <a href="/about">Acerca de</a>
+            <span class="footer-label">{english ? 'Connect' : 'Conecta'}</span>
+            <a href={localized('/about')}>{english ? 'About' : 'Acerca de'}</a>
             <a href={site.github} target="_blank" rel="noreferrer">
               GitHub ↗
             </a>
@@ -129,16 +143,37 @@ function siteUrl() {
       </div>
       <div class="wrap footer-bottom">
         <span>© {new Date().getFullYear()} SpooderCore</span>
-        <span>Sitio estático generado con Astro.</span>
+        <span>{english ? 'Static site generated with Astro.' : 'Sitio estático generado con Astro.'}</span>
       </div>
     </footer>
     <script>
+      const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+      const theme = localStorage.getItem('spoodercore-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+      const updateThemeButton = () => {
+        const light = document.documentElement.dataset.theme === 'light';
+        if (themeButton) {
+          themeButton.textContent = light ? '☾' : '☼';
+          const english = document.documentElement.lang === 'en';
+          themeButton.setAttribute('aria-label', light ? (english ? 'Switch to dark mode' : 'Activar modo oscuro') : (english ? 'Switch to light mode' : 'Activar modo claro'));
+          themeButton.title = light ? (english ? 'Dark mode' : 'Modo oscuro') : (english ? 'Light mode' : 'Modo claro');
+        }
+        document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', light ? '#f7f6f2' : '#111110');
+      };
+      updateThemeButton();
+      themeButton?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('spoodercore-theme', next);
+        updateThemeButton();
+      });
       const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
       const menu = document.querySelector<HTMLElement>('#mobile-nav');
       button?.addEventListener('click', () => {
         const open = button.getAttribute('aria-expanded') !== 'true';
         button.setAttribute('aria-expanded', String(open));
-        button.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        const english = document.documentElement.lang === 'en';
+        button.setAttribute('aria-label', open ? (english ? 'Close menu' : 'Cerrar menú') : (english ? 'Open menu' : 'Abrir menú'));
         if (menu) menu.hidden = !open;
       });
     </script>

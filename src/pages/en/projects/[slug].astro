@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { projects, getProject } from '../../../data/projects';
+import { getProjectPageContent } from '../../../data/releases';
+
+export async function getStaticPaths() {
+  return Promise.all(
+    projects.map(async (project) => ({
+      params: { slug: project.slug },
+      props: {
+        slug: project.slug,
+        ...(await getProjectPageContent(project)),
+      },
+    })),
+  );
+}
+const sourceProject = getProject(Astro.props.slug)!;
+const project = {
+  ...sourceProject,
+  summary: sourceProject.summaryEn ?? sourceProject.summary,
+  description: sourceProject.descriptionEn ?? sourceProject.description,
+  eyebrow: sourceProject.eyebrowEn ?? sourceProject.eyebrow,
+  contribution: sourceProject.contributionEn ?? sourceProject.contribution,
+  status: sourceProject.status === 'Destacado' ? 'Featured' : 'Catalog',
+};
+const { readmeHtml, releases } = Astro.props;
+
+function formatSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  const megabytes = bytes / (1024 * 1024);
+  return megabytes < 1 ? `${Math.round(bytes / 1024)} KB` : `${megabytes.toFixed(1)} MB`;
+}
+
+function formatDate(date: string): string {
+  return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium' }).format(new Date(date));
+}
+---
+
+<BaseLayout locale="en" title={project.name} description={project.summary} active="/projects">
+  <section class="detail-hero wrap">
+    <a class="back-link" href="/en/projects">
+      ← All projects
+    </a>
+    <div class="detail-layout">
+      <div>
+        <p class="eyebrow">PROJECT / {project.number}</p>
+        <h1>
+          {project.name}
+          <span class="period">.</span>
+        </h1>
+        <p class="detail-lede">{project.summary}</p>
+        <div class="detail-status">
+          <span class="status">
+            <i></i>
+            {project.status}
+          </span>
+          <span class="tag">{project.eyebrow}</span>
+        </div>
+      </div>
+      {project.logo ? (
+        <div class="detail-project-logo">
+          <img src={project.logo} alt={`${project.name} logo`} />
+        </div>
+      ) : (
+        <div class="detail-glyph" aria-hidden="true">
+          <span>{project.name.slice(0, 1)}</span>
+          <b>SC—{project.number}</b>
+        </div>
+      )}
+    </div>
+  </section>
+  <section class="detail-body wrap">
+    <div class="detail-main">
+      <p class="eyebrow">ABOUT THE PROJECT</p>
+      <p class="detail-description">{project.description}</p>
+    </div>
+    <aside class="detail-aside">
+      <p class="eyebrow">DETAILS</p>
+      <div class="detail-row">
+        <span>Status</span>
+        <span>{project.status}</span>
+      </div>
+      <div class="detail-row">
+        <span>Área</span>
+        <span>{project.eyebrow}</span>
+      </div>
+      <div class="detail-row">
+        <span>Technologies</span>
+        <span>{project.stack.join(', ')}</span>
+      </div>
+      {project.contribution && (
+        <div class="detail-row">
+          <span>My contribution</span>
+          <span>{project.contribution}</span>
+        </div>
+      )}
+      {project.repository && (
+        <a
+          class="detail-repository-link"
+          href={project.repository}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open repository <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </aside>
+  </section>
+  {(readmeHtml || releases.length > 0) && (
+    <nav class="project-resource-nav wrap" aria-label="Project contents">
+      {readmeHtml && (
+        <a href="#readme">
+          README <span aria-hidden="true">↓</span>
+        </a>
+      )}
+      {releases.length > 0 && (
+        <a href="#descargas">
+          Downloads <span aria-hidden="true">↓</span>
+        </a>
+      )}
+    </nav>
+  )}
+  {project.team && (
+    <section class="detail-team wrap">
+      <div class="detail-team-heading">
+        <p class="eyebrow">COLLABORATIVE PROJECT</p>
+        <h2>Team & contributions</h2>
+        <p>Cliponomicon was developed with contributions from several people.</p>
+      </div>
+      <ul class="detail-team-list">
+        {project.team.map((member) => (
+          <li>
+            <span>{member.name}</span>
+            <span>{member.roleEn ?? member.role}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  {readmeHtml && (
+    <section class="project-readme wrap" id="readme">
+      <div class="project-resource-heading">
+        <div>
+          <p class="eyebrow">REPOSITORY DOCUMENTATION</p>
+          <h2>README</h2>
+        </div>
+        <a href={project.repository} target="_blank" rel="noreferrer">
+          View on GitHub ↗
+        </a>
+      </div>
+      <article class="project-readme-content" set:html={readmeHtml} />
+    </section>
+  )}
+  {releases.length > 0 && (
+    <section class="project-downloads wrap" id="descargas">
+      <div class="project-resource-heading">
+        <div>
+          <p class="eyebrow">RELEASE ASSETS</p>
+          <h2>Downloads</h2>
+        </div>
+        <a href={`${project.repository}/releases`} target="_blank" rel="noreferrer">
+          All releases ↗
+        </a>
+      </div>
+      <div class="project-release-list">
+        {releases.map((release) => (
+          <article class="project-release">
+            <div class="project-release-heading">
+              <a href={release.url} target="_blank" rel="noreferrer">
+                {release.name}
+              </a>
+              <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
+            </div>
+            <ul class="project-release-assets">
+              {release.assets.map((asset) => (
+                <li>
+                  <a href={asset.url} target="_blank" rel="noreferrer" download>
+                    <span>{asset.name}</span>
+                    <span>{formatSize(asset.size)} · Download ↓</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+  <section class="detail-next wrap">
+    <p class="eyebrow">PROJECTS</p>
+    <a href="/en/projects">
+      Back to projects <span>↗</span>
+    </a>
+  </section>
+</BaseLayout>

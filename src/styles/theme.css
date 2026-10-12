@@ -1,0 +1,268 @@
+/* Appearance controls and light color scheme */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.header-control {
+  display: inline-grid;
+  place-items: center;
+  min-width: 37px;
+  height: 37px;
+  padding: 0 9px;
+  border: 1px solid #3a3936;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font: 600 12px var(--mono);
+  cursor: pointer;
+}
+.header-control:hover {
+  border-color: var(--red);
+}
+.header-controls .header-github {
+  margin-left: 3px;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f7f6f2;
+  --bg-soft: #efeee9;
+  --panel: #ffffff;
+  --line: #d4d1c9;
+  --line-soft: #e4e2dc;
+  --ink: #22211f;
+  --muted: #67655f;
+  --red: #c93228;
+  --red-dark: #a92720;
+}
+:root[data-theme='light'] body,
+:root[data-theme='light'] .site-footer {
+  background: var(--bg);
+  color: var(--ink);
+}
+:root[data-theme='light'] .site-header {
+  background: rgb(247 246 242 / 92%);
+  border-color: #dedbd4;
+}
+:root[data-theme='light'] .main-nav a,
+:root[data-theme='light'] .header-github,
+:root[data-theme='light'] .header-control,
+:root[data-theme='light'] .wordmark-light,
+:root[data-theme='light'] .button-outline,
+:root[data-theme='light'] .profile-card h2,
+:root[data-theme='light'] .profile-project-main h3,
+:root[data-theme='light'] .featured-project-title-row h2,
+:root[data-theme='light'] .other-project-row h3,
+:root[data-theme='light'] .detail-next > a,
+:root[data-theme='light'] .project-resource-heading h2 {
+  color: #262521;
+}
+:root[data-theme='light'] .header-control,
+:root[data-theme='light'] .header-github,
+:root[data-theme='light'] .button-outline {
+  border-color: #c9c6be;
+}
+:root[data-theme='light'] .main-nav a:hover,
+:root[data-theme='light'] .main-nav a.active,
+:root[data-theme='light'] .header-github:hover {
+  color: #111;
+}
+:root[data-theme='light'] .profile-stack-band,
+:root[data-theme='light'] .stack-band,
+:root[data-theme='light'] .manifesto,
+:root[data-theme='light'] .featured-project-card,
+:root[data-theme='light'] .explore-card,
+:root[data-theme='light'] .tech-card,
+:root[data-theme='light'] .profile-tech-group,
+:root[data-theme='light'] .profile-card,
+:root[data-theme='light'] .detail-aside,
+:root[data-theme='light'] .about-aside,
+:root[data-theme='light'] .metrics-note,
+:root[data-theme='light'] .empty-state,
+:root[data-theme='light'] .release-project,
+:root[data-theme='light'] .featured-project-visual {
+  background-color: #fff;
+}
+:root[data-theme='light'] .profile-stack-band,
+:root[data-theme='light'] .stack-band,
+:root[data-theme='light'] .manifesto,
+:root[data-theme='light'] .profile-about,
+:root[data-theme='light'] .featured-project-card,
+:root[data-theme='light'] .featured-project-visual,
+:root[data-theme='light'] .explore-card,
+:root[data-theme='light'] .tech-card,
+:root[data-theme='light'] .profile-tech-group,
+:root[data-theme='light'] .profile-card,
+:root[data-theme='light'] .detail-aside,
+:root[data-theme='light'] .about-aside,
+:root[data-theme='light'] .metrics-note,
+:root[data-theme='light'] .release-project,
+:root[data-theme='light'] .project-readme-content,
+:root[data-theme='light'] .project-release-assets a,
+:root[data-theme='light'] .release-assets a,
+:root[data-theme='light'] .detail-hero,
+:root[data-theme='light'] .page-hero,
+:root[data-theme='light'] .profile-project-list,
+:root[data-theme='light'] .profile-project {
+  border-color: #d8d5cd;
+}
+:root[data-theme='light'] .ticker,
+:root[data-theme='light'] .closing-cta,
+:root[data-theme='light'] .site-footer {
+  background: #eeede8;
+}
+:root[data-theme='light'] .profile-card-top,
+:root[data-theme='light'] .profile-name-label,
+:root[data-theme='light'] .profile-bio,
+:root[data-theme='light'] .profile-focus span,
+:root[data-theme='light'] .profile-tech-list span,
+:root[data-theme='light'] .profile-project-main p,
+:root[data-theme='light'] .section-intro,
+:root[data-theme='light'] .page-lede,
+:root[data-theme='light'] .about-story > p:not(.eyebrow),
+:root[data-theme='light'] .detail-lede,
+:root[data-theme='light'] .detail-description,
+:root[data-theme='light'] .metrics-note > div > p:last-child,
+:root[data-theme='light'] .footer-links a,
+:root[data-theme='light'] .footer-top > div:first-child p {
+  color: #5f5d57;
+}
+:root[data-theme='light'] .tag,
+:root[data-theme='light'] .profile-tech-list span,
+:root[data-theme='light'] .profile-focus span {
+  border-color: #d4d1c9;
+  color: #55534d;
+}
+:root[data-theme='light'] .profile-project:hover,
+:root[data-theme='light'] .release-assets a:hover,
+:root[data-theme='light'] .project-release-assets a:hover {
+  background-color: #f0efeb;
+}
+:root[data-theme='light'] .footer-bottom {
+  border-color: #d8d5cd;
+  color: #67655f;
+}
+@media (max-width: 680px) {
+  .header-controls {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .header-controls .header-github {
+    display: none;
+  }
+  .header-control {
+    min-width: 34px;
+    height: 34px;
+  }
+}
+:root[data-theme='light'] .profile-card,
+:root[data-theme='light'] .about-aside,
+:root[data-theme='light'] .featured-project-visual,
+:root[data-theme='light'] .tech-card,
+:root[data-theme='light'] .profile-tech-group,
+:root[data-theme='light'] .explore-card,
+:root[data-theme='light'] .empty-state,
+:root[data-theme='light'] .demo-visual,
+:root[data-theme='light'] .detail-aside,
+:root[data-theme='light'] .metrics-note,
+:root[data-theme='light'] .release-project,
+:root[data-theme='light'] .project-readme-content,
+:root[data-theme='light'] .project-release,
+:root[data-theme='light'] .featured-project-card {
+  background: #fff;
+  box-shadow: 0 14px 45px rgb(36 32 25 / 7%);
+}
+:root[data-theme='light'] .profile-stack-band,
+:root[data-theme='light'] .stack-band,
+:root[data-theme='light'] .manifesto,
+:root[data-theme='light'] .profile-about,
+:root[data-theme='light'] .ticker,
+:root[data-theme='light'] .closing-cta,
+:root[data-theme='light'] .site-footer,
+:root[data-theme='light'] .profile-tech-group,
+:root[data-theme='light'] .project-contribution {
+  background: #eeede8;
+}
+:root[data-theme='light'] .ticker-inner,
+:root[data-theme='light'] .eyebrow,
+:root[data-theme='light'] .profile-card-role,
+:root[data-theme='light'] .profile-card-name,
+:root[data-theme='light'] .profile-project-number,
+:root[data-theme='light'] .profile-project-stack,
+:root[data-theme='light'] .profile-tech-group-index,
+:root[data-theme='light'] .featured-project-number,
+:root[data-theme='light'] .featured-project-type,
+:root[data-theme='light'] .footer-label,
+:root[data-theme='light'] .footer-bottom,
+:root[data-theme='light'] .muted-heading,
+:root[data-theme='light'] .status,
+:root[data-theme='light'] .tag,
+:root[data-theme='light'] .release-no,
+:root[data-theme='light'] .release-status {
+  color: #625f58;
+}
+:root[data-theme='light'] .profile-project-main p,
+:root[data-theme='light'] .profile-about-inner > p,
+:root[data-theme='light'] .profile-bio,
+:root[data-theme='light'] .page-lede,
+:root[data-theme='light'] .about-story > p:not(.eyebrow),
+:root[data-theme='light'] .detail-description,
+:root[data-theme='light'] .metrics-note > div > p:last-child,
+:root[data-theme='light'] .demo-empty > div:last-child > p:not(.eyebrow),
+:root[data-theme='light'] .featured-project-summary,
+:root[data-theme='light'] .other-project-row p,
+:root[data-theme='light'] .release-message,
+:root[data-theme='light'] .detail-row,
+:root[data-theme='light'] .project-readme-content {
+  color: #4f4d47;
+}
+:root[data-theme='light'] .profile-card-specialties span,
+:root[data-theme='light'] .profile-tech-list span,
+:root[data-theme='light'] .profile-focus span,
+:root[data-theme='light'] .tag,
+:root[data-theme='light'] .project-readme-content code,
+:root[data-theme='light'] .release-assets a,
+:root[data-theme='light'] .project-release-assets a {
+  background-color: #f8f7f3;
+  border-color: #d5d2ca;
+  color: #34322e;
+}
+:root[data-theme='light'] .main-nav a,
+:root[data-theme='light'] .mobile-nav a,
+:root[data-theme='light'] .footer-links a,
+:root[data-theme='light'] .text-link,
+:root[data-theme='light'] .back-link,
+:root[data-theme='light'] .profile-all-projects,
+:root[data-theme='light'] .profile-card-link,
+:root[data-theme='light'] .project-resource-heading a,
+:root[data-theme='light'] .featured-project-links a {
+  color: #34322e;
+}
+:root[data-theme='light'] .mobile-nav {
+  background: #f7f6f2;
+  border-color: #d8d5cd;
+}
+:root[data-theme='light'] .detail-row span:last-child,
+:root[data-theme='light'] .release-tag,
+:root[data-theme='light'] .release-project-heading h2,
+:root[data-theme='light'] .release-assets a,
+:root[data-theme='light'] .project-release-heading > a,
+:root[data-theme='light'] .project-release-assets a,
+:root[data-theme='light'] .project-readme-content h1,
+:root[data-theme='light'] .project-readme-content h2,
+:root[data-theme='light'] .project-readme-content h3,
+:root[data-theme='light'] .stack-list span,
+:root[data-theme='light'] .principle,
+:root[data-theme='light'] .profile-tech-group h3,
+:root[data-theme='light'] .metrics-note h3,
+:root[data-theme='light'] .empty-state h2,
+:root[data-theme='light'] .demo-empty h2 {
+  color: #292824;
+}
+:root[data-theme='light'] .release-project-links a,
+:root[data-theme='light'] .release-assets a span:last-child,
+:root[data-theme='light'] .project-release-assets a span:last-child,
+:root[data-theme='light'] .detail-next > a,
+:root[data-theme='light'] .project-release-heading time {
+  color: #56544e;
+}

@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { projects } from '../../../data/projects';
+
+const localizedProjects = projects.map((project) => ({
+  ...project,
+  summary: project.summaryEn ?? project.summary,
+  eyebrow: project.eyebrowEn ?? project.eyebrow,
+  contribution: project.contributionEn ?? project.contribution,
+  status: project.status === 'Destacado' ? 'Featured' : 'Catalog',
+}));
+const featuredProjects = localizedProjects.filter((project) => project.featured);
+const otherProjects = localizedProjects.filter((project) => !project.featured);
+---
+
+<BaseLayout
+  locale="en"
+  active="/projects"
+  title="Projects"
+  description="Projects by Francisco Valencia: SpiderFinance, Cliponomicon, and other work."
+>
+  <section class="page-hero wrap projects-page-hero">
+    <p class="eyebrow">FRANCISCO VALENCIA / PROJECTS</p>
+    <h1>
+      Projects<span class="period">.</span>
+    </h1>
+    <p class="page-lede">Backend development, APIs, databases, and software architecture.</p>
+    <div class="page-hero-line">
+      <span>PROJECTS</span>
+      <span>DETAILS &amp; TECHNOLOGIES</span>
+    </div>
+  </section>
+
+  <section class="section wrap featured-projects-section">
+    <div class="featured-project-grid">
+      {featuredProjects.map((project) => (
+        <article class="featured-project-card">
+          <div class="featured-project-visual">
+            <span class="featured-project-number">{project.number} / PROJECT</span>
+            <img src={project.logo} alt={`${project.name} logo`} loading="lazy" />
+            <span class="featured-project-type">{project.eyebrow}</span>
+          </div>
+          <div class="featured-project-content">
+            <div class="featured-project-title-row">
+              <div>
+                <p class="eyebrow">{project.status}</p>
+                <h2>{project.name}</h2>
+              </div>
+              <a
+                class="featured-project-arrow"
+                href={`/en/projects/${project.slug}`}
+                aria-label={`View ${project.name} details`}
+              >
+                ↗
+              </a>
+            </div>
+            <p class="featured-project-summary">{project.summary}</p>
+            {project.contribution && (
+              <p class="project-contribution">
+                <span>My contribution</span>
+                {project.contribution}
+              </p>
+            )}
+            {project.team && (
+              <div class="project-team">
+                <p class="eyebrow">TEAM</p>
+                <ul>
+                  {project.team.map((member) => (
+                    <li>
+                      <span>{member.name}</span>
+                      <span>{member.roleEn ?? member.role}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div class="tag-row featured-project-tags">
+              {project.stack.map((technology) => (
+                <span class="tag">{technology}</span>
+              ))}
+            </div>
+            <div class="featured-project-links">
+              <a href={`/en/projects/${project.slug}`}>
+                Project details <span aria-hidden="true">→</span>
+              </a>
+              {project.repository && (
+                <a href={project.repository} target="_blank" rel="noreferrer">
+                  Repository <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap other-projects-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">OTHER WORK</p>
+        <h2>
+          More projects<span class="period">.</span>
+        </h2>
+      </div>
+      <p class="section-intro">Other apps and work in progress.</p>
+    </div>
+    <div class="other-project-list">
+      {otherProjects.map((project) => (
+        <article class="other-project-row">
+          <span class="other-project-number">{project.number}</span>
+          <div>
+            <h3>
+              <a href={`/en/projects/${project.slug}`}>
+                {project.name}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </h3>
+            <p>{project.summary}</p>
+            <div class="tag-row">
+              {project.stack.map((technology) => (
+                <span class="tag">{technology}</span>
+              ))}
+            </div>
+          </div>
+          {project.repository && (
+            <a
+              class="other-project-repository"
+              href={project.repository}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

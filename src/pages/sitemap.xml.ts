@@ -12,9 +12,15 @@ export const GET: APIRoute = () => {
     '/demos',
     '/about',
   ];
-  const urls = paths.map((path) => `  <url><loc>${base}${path}</loc></url>`).join('\n');
+  const urls = paths.flatMap((path) => {
+    const englishPath = `/en${path === '/' ? '' : path}`;
+    return [
+      `  <url><loc>${base}${path}</loc><xhtml:link rel="alternate" hreflang="es" href="${base}${path}"/><xhtml:link rel="alternate" hreflang="en" href="${base}${englishPath}"/></url>`,
+      `  <url><loc>${base}${englishPath}</loc><xhtml:link rel="alternate" hreflang="es" href="${base}${path}"/><xhtml:link rel="alternate" hreflang="en" href="${base}${englishPath}"/></url>`,
+    ];
+  }).join('\n');
   return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>`,
     {
       headers: { 'Content-Type': 'application/xml; charset=utf-8' },
     },
