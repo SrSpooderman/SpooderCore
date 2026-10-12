@@ -1,0 +1,13 @@
+{
+  "title": "Downloads",
+  "description": "Files published for download in each project's releases.",
+  "eyebrow": "PROJECTS / FILES",
+  "lede": "Files published for download in each project's releases.",
+  "available": "AVAILABLE FILES",
+  "source": "SOURCE: GITHUB",
+  "releasesWithAssets": "RELEASES WITH FILES",
+  "repository": "Repository",
+  "allReleases": "All releases",
+  "unavailable": "Releases could not be loaded for this build.",
+  "prerelease": "Pre-release"
+}

@@ -1,0 +1,7 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+import { getLocalizedPaths } from '../../i18n/locales';
+export const getStaticPaths = () => getLocalizedPaths();
+---
+
+<HomePage locale={Astro.props.locale} />

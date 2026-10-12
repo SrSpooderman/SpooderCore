@@ -2,6 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { projects } from '../../data/projects';
 import { getProjectReleases } from '../../data/releases';
+import { messages, type Locale } from '../../i18n/locales';
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'downloads');
 
 const releaseLists = await getProjectReleases(projects);
 const downloadableProjects = releaseLists
@@ -15,7 +18,7 @@ const formatSize = (bytes: number) =>
     ? `${Math.max(1, Math.round(bytes / 1_000))} KB`
     : `${(bytes / 1_000_000).toFixed(1)} MB`;
 const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString('en-GB', {
+  new Date(date).toLocaleDateString(locale, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -24,20 +27,20 @@ const formatDate = (date: string) =>
 ---
 
 <BaseLayout
-  locale="en"
+  locale={locale}
   active="/downloads"
-  title="Downloads"
-  description="Files published in each project’s releases."
+  title={t.title}
+  description={t.description}
 >
   <section class="page-hero wrap">
-    <p class="eyebrow">PROJECTS / FILES</p>
+    <p class="eyebrow">{t.eyebrow}</p>
     <h1>
-      Downloads<span class="period">.</span>
+      {t.title}<span class="period">.</span>
     </h1>
-    <p class="page-lede">Files published in each project’s releases.</p>
+    <p class="page-lede">{t.lede}</p>
     <div class="page-hero-line">
-      <span>AVAILABLE FILES</span>
-      <span>SOURCE: GITHUB</span>
+      <span>{t.available}</span>
+      <span>{t.source}</span>
     </div>
   </section>
   <section class="section wrap downloads-section">
@@ -45,7 +48,7 @@ const formatDate = (date: string) =>
       <details class="release-project">
         <summary class="release-project-heading">
           <div class="release-project-title">
-            <p class="eyebrow">{project.releases.length} RELEASES WITH FILES</p>
+            <p class="eyebrow">{project.releases.length} {t.releasesWithAssets}</p>
             <h2>{project.projectName}</h2>
           </div>
           <span class="release-project-toggle" aria-hidden="true">
@@ -55,15 +58,15 @@ const formatDate = (date: string) =>
         <div class="release-project-content">
           <div class="release-project-links">
             <a href={project.repositoryUrl} target="_blank" rel="noreferrer">
-              Repository ↗
+              {t.repository} ↗
             </a>
             <a href={`${project.repositoryUrl}/releases`} target="_blank" rel="noreferrer">
-              All releases ↗
+              {t.allReleases} ↗
             </a>
           </div>
           {project.unavailable ? (
             <div class="release-message">
-              <p>Releases could not be loaded for this build.</p>
+              <p>{t.unavailable}</p>
             </div>
           ) : (
             <div class="release-list">
@@ -75,7 +78,7 @@ const formatDate = (date: string) =>
                         {release.name}
                       </a>
                       <span class="release-version">{release.tag}</span>
-                      {release.prerelease && <span class="release-prerelease">Pre-release</span>}
+                      {release.prerelease && <span class="release-prerelease">{t.prerelease}</span>}
                     </div>
                     <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
                   </div>

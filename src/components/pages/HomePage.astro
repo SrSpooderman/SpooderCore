@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { messages, localizedPath, type Locale } from '../../i18n/locales';
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'home');
 
-const focusAreas = ['Backend engineering', 'APIs', 'Databases', 'Software architecture'];
+const focusAreas = [t.focusBackend, t.focusApis, t.focusDatabases, t.focusArchitecture];
 const technologyGroups = [
   {
-    category: 'Backend & architecture',
+    category: t.backendArchitecture,
     technologies: [
       'Python',
       'FastAPI',
@@ -13,13 +16,13 @@ const technologyGroups = [
       'Spring',
       'Django',
       'REST APIs',
-      'Hexagonal architecture',
-      'Domain modeling',
-      'Authentication',
+      t.hexagonalArchitecture,
+      t.domainModeling,
+      t.authentication,
     ],
   },
   {
-    category: 'Data & infrastructure',
+    category: t.dataInfrastructure,
     technologies: [
       'PostgreSQL',
       'MySQL',
@@ -39,7 +42,7 @@ const technologyGroups = [
     ],
   },
   {
-    category: 'Frontend & desktop',
+    category: t.frontendDesktop,
     technologies: [
       'React',
       'TypeScript',
@@ -53,7 +56,7 @@ const technologyGroups = [
     ],
   },
   {
-    category: 'Automation & tools',
+    category: t.automationTools,
     technologies: [
       'Git',
       'GitHub',
@@ -61,14 +64,14 @@ const technologyGroups = [
       'GitLab',
       'VS Code',
       'CI/CD',
-      'Testing',
-      'Deployment',
+      t.testing,
+      t.deployment,
       'FFmpeg',
       'yt-dlp',
       'RQ',
       'MCP',
-      'Embedded systems',
-      'Microcontrollers',
+      t.embeddedSystems,
+      t.microcontrollers,
     ],
   },
 ];
@@ -76,14 +79,14 @@ const projects = [
   {
     number: '01',
     name: 'SpiderFinance',
-    description: 'Multi-user web app for organizing and reviewing personal finances.',
+    description: t.projectSpiderfinance,
     stack: 'Python · FastAPI · PostgreSQL · React',
     href: 'https://github.com/SrSpooderman/SpiderFinance',
   },
   {
     number: '02',
     name: 'Cliponomicon API',
-    description: 'Modular backend for managing, processing, and serving videos.',
+    description: t.projectCliponomicon,
     stack: 'FastAPI · MySQL · Redis · FFmpeg',
     href: 'https://github.com/SrSpooderman/CliponomiconAPI',
   },
@@ -91,14 +94,14 @@ const projects = [
     number: '03',
     name: 'SpiderPortfolio',
     description:
-      'Visual page editor with reusable components, drafts, and publishing.',
+      t.projectSpiderportfolio,
     stack: 'React · Puck · FastAPI · PostgreSQL',
     href: 'https://github.com/SrSpooderman/Portfolio/tree/develop',
   },
   {
     number: '04',
     name: 'SpiderToMP3',
-    description: 'Desktop application for downloading and converting media.',
+    description: t.projectSpidertomp3,
     stack: 'Python · PySide6 · yt-dlp · FFmpeg',
     href: 'https://github.com/SrSpooderman/SpiderToMP3',
   },
@@ -106,17 +109,17 @@ const projects = [
 ---
 
 <BaseLayout
-  locale="en"
+  locale={locale}
   active="/"
-  title="Francisco Valencia — Backend & Software Developer"
-  description="Francisco Valencia, SrSpooderman. Software developer focused on backend systems, APIs, databases, and software architecture."
+  title={t.title}
+  description={t.description}
 >
   <section class="profile-hero wrap">
     <div class="profile-intro">
       <p class="eyebrow profile-kicker">
-        <span class="profile-kicker-mark"></span> SrSpooderman / PROFILE
+        <span class="profile-kicker-mark"></span> {t.kicker}
       </p>
-      <p class="profile-name-label">Hello, I’m</p>
+      <p class="profile-name-label">{t.hello}</p>
       <h1>
         Francisco
         <br />
@@ -124,9 +127,7 @@ const projects = [
       </h1>
       <p class="profile-role">Backend &amp; Software Developer</p>
       <p class="profile-bio">
-        I build software focused on backend systems, APIs, databases, and architecture. I also work
-        on frontend when a project needs it, taking applications from design through deployment and
-        maintenance.
+        {t.bio}
       </p>
       <div class="profile-actions">
         <a
@@ -146,16 +147,16 @@ const projects = [
           LinkedIn <span aria-hidden="true">↗</span>
         </a>
       </div>
-      <div class="profile-focus" aria-label="Areas of focus">
+      <div class="profile-focus" aria-label={t.focusLabel}>
         {focusAreas.map((area) => (
           <span>{area}</span>
         ))}
       </div>
     </div>
 
-    <aside class="profile-card" aria-label="SrSpooderman's GitHub profile">
+    <aside class="profile-card" aria-label={t.profileCard}>
       <div class="profile-card-top">
-        <span>PUBLIC PROFILE</span>
+        <span>{t.profilePublic}</span>
         <span>GITHUB / 2021</span>
       </div>
       <div class="profile-portrait-wrap">
@@ -163,7 +164,7 @@ const projects = [
         <img
           class="profile-portrait"
           src="https://avatars.githubusercontent.com/u/77443507?v=4"
-          alt="Francisco Valencia's GitHub avatar"
+          alt={t.githubAvatar}
           width="176"
           height="176"
           fetchpriority="high"
@@ -172,11 +173,11 @@ const projects = [
       </div>
       <h2>SrSpooderman</h2>
       <p class="profile-card-name">Francisco Valencia</p>
-      <p class="profile-card-role">Software developer</p>
+      <p class="profile-card-role">{t.softwareDeveloper}</p>
       <div class="profile-card-specialties">
         <span>Backend engineering</span>
-        <span>API development</span>
-        <span>Software architecture</span>
+        <span>{t.apiDevelopment}</span>
+        <span>{t.focusArchitecture}</span>
       </div>
       <a
         class="profile-card-link"
@@ -184,17 +185,17 @@ const projects = [
         target="_blank"
         rel="noreferrer"
       >
-        View GitHub profile <span aria-hidden="true">↗</span>
+        {t.viewGithub} <span aria-hidden="true">↗</span>
       </a>
     </aside>
   </section>
 
-  <section class="profile-stack-band" aria-label="Technologies and tools">
+  <section class="profile-stack-band" aria-label={t.technologiesLabel}>
     <div class="wrap profile-stack-inner">
       <div class="profile-stack-heading">
-        <p class="eyebrow">TECHNOLOGIES & TOOLS</p>
+        <p class="eyebrow">{t.technologiesLabel}</p>
         <h2>
-          Tech stack<span class="period">.</span>
+          {t.stackTitle}<span class="period">.</span>
         </h2>
       </div>
       <div class="profile-tech-groups">
@@ -216,16 +217,13 @@ const projects = [
   <section class="section wrap profile-work" id="projects">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">SELECTED WORK</p>
+        <p class="eyebrow">{t.selectedWork}</p>
         <h2>
-          Projects I
-          <br />
-          <span class="muted-heading">work on.</span>
+          {t.projectsHeading}
         </h2>
       </div>
       <p class="section-intro">
-        A selection of personal projects, from backend services and file processing to desktop
-        applications.
+        {t.projectsIntro}
       </p>
     </div>
     <div class="profile-project-list">
@@ -246,32 +244,28 @@ const projects = [
         </a>
       ))}
     </div>
-    <a class="profile-all-projects" href="/en/projects">
-      View all projects <span aria-hidden="true">→</span>
+    <a class="profile-all-projects" href={localizedPath(locale, '/projects')}>
+      {t.allProjects} <span aria-hidden="true">→</span>
     </a>
   </section>
 
   <section class="profile-about">
     <div class="wrap profile-about-inner">
       <div>
-        <p class="eyebrow">HOW I WORK</p>
+        <p class="eyebrow">{t.howIWork}</p>
         <h2>
-          Architecture,
-          <br />
-          <span>deployment, and maintenance.</span>
+          {t.architectureHeading}
         </h2>
       </div>
       <p>
-        I also take care of the work around the code: architecture, containers, deployments,
-        automation, and maintenance. I aim to build understandable systems that can evolve with a
-        project.
+        {t.architectureIntro}
       </p>
     </div>
   </section>
 
   <section class="section wrap profile-connect">
-    <p class="eyebrow">PROFESSIONAL CONTACT</p>
-    <h2>Let’s talk software.</h2>
+    <p class="eyebrow">{t.professionalContact}</p>
+    <h2>{t.contactHeading}</h2>
     <div class="profile-actions">
       <a
         class="button button-primary"
@@ -282,7 +276,7 @@ const projects = [
         LinkedIn <span aria-hidden="true">↗</span>
       </a>
       <a class="text-link" href="https://github.com/SrSpooderman" target="_blank" rel="noreferrer">
-        Explore GitHub <span aria-hidden="true">→</span>
+        {t.exploreGithub} <span aria-hidden="true">→</span>
       </a>
     </div>
   </section>

@@ -1,29 +1,25 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { projects, getProject } from '../../../data/projects';
-import { getProjectPageContent } from '../../../data/releases';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProject } from '../../data/projects';
+import { messages, localizedPath, type Locale } from '../../i18n/locales';
 
-export async function getStaticPaths() {
-  return Promise.all(
-    projects.map(async (project) => ({
-      params: { slug: project.slug },
-      props: {
-        slug: project.slug,
-        ...(await getProjectPageContent(project)),
-      },
-    })),
-  );
-}
-const sourceProject = getProject(Astro.props.slug)!;
+const { slug, readmeHtml, releases, locale } = Astro.props as { slug: string; readmeHtml: string | null; releases: import('../../data/releases').ProjectRelease[]; locale: Locale };
+const sourceProject = getProject(slug)!;
+const t = messages(locale, 'projects');
+const prefixBySlug: Record<string, string> = {
+  spiderfinance: 'spiderfinance', 'cliponomicon-api': 'cliponomiconApi',
+  spiderportfolio: 'spiderportfolio', spidertomp3: 'spidertomp3', spiderawake: 'spiderawake', rehuse: 'rehuse',
+};
+const prefix = prefixBySlug[sourceProject.slug];
 const project = {
   ...sourceProject,
-  summary: sourceProject.summaryEn ?? sourceProject.summary,
-  description: sourceProject.descriptionEn ?? sourceProject.description,
-  eyebrow: sourceProject.eyebrowEn ?? sourceProject.eyebrow,
-  contribution: sourceProject.contributionEn ?? sourceProject.contribution,
-  status: sourceProject.status === 'Destacado' ? 'Featured' : 'Catalog',
+  summary: t[`${prefix}Summary`],
+  description: t[`${prefix}Description`],
+  eyebrow: t[`${prefix}Eyebrow`],
+  status: sourceProject.featured ? t.featured : t.catalog,
+  contribution: sourceProject.slug === 'cliponomicon-api' ? t.cliponomiconApiContribution : undefined,
+  team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
 };
-const { readmeHtml, releases } = Astro.props;
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -32,18 +28,18 @@ function formatSize(bytes: number): string {
 }
 
 function formatDate(date: string): string {
-  return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium' }).format(new Date(date));
+  return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(date));
 }
 ---
 
-<BaseLayout locale="en" title={project.name} description={project.summary} active="/projects">
+<BaseLayout locale={locale} title={project.name} description={project.summary} active="/projects">
   <section class="detail-hero wrap">
-    <a class="back-link" href="/en/projects">
-      ← All projects
+    <a class="back-link" href={localizedPath(locale, '/projects')}>
+      {t.backToProjects}
     </a>
     <div class="detail-layout">
       <div>
-        <p class="eyebrow">PROJECT / {project.number}</p>
+        <p class="eyebrow">{t.projectLabel} / {project.number}</p>
         <h1>
           {project.name}
           <span class="period">.</span>
@@ -71,26 +67,26 @@ function formatDate(date: string): string {
   </section>
   <section class="detail-body wrap">
     <div class="detail-main">
-      <p class="eyebrow">ABOUT THE PROJECT</p>
+      <p class="eyebrow">{t.aboutProject}</p>
       <p class="detail-description">{project.description}</p>
     </div>
     <aside class="detail-aside">
-      <p class="eyebrow">DETAILS</p>
+      <p class="eyebrow">{t.details}</p>
       <div class="detail-row">
-        <span>Status</span>
+        <span>{t.status}</span>
         <span>{project.status}</span>
       </div>
       <div class="detail-row">
-        <span>Área</span>
+        <span>{t.area}</span>
         <span>{project.eyebrow}</span>
       </div>
       <div class="detail-row">
-        <span>Technologies</span>
+        <span>{t.technologies}</span>
         <span>{project.stack.join(', ')}</span>
       </div>
       {project.contribution && (
         <div class="detail-row">
-          <span>My contribution</span>
+          <span>{t.contribution}</span>
           <span>{project.contribution}</span>
         </div>
       )}
@@ -101,13 +97,13 @@ function formatDate(date: string): string {
           target="_blank"
           rel="noreferrer"
         >
-          Open repository <span aria-hidden="true">↗</span>
+          {t.openRepository} <span aria-hidden="true">↗</span>
         </a>
       )}
     </aside>
   </section>
   {(readmeHtml || releases.length > 0) && (
-    <nav class="project-resource-nav wrap" aria-label="Project contents">
+    <nav class="project-resource-nav wrap" aria-label={t.contents}>
       {readmeHtml && (
         <a href="#readme">
           README <span aria-hidden="true">↓</span>
@@ -115,7 +111,7 @@ function formatDate(date: string): string {
       )}
       {releases.length > 0 && (
         <a href="#descargas">
-          Downloads <span aria-hidden="true">↓</span>
+          {t.downloads} <span aria-hidden="true">↓</span>
         </a>
       )}
     </nav>
@@ -123,15 +119,15 @@ function formatDate(date: string): string {
   {project.team && (
     <section class="detail-team wrap">
       <div class="detail-team-heading">
-        <p class="eyebrow">COLLABORATIVE PROJECT</p>
-        <h2>Team & contributions</h2>
-        <p>Cliponomicon was developed with contributions from several people.</p>
+        <p class="eyebrow">{t.collaborative}</p>
+        <h2>{t.teamContributions}</h2>
+        <p>{t.teamDescription}</p>
       </div>
       <ul class="detail-team-list">
         {project.team.map((member) => (
           <li>
             <span>{member.name}</span>
-            <span>{member.roleEn ?? member.role}</span>
+            <span>{member.role}</span>
           </li>
         ))}
       </ul>
@@ -141,11 +137,11 @@ function formatDate(date: string): string {
     <section class="project-readme wrap" id="readme">
       <div class="project-resource-heading">
         <div>
-          <p class="eyebrow">REPOSITORY DOCUMENTATION</p>
+          <p class="eyebrow">{t.repositoryDocs}</p>
           <h2>README</h2>
         </div>
         <a href={project.repository} target="_blank" rel="noreferrer">
-          View on GitHub ↗
+          {t.viewOnGithub} ↗
         </a>
       </div>
       <article class="project-readme-content" set:html={readmeHtml} />
@@ -155,11 +151,11 @@ function formatDate(date: string): string {
     <section class="project-downloads wrap" id="descargas">
       <div class="project-resource-heading">
         <div>
-          <p class="eyebrow">RELEASE ASSETS</p>
-          <h2>Downloads</h2>
+          <p class="eyebrow">{t.releaseAssets}</p>
+          <h2>{t.downloads}</h2>
         </div>
         <a href={`${project.repository}/releases`} target="_blank" rel="noreferrer">
-          All releases ↗
+          {t.allReleases} ↗
         </a>
       </div>
       <div class="project-release-list">
@@ -176,7 +172,7 @@ function formatDate(date: string): string {
                 <li>
                   <a href={asset.url} target="_blank" rel="noreferrer" download>
                     <span>{asset.name}</span>
-                    <span>{formatSize(asset.size)} · Download ↓</span>
+                    <span>{formatSize(asset.size)} · {t.download} ↓</span>
                   </a>
                 </li>
               ))}
@@ -187,9 +183,9 @@ function formatDate(date: string): string {
     </section>
   )}
   <section class="detail-next wrap">
-    <p class="eyebrow">PROJECTS</p>
-    <a href="/en/projects">
-      Back to projects <span>↗</span>
+    <p class="eyebrow">{t.title}</p>
+    <a href={localizedPath(locale, '/projects')}>
+      {t.backToList} <span>↗</span>
     </a>
   </section>
 </BaseLayout>

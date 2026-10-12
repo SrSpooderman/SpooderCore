@@ -20,6 +20,39 @@
 .header-control:hover {
   border-color: var(--red);
 }
+.language-switcher {
+  position: relative;
+}
+.language-switcher > summary {
+  list-style: none;
+}
+.language-switcher > summary::-webkit-details-marker {
+  display: none;
+}
+.language-options {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 7px);
+  right: 0;
+  display: grid;
+  min-width: 120px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+.language-options a {
+  padding: 9px 11px;
+  color: var(--ink);
+  font: 500 12px var(--mono);
+  text-decoration: none;
+}
+.language-options a:hover,
+.language-options a[aria-current='true'] {
+  background: var(--bg-soft);
+  color: var(--red);
+}
 .header-controls .header-github {
   margin-left: 3px;
 }

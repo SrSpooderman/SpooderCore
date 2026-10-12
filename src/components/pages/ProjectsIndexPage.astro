@@ -1,33 +1,48 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { projects } from '../../../data/projects';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data/projects';
+import { messages, localizedPath, type Locale } from '../../i18n/locales';
 
-const localizedProjects = projects.map((project) => ({
-  ...project,
-  summary: project.summaryEn ?? project.summary,
-  eyebrow: project.eyebrowEn ?? project.eyebrow,
-  contribution: project.contributionEn ?? project.contribution,
-  status: project.status === 'Destacado' ? 'Featured' : 'Catalog',
-}));
+const { locale } = Astro.props as { locale: Locale };
+const t = messages(locale, 'projects');
+const prefixBySlug: Record<string, string> = {
+  spiderfinance: 'spiderfinance',
+  'cliponomicon-api': 'cliponomiconApi',
+  spiderportfolio: 'spiderportfolio',
+  spidertomp3: 'spidertomp3',
+  spiderawake: 'spiderawake',
+  rehuse: 'rehuse',
+};
+const localizedProjects = projects.map((project) => {
+  const key = prefixBySlug[project.slug];
+  return {
+    ...project,
+    summary: t[`${key}Summary`],
+    eyebrow: t[`${key}Eyebrow`],
+    status: project.featured ? t.featured : t.catalog,
+    contribution: project.slug === 'cliponomicon-api' ? t.cliponomiconApiContribution : undefined,
+    team: project.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
+  };
+});
 const featuredProjects = localizedProjects.filter((project) => project.featured);
 const otherProjects = localizedProjects.filter((project) => !project.featured);
 ---
 
 <BaseLayout
-  locale="en"
+  locale={locale}
   active="/projects"
-  title="Projects"
-  description="Projects by Francisco Valencia: SpiderFinance, Cliponomicon, and other work."
+  title={t.title}
+  description={t.description}
 >
   <section class="page-hero wrap projects-page-hero">
-    <p class="eyebrow">FRANCISCO VALENCIA / PROJECTS</p>
+    <p class="eyebrow">{t.eyebrow}</p>
     <h1>
-      Projects<span class="period">.</span>
+      {t.title}<span class="period">.</span>
     </h1>
-    <p class="page-lede">Backend development, APIs, databases, and software architecture.</p>
+    <p class="page-lede">{t.lede}</p>
     <div class="page-hero-line">
-      <span>PROJECTS</span>
-      <span>DETAILS &amp; TECHNOLOGIES</span>
+      <span>{t.heroLineOne}</span>
+      <span>{t.heroLineTwo}</span>
     </div>
   </section>
 
@@ -36,8 +51,8 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
       {featuredProjects.map((project) => (
         <article class="featured-project-card">
           <div class="featured-project-visual">
-            <span class="featured-project-number">{project.number} / PROJECT</span>
-            <img src={project.logo} alt={`${project.name} logo`} loading="lazy" />
+            <span class="featured-project-number">{project.number} / {t.projectLabel}</span>
+            <img src={project.logo} alt={`Logo de ${project.name}`} loading="lazy" />
             <span class="featured-project-type">{project.eyebrow}</span>
           </div>
           <div class="featured-project-content">
@@ -48,8 +63,8 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
               </div>
               <a
                 class="featured-project-arrow"
-                href={`/en/projects/${project.slug}`}
-                aria-label={`View ${project.name} details`}
+                href={localizedPath(locale, `/projects/${project.slug}`)}
+                aria-label={t.viewProject.replace('{name}', project.name)}
               >
                 ↗
               </a>
@@ -57,18 +72,18 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
             <p class="featured-project-summary">{project.summary}</p>
             {project.contribution && (
               <p class="project-contribution">
-                <span>My contribution</span>
+                <span>{t.contribution}</span>
                 {project.contribution}
               </p>
             )}
             {project.team && (
               <div class="project-team">
-                <p class="eyebrow">TEAM</p>
+                <p class="eyebrow">{t.team}</p>
                 <ul>
                   {project.team.map((member) => (
                     <li>
                       <span>{member.name}</span>
-                      <span>{member.roleEn ?? member.role}</span>
+                      <span>{member.role}</span>
                     </li>
                   ))}
                 </ul>
@@ -80,12 +95,12 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
               ))}
             </div>
             <div class="featured-project-links">
-              <a href={`/en/projects/${project.slug}`}>
-                Project details <span aria-hidden="true">→</span>
+              <a href={localizedPath(locale, `/projects/${project.slug}`)}>
+                {t.projectDetails} <span aria-hidden="true">→</span>
               </a>
               {project.repository && (
                 <a href={project.repository} target="_blank" rel="noreferrer">
-                  Repository <span aria-hidden="true">↗</span>
+                  {t.repository} <span aria-hidden="true">↗</span>
                 </a>
               )}
             </div>
@@ -98,12 +113,12 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
   <section class="section wrap other-projects-section">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">OTHER WORK</p>
+        <p class="eyebrow">{t.otherWork}</p>
         <h2>
-          More projects<span class="period">.</span>
+          {t.moreProjects}
         </h2>
       </div>
-      <p class="section-intro">Other apps and work in progress.</p>
+      <p class="section-intro">{t.otherIntro}</p>
     </div>
     <div class="other-project-list">
       {otherProjects.map((project) => (
@@ -111,7 +126,7 @@ const otherProjects = localizedProjects.filter((project) => !project.featured);
           <span class="other-project-number">{project.number}</span>
           <div>
             <h3>
-              <a href={`/en/projects/${project.slug}`}>
+              <a href={localizedPath(locale, `/projects/${project.slug}`)}>
                 {project.name}
                 <span aria-hidden="true">↗</span>
               </a>
