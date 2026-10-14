@@ -26,7 +26,9 @@ const projectsWithDownloads = downloadableProjects.filter(
 ).length;
 const downloadSummary = t.downloadSummary
   .replace('{files}', String(totalDownloadableFiles))
-  .replace('{projects}', String(projectsWithDownloads));
+  .replace('{filesLabel}', totalDownloadableFiles === 1 ? t.fileSingular : t.filePlural)
+  .replace('{projects}', String(projectsWithDownloads))
+  .replace('{projectsLabel}', projectsWithDownloads === 1 ? t.projectSingular : t.projectPlural);
 const formatSize = (bytes: number) =>
   bytes < 1_000_000
     ? `${Math.max(1, Math.round(bytes / 1_000))} KB`
@@ -59,9 +61,10 @@ const formatDate = (date: string) =>
         <summary class="release-project-heading">
           <div class="release-project-title">
             <p class="eyebrow">
-              {project.releases.length} {t.releasesWithAssets}
+              {project.releases.length}{' '}
+              {project.releases.length === 1 ? t.releaseWithAssets : t.releasesWithAssets}
             </p>
-            <h2>{project.projectName}</h2>
+            <h2 class="release-project-name">{project.projectName}</h2>
           </div>
           <span class="release-project-toggle" aria-hidden="true">
             +
@@ -89,7 +92,7 @@ const formatDate = (date: string) =>
               {project.releases.map((release) => (
                 <article class="release-item">
                   <div class="release-item-heading">
-                    <div>
+                    <div class="release-item-meta">
                       <a href={release.url} target="_blank" rel="noreferrer" class="release-tag">
                         {release.name}
                       </a>
@@ -106,7 +109,7 @@ const formatDate = (date: string) =>
                       <li>
                         <a href={asset.url} target="_blank" rel="noreferrer">
                           <span>{asset.name}</span>
-                          <span>{formatSize(asset.size)} ↓</span>
+                          <span class="release-asset-size">{formatSize(asset.size)} ↓</span>
                         </a>
                       </li>
                     ))}

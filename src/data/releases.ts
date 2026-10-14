@@ -1,5 +1,5 @@
 import type { Project } from './projects';
-import { ELEMENT_NODE, parse, renderSync, walkSync } from 'ultrahtml';
+import { ELEMENT_NODE, parse, renderSync, walkSync, type ElementNode } from 'ultrahtml';
 import sanitize from 'ultrahtml/transformers/sanitize';
 
 interface GitHubAsset {
@@ -294,11 +294,44 @@ export async function getProjectPageContent(project: Project): Promise<ProjectPa
       readmeHtml = null;
     }
   }
+  if (!readmeHtml) readmeHtml = await getReadmeFromRepositoryPage(repository);
 
   return {
     readmeHtml,
     releases: (releaseResult[0]?.releases ?? []).filter((release) => release.assets.length > 0),
   };
+}
+
+async function getReadmeFromRepositoryPage(repository: ProjectRepository): Promise<string | null> {
+  try {
+    const branchPath = repository.ref
+      ? `/tree/${repository.ref.split('/').map(encodeURIComponent).join('/')}`
+      : '';
+    const response = await fetch(`https://github.com/${repository.path}${branchPath}`, {
+      headers: { 'User-Agent': 'SpooderCore-portal' },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!response.ok) return null;
+
+    const html = await response.text();
+    const document = parse(html);
+    let readme: ElementNode | null = null;
+    walkSync(document, (node) => {
+      if (
+        node.type === ELEMENT_NODE &&
+        node.name === 'article' &&
+        node.attributes.class?.split(/\s+/).includes('markdown-body')
+      ) {
+        readme = node;
+      }
+    });
+
+    const branch = repository.ref ?? html.match(/"defaultBranch"\s*:\s*"([^"]+)"/)?.[1] ?? null;
+    if (!readme || !branch) return null;
+    return sanitizeReadme(renderSync(readme), repository.path, branch);
+  } catch {
+    return null;
+  }
 }
 
 async function sanitizeReadme(

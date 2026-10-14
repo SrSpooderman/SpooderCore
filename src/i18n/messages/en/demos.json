@@ -1,13 +1,14 @@
 {
   "title": "Demos",
-  "description": "Status of public demos for SpooderCore projects.",
-  "eyebrow": "DEMOS / STATUS",
-  "heading": "Public demos.",
-  "lede": "This section is for public project demos. There are none available right now.",
-  "currentStatus": "CURRENT STATUS",
-  "nonePublished": "NO DEMOS PUBLISHED",
-  "unavailable": "STATUS / UNAVAILABLE",
-  "emptyHeading": "No demos published.",
-  "emptyDescription": "No project in the catalog has a public demo link. Visit each project page for available information.",
+  "description": "Demos for SpooderCore projects.",
+  "eyebrow": "DEMOS",
+  "heading": "Demos.",
+  "lede": "Demos will appear here when they’re ready. For now, you can explore the projects and their repositories.",
+  "currentStatus": "RIGHT NOW",
+  "nonePublished": "NO DEMOS YET",
+  "unavailable": "COMING LATER",
+  "emptyHeading": "No demos yet.",
+  "emptyDescription": "You can read about each project and visit its repository from the projects page.",
+  "demoPlaceholder": "DEMOS / COMING LATER",
   "viewProjects": "View projects"
 }

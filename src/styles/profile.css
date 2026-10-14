@@ -47,7 +47,7 @@
   max-width: 570px;
   margin: 17px 0 25px;
   color: #a5a39c;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.85;
 }
 .profile-actions {
@@ -168,7 +168,7 @@
   font-family: var(--mono);
   font-size: 11px;
 }
-.profile-card-specialties span:last-child {
+.profile-card-specialty--wide {
   grid-column: 1 / -1;
 }
 .profile-card-link {
@@ -275,7 +275,7 @@
   color: var(--red);
   font-size: 14px;
 }
-.profile-project-main p {
+.profile-project-description {
   margin: 0 0 8px;
   color: #97958e;
   font-size: 15px;
@@ -326,7 +326,7 @@
 .profile-about h2 span {
   color: #929088;
 }
-.profile-about-inner > p {
+.profile-about-description {
   max-width: 470px;
   margin: 23px 0 0;
   color: #a09e97;
@@ -402,7 +402,7 @@
     gap: 10px;
     padding-block: 56px;
   }
-  .profile-about-inner > p {
+  .profile-about-description {
     font-size: 15px;
   }
   .profile-about h2,

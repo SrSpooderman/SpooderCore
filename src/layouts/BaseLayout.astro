@@ -7,8 +7,10 @@ interface Props {
   description?: string;
   active?: string;
   locale?: Locale;
+  noindex?: boolean;
 }
 const { title = site.name, active = '', locale = 'es' } = Astro.props;
+const { noindex = false } = Astro.props;
 const t = messages(locale, 'common');
 const description = Astro.props.description ?? t.siteDescription;
 const pageTitle = title === site.name ? title : `${title} — ${site.name}`;
@@ -39,6 +41,7 @@ function siteUrl() {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#111110" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/brand/spoodercore.png" />
@@ -135,11 +138,16 @@ function siteUrl() {
         {nav.map((item) => (
           <a href={localized(item.href)}>
             <span>{item.label}</span>
-            <span aria-hidden="true">↗</span>
+            <span class="mobile-nav-arrow" aria-hidden="true">
+              ↗
+            </span>
           </a>
         ))}
         <a href={site.github} target="_blank" rel="noreferrer">
-          GitHub<span aria-hidden="true">↗</span>
+          GitHub
+          <span class="mobile-nav-arrow" aria-hidden="true">
+            ↗
+          </span>
         </a>
       </nav>
     </header>
@@ -154,19 +162,19 @@ function siteUrl() {
               spooder<span class="wordmark-light">core</span>
             </span>
           </a>
-          <p>
+          <p class="footer-bio">
             <span>{t.footerBio}</span>
           </p>
         </div>
         <div class="footer-links">
-          <div>
+          <div class="footer-link-group">
             <span class="footer-label">{t.explore}</span>
             <a href={localized('/')}>{t.home}</a>
             <a href={localized('/projects')}>{t.projects}</a>
             <a href={localized('/downloads')}>{t.downloads}</a>
             <a href={localized('/lab')}>{t.lab}</a>
           </div>
-          <div>
+          <div class="footer-link-group">
             <span class="footer-label">{t.connect}</span>
             <a href={site.github} target="_blank" rel="noreferrer">
               GitHub ↗
@@ -176,7 +184,7 @@ function siteUrl() {
       </div>
       <div class="wrap footer-bottom">
         <span>© {new Date().getFullYear()} SpooderCore</span>
-        <span>{t.footerCopyright}</span>
+        <span class="footer-bottom-note">{t.footerCopyright}</span>
       </div>
     </footer>
     <script>

@@ -5,9 +5,9 @@ const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'lab');
 
 const metrics = [
-  { name: t.cpu, description: t.cpuDescription },
-  { name: t.memory, description: t.memoryDescription },
-  { name: t.storage, description: t.storageDescription },
+  { key: 'cpu', name: t.cpu, description: t.cpuDescription },
+  { key: 'memory', name: t.memory, description: t.memoryDescription },
+  { key: 'storage', name: t.storage, description: t.storageDescription },
 ];
 ---
 
@@ -32,8 +32,12 @@ const metrics = [
 
     <div class="tech-grid server-metric-grid">
       {metrics.map((metric, index) => (
-        <article class="tech-card server-metric-card">
-          <span class="tech-index">0{index + 1} / HOST</span>
+        <article
+          class:list={['tech-card', 'server-metric-card', `server-metric-card--${metric.key}`]}
+        >
+          <span class="tech-index">
+            0{index + 1} / {t.hostLabel}
+          </span>
           <span class="eyebrow">{t.currentUsage}</span>
           <h3>{metric.name}</h3>
           <p>{metric.description}</p>
@@ -61,12 +65,12 @@ const metrics = [
       <span class="metrics-mark" aria-hidden="true">
         ◎
       </span>
-      <div>
+      <div class="metrics-copy">
         <p class="eyebrow">{t.sourceStatus}</p>
         <h3 id="metrics-status" aria-live="polite">
           {t.checkingServer}
         </h3>
-        <p>
+        <p class="metrics-timestamp">
           <time id="metrics-timestamp">{t.waitingTimestamp}</time>
         </p>
         <p class="metrics-detail" id="metrics-detail" aria-live="polite">
@@ -82,7 +86,7 @@ const metrics = [
       <span class="metrics-mark" aria-hidden="true">
         ⌁
       </span>
-      <div>
+      <div class="metrics-copy">
         <p class="eyebrow">{t.services}</p>
         <h3>{t.noServiceMetrics}</h3>
         <p>{t.servicesDescription}</p>

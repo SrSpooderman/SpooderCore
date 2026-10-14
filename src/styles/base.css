@@ -17,7 +17,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -92,7 +92,7 @@ button {
 .main-nav a,
 .header-github {
   color: #aaa9a2;
-  font-size: 15px;
+  font-size: 16px;
   transition: color 0.2s;
 }
 .main-nav a:hover,
@@ -117,7 +117,7 @@ button {
   margin: 0;
   color: #aaa8a0;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   line-height: 1.5;
 }
@@ -259,7 +259,7 @@ p {
 .footer-wordmark {
   font-size: 16px;
 }
-.footer-top > div:first-child p {
+.footer-bio {
   max-width: 360px;
   margin: 8px 0 0;
   color: #aaa9a1;
@@ -271,7 +271,7 @@ p {
   grid-template-columns: 1.4fr 1fr;
   gap: 18px;
 }
-.footer-links > div {
+.footer-link-group {
   display: flex;
   flex-wrap: wrap;
   align-content: start;

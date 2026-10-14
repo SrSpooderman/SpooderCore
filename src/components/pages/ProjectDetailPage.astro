@@ -17,9 +17,37 @@ const project = {
   summary: t[`${prefix}Summary`],
   description: t[`${prefix}Description`],
   eyebrow: t[`${prefix}Eyebrow`],
-  status: sourceProject.featured ? t.featured : t.catalog,
-  contribution:
-    sourceProject.slug === 'cliponomicon-api' ? t.cliponomiconApiContribution : undefined,
+  status: sourceProject.statusKey
+    ? t[sourceProject.statusKey]
+    : sourceProject.featured
+      ? t.featured
+      : t.catalog,
+  contribution: sourceProject.contributionKey
+    ? t[sourceProject.contributionKey]
+    : sourceProject.slug === 'cliponomicon-api'
+      ? t.cliponomiconApiContribution
+      : undefined,
+  quote: sourceProject.quoteKey ? t[sourceProject.quoteKey] : undefined,
+  scopeNote: sourceProject.scopeNoteKey ? t[sourceProject.scopeNoteKey] : undefined,
+  featuresTitle: t[`${prefix}FeaturesTitle`],
+  contributionEvidenceTitle: t[`${prefix}ContributionEvidence`],
+  resourcesTitle: t[`${prefix}ResourcesTitle`],
+  screenshotsTitle: t[`${prefix}ScreenshotsTitle`],
+  features: sourceProject.featureKeys?.map((key) => t[key]),
+  technologyGroups: sourceProject.technologyGroups?.map((group) => ({
+    label: t[group.labelKey],
+    technologies: group.technologies,
+  })),
+  documentation: sourceProject.documentation
+    ?.filter((item) => !readmeHtml || !item.url.endsWith('/README.md'))
+    .map((item) => ({
+      label: t[item.labelKey],
+      url: item.url,
+    })),
+  screenshots: sourceProject.screenshots?.map((image) => ({
+    ...image,
+    alt: t[image.altKey],
+  })),
   team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
 };
 
@@ -40,7 +68,7 @@ function formatDate(date: string): string {
       {t.backToProjects}
     </a>
     <div class="detail-layout">
-      <div>
+      <div class="detail-layout-copy">
         <p class="eyebrow">
           {t.projectLabel} / {project.number}
         </p>
@@ -59,7 +87,7 @@ function formatDate(date: string): string {
       </div>
       {project.logo ? (
         <div class="detail-project-logo">
-          <img src={project.logo} alt={`${project.name} logo`} />
+          <img src={project.logo} alt={t.projectLogo.replace('{name}', project.name)} />
         </div>
       ) : (
         <div class="detail-glyph" aria-hidden="true">
@@ -73,27 +101,60 @@ function formatDate(date: string): string {
     <div class="detail-main">
       <p class="eyebrow">{t.aboutProject}</p>
       <p class="detail-description">{project.description}</p>
+      {project.quote && <blockquote class="project-quote">“{project.quote}”</blockquote>}
+      {project.features && (
+        <div class="project-features">
+          <p class="eyebrow">{project.featuresTitle}</p>
+          <ul>
+            {project.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {project.scopeNote && <p class="project-scope-note">{project.scopeNote}</p>}
+      {project.contribution && (
+        <div class="project-contribution">
+          <p class="eyebrow">{t.contribution}</p>
+          <p class="project-contribution-description">{project.contribution}</p>
+          {sourceProject.contributionSources && (
+            <div class="project-contribution-links">
+              <span>{project.contributionEvidenceTitle}:</span>
+              {sourceProject.contributionSources.map((url, index) => (
+                <a href={url} target="_blank" rel="noreferrer">
+                  #{index + 1}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
     <aside class="detail-aside">
       <p class="eyebrow">{t.details}</p>
       <div class="detail-row">
-        <span>{t.status}</span>
-        <span>{project.status}</span>
+        <span class="detail-row-label">{t.status}</span>
+        <span class="detail-row-value">{project.status}</span>
       </div>
       <div class="detail-row">
-        <span>{t.area}</span>
-        <span>{project.eyebrow}</span>
+        <span class="detail-row-label">{t.area}</span>
+        <span class="detail-row-value">{project.eyebrow}</span>
       </div>
       <div class="detail-row">
-        <span>{t.technologies}</span>
-        <span>{project.stack.join(', ')}</span>
+        <span class="detail-row-label">{t.technologies}</span>
+        {project.technologyGroups ? (
+          <div class="detail-technology-groups detail-row-value">
+            {project.technologyGroups.map((group) => (
+              <div class="detail-technology-group">
+                <b>{group.label}</b>
+                <span>{group.technologies.join(', ')}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <span class="detail-row-value">{project.stack.join(', ')}</span>
+        )}
       </div>
-      {project.contribution && (
-        <div class="detail-row">
-          <span>{t.contribution}</span>
-          <span>{project.contribution}</span>
-        </div>
-      )}
       {project.repository && (
         <a
           class="detail-repository-link"
@@ -106,6 +167,35 @@ function formatDate(date: string): string {
       )}
     </aside>
   </section>
+  {project.documentation && (
+    <section class="project-doc-links wrap">
+      <p class="eyebrow">{project.resourcesTitle}</p>
+      <ul>
+        {project.documentation.map((item) => (
+          <li>
+            <a class="project-documentation-link" href={item.url} target="_blank" rel="noreferrer">
+              {item.label} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  {project.screenshots && (
+    <section class="project-screenshots wrap">
+      <p class="eyebrow">{project.screenshotsTitle}</p>
+      <div class="project-screenshot-grid">
+        {project.screenshots.map((image, index) => (
+          <figure class:list={{ 'project-screenshot-featured': index === 0 }}>
+            <a href={image.src} target="_blank" rel="noreferrer">
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </a>
+            <figcaption>{image.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
   {(readmeHtml || releases.length > 0) && (
     <nav class="project-resource-nav wrap" aria-label={t.contents}>
       {readmeHtml && (
@@ -125,13 +215,13 @@ function formatDate(date: string): string {
       <div class="detail-team-heading">
         <p class="eyebrow">{t.collaborative}</p>
         <h2>{t.teamContributions}</h2>
-        <p>{t.teamDescription}</p>
+        <p class="detail-team-description">{t.teamDescription}</p>
       </div>
       <ul class="detail-team-list">
         {project.team.map((member) => (
           <li>
-            <span>{member.name}</span>
-            <span>{member.role}</span>
+            <span class="detail-team-name">{member.name}</span>
+            <span class="detail-team-role">{member.role}</span>
           </li>
         ))}
       </ul>
@@ -140,15 +230,23 @@ function formatDate(date: string): string {
   {readmeHtml && (
     <section class="project-readme wrap" id="readme">
       <div class="project-resource-heading">
-        <div>
+        <div class="project-resource-title">
           <p class="eyebrow">{t.repositoryDocs}</p>
           <h2>README</h2>
         </div>
-        <a href={project.repository} target="_blank" rel="noreferrer">
+        <a class="project-resource-link" href={project.repository} target="_blank" rel="noreferrer">
           {t.viewOnGithub} ↗
         </a>
       </div>
-      <article class="project-readme-content" set:html={readmeHtml} />
+      <details class="project-readme-details">
+        <summary class="project-readme-summary">
+          <span>{t.expandReadme}</span>
+          <span class="project-readme-icon" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <article class="project-readme-content" set:html={readmeHtml} />
+      </details>
     </section>
   )}
   {releases.length > 0 && (
@@ -158,7 +256,12 @@ function formatDate(date: string): string {
           <p class="eyebrow">{t.releaseAssets}</p>
           <h2>{t.downloads}</h2>
         </div>
-        <a href={`${project.repository}/releases`} target="_blank" rel="noreferrer">
+        <a
+          class="project-resource-link"
+          href={`${project.repository}/releases`}
+          target="_blank"
+          rel="noreferrer"
+        >
           {t.allReleases} ↗
         </a>
       </div>
@@ -166,7 +269,7 @@ function formatDate(date: string): string {
         {releases.map((release) => (
           <article class="project-release">
             <div class="project-release-heading">
-              <a href={release.url} target="_blank" rel="noreferrer">
+              <a class="project-release-title" href={release.url} target="_blank" rel="noreferrer">
                 {release.name}
               </a>
               <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
@@ -176,7 +279,7 @@ function formatDate(date: string): string {
                 <li>
                   <a href={asset.url} target="_blank" rel="noreferrer" download>
                     <span>{asset.name}</span>
-                    <span>
+                    <span class="project-release-asset-size">
                       {formatSize(asset.size)} · {t.download} ↓
                     </span>
                   </a>
@@ -190,7 +293,7 @@ function formatDate(date: string): string {
   )}
   <section class="detail-next wrap">
     <p class="eyebrow">{t.title}</p>
-    <a href={localizedPath(locale, '/projects')}>
+    <a class="detail-next-link" href={localizedPath(locale, '/projects')}>
       {t.backToList} <span>↗</span>
     </a>
   </section>
