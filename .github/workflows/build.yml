@@ -19,6 +19,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Run unit tests
+        run: npm test
       - run: npm run format:check
       - run: npm run build
 

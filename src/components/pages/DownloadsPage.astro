@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { projects } from '../../data/projects';
 import { getProjectReleases } from '../../data/releases';
 import { messages, type Locale } from '../../i18n/locales';
+import { formatDownloadDate, formatDownloadSize } from '../../utils/format';
 const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'downloads');
 
@@ -29,17 +30,6 @@ const downloadSummary = t.downloadSummary
   .replace('{filesLabel}', totalDownloadableFiles === 1 ? t.fileSingular : t.filePlural)
   .replace('{projects}', String(projectsWithDownloads))
   .replace('{projectsLabel}', projectsWithDownloads === 1 ? t.projectSingular : t.projectPlural);
-const formatSize = (bytes: number) =>
-  bytes < 1_000_000
-    ? `${Math.max(1, Math.round(bytes / 1_000))} KB`
-    : `${(bytes / 1_000_000).toFixed(1)} MB`;
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString(locale, {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC',
-  });
 ---
 
 <BaseLayout locale={locale} active="/downloads" title={t.title} description={t.description}>
@@ -102,14 +92,16 @@ const formatDate = (date: string) =>
                       <span class="release-version">{release.tag}</span>
                       {release.prerelease && <span class="release-prerelease">{t.prerelease}</span>}
                     </div>
-                    <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
+                    <time datetime={release.publishedAt}>
+                      {formatDownloadDate(release.publishedAt, locale)}
+                    </time>
                   </div>
                   <ul class="release-assets">
                     {release.assets.map((asset) => (
                       <li>
                         <a href={asset.url} target="_blank" rel="noreferrer">
                           <span>{asset.name}</span>
-                          <span class="release-asset-size">{formatSize(asset.size)} ↓</span>
+                          <span class="release-asset-size">{formatDownloadSize(asset.size)} ↓</span>
                         </a>
                       </li>
                     ))}

@@ -50,7 +50,7 @@ interface GitHubRepository {
   default_branch: string;
 }
 
-interface ProjectRepository {
+export interface ProjectRepository {
   path: string;
   ref?: string;
 }
@@ -230,7 +230,9 @@ async function getReleasesFromPage(repository: string): Promise<ProjectRelease[]
   return releases;
 }
 
-function projectRepository(repositoryUrl: string | undefined): ProjectRepository | null {
+export function parseProjectRepository(
+  repositoryUrl: string | undefined,
+): ProjectRepository | null {
   if (!repositoryUrl) return null;
   try {
     const url = new URL(repositoryUrl);
@@ -256,7 +258,7 @@ function projectRepository(repositoryUrl: string | undefined): ProjectRepository
 }
 
 export async function getProjectPageContent(project: Project): Promise<ProjectPageContent> {
-  const repository = projectRepository(project.repository);
+  const repository = parseProjectRepository(project.repository);
   if (!repository) return { readmeHtml: null, releases: [] };
   const readmeEndpoint = new URL(`https://api.github.com/repos/${repository.path}/readme`);
   if (repository.ref) readmeEndpoint.searchParams.set('ref', repository.ref);

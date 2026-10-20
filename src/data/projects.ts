@@ -26,6 +26,12 @@ export const projects: Project[] = [
     stack: ['React', 'FastAPI', 'PostgreSQL', 'Docker'],
     featured: true,
     number: '02',
+    technologyGroups: [
+      { labelKey: 'techFrontend', technologies: ['React', 'TypeScript', 'Vite'] },
+      { labelKey: 'techBackend', technologies: ['Python', 'FastAPI', 'SQLAlchemy'] },
+      { labelKey: 'techData', technologies: ['PostgreSQL', 'SQLite'] },
+      { labelKey: 'techDeployment', technologies: ['Docker', 'Nginx'] },
+    ],
     statusKey: 'spiderfinanceStatus',
     featureKeys: [
       'spiderfinanceFeatureAccounts',
@@ -34,49 +40,6 @@ export const projects: Project[] = [
       'spiderfinanceFeatureSavings',
       'spiderfinanceFeatureInvestments',
       'spiderfinanceFeatureImportExport',
-    ],
-    technologyGroups: [
-      {
-        labelKey: 'spiderfinanceFrontend',
-        technologies: [
-          'React 18',
-          'TypeScript',
-          'Vite',
-          'TanStack Query',
-          'React Hook Form',
-          'Zod',
-          'Recharts',
-          'CSS',
-        ],
-      },
-      {
-        labelKey: 'spiderfinanceBackend',
-        technologies: [
-          'Python',
-          'FastAPI',
-          'Uvicorn',
-          'Pydantic',
-          'SQLAlchemy',
-          'Alembic',
-          'PyJWT',
-          'Argon2',
-          'openpyxl',
-        ],
-      },
-      { labelKey: 'spiderfinanceDatabase', technologies: ['PostgreSQL 16', 'SQLite'] },
-      {
-        labelKey: 'spiderfinanceInfrastructure',
-        technologies: [
-          'Docker',
-          'Docker Compose',
-          'Nginx',
-          'GitHub Actions',
-          'GitHub Container Registry',
-          'pytest',
-          'Node.js',
-          'SMTP',
-        ],
-      },
     ],
     contributionKey: 'spiderfinanceContribution',
     contributionSources: [
@@ -123,9 +86,18 @@ export const projects: Project[] = [
   {
     slug: 'cliponomicon-api',
     name: 'Cliponomicon API',
-    stack: ['FastAPI', 'Python', 'React', 'TypeScript', 'MySQL', 'Redis', 'Docker'],
+    stack: ['React', 'FastAPI', 'MySQL', 'Redis', 'FFmpeg'],
     featured: true,
     number: '01',
+    technologyGroups: [
+      { labelKey: 'techFrontend', technologies: ['React', 'TypeScript', 'Vite'] },
+      { labelKey: 'techBackend', technologies: ['Python', 'FastAPI', 'SQLAlchemy'] },
+      { labelKey: 'techDataAndJobs', technologies: ['MySQL', 'Redis', 'RQ'] },
+      {
+        labelKey: 'techProcessingAndDeployment',
+        technologies: ['FFmpeg', 'Docker', 'Nginx'],
+      },
+    ],
     statusKey: 'cliponomiconApiStatus',
     featureKeys: [
       'cliponomiconApiFeatureUpload',
@@ -134,53 +106,6 @@ export const projects: Project[] = [
       'cliponomiconApiFeatureAuth',
       'cliponomiconApiFeatureSteam',
       'cliponomiconApiFeatureBackoffice',
-    ],
-    technologyGroups: [
-      {
-        labelKey: 'cliponomiconApiFrontend',
-        technologies: [
-          'React 18',
-          'TypeScript',
-          'Vite',
-          'React Router',
-          'TanStack Query',
-          'TanStack Table',
-          'Recharts',
-          'Lucide React',
-          'CSS',
-        ],
-      },
-      {
-        labelKey: 'cliponomiconApiBackend',
-        technologies: [
-          'Python 3.12',
-          'FastAPI',
-          'Uvicorn',
-          'Pydantic Settings',
-          'SQLAlchemy',
-          'Alembic',
-          'python-jose',
-          'bcrypt',
-          'PyMySQL',
-        ],
-      },
-      { labelKey: 'cliponomiconApiDatabase', technologies: ['MySQL 8.4', 'Redis 7', 'RQ'] },
-      {
-        labelKey: 'cliponomiconApiInfrastructure',
-        technologies: [
-          'Docker',
-          'Docker Compose',
-          'FFmpeg',
-          'ffprobe',
-          'Nginx',
-          'Certbot',
-          'GitHub Actions',
-          'Portainer webhook',
-          'pytest',
-          'HTTPX',
-          'ESLint',
-        ],
-      },
     ],
     contributionKey: 'cliponomiconApiContribution',
     quoteKey: 'cliponomiconApiQuote',
@@ -214,9 +139,13 @@ export const projects: Project[] = [
   {
     slug: 'spiderportfolio',
     name: 'SpiderPortfolio',
-    stack: ['React', 'Puck', 'FastAPI', 'PostgreSQL', 'Docker'],
+    stack: ['React', 'Puck', 'FastAPI', 'PostgreSQL'],
     featured: false,
     number: '05',
+    technologyGroups: [
+      { labelKey: 'techVisualEditor', technologies: ['React', 'Puck'] },
+      { labelKey: 'techBackendAndData', technologies: ['FastAPI', 'PostgreSQL'] },
+    ],
     repository: 'https://github.com/SrSpooderman/Portfolio/tree/develop',
   },
   {
@@ -225,6 +154,10 @@ export const projects: Project[] = [
     stack: ['Python', 'PySide6', 'yt-dlp', 'FFmpeg'],
     featured: true,
     number: '03',
+    technologyGroups: [
+      { labelKey: 'techDesktop', technologies: ['Python', 'PySide6', 'Qt Widgets'] },
+      { labelKey: 'techMedia', technologies: ['yt-dlp', 'FFmpeg', 'Mutagen'] },
+    ],
     statusKey: 'spidertomp3Status',
     featureKeys: [
       'spidertomp3FeatureFormats',
@@ -233,21 +166,6 @@ export const projects: Project[] = [
       'spidertomp3FeatureLists',
       'spidertomp3FeaturePodcasts',
       'spidertomp3FeatureUpdates',
-    ],
-    technologyGroups: [
-      { labelKey: 'spidertomp3Frontend', technologies: ['Python 3.12+', 'PySide6', 'Qt Widgets'] },
-      {
-        labelKey: 'spidertomp3Backend',
-        technologies: ['yt-dlp', 'FFmpeg', 'ffprobe', 'Mutagen', 'psutil'],
-      },
-      {
-        labelKey: 'spidertomp3Database',
-        technologies: ['Qt QSettings'],
-      },
-      {
-        labelKey: 'spidertomp3Infrastructure',
-        technologies: ['PyInstaller', 'GitHub Actions', 'GitHub Releases', 'unittest'],
-      },
     ],
     contributionKey: 'spidertomp3Contribution',
     quoteKey: 'spidertomp3Quote',
@@ -288,6 +206,7 @@ export const projects: Project[] = [
     stack: ['Python', 'Kivy', 'Java'],
     featured: false,
     number: '06',
+    technologyGroups: [{ labelKey: 'techAndroid', technologies: ['Python', 'Kivy', 'Java'] }],
     repository: 'https://github.com/SrSpooderman/SpiderAwake',
   },
   {
@@ -296,6 +215,9 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'MySQL'],
     featured: true,
     number: '04',
+    technologyGroups: [
+      { labelKey: 'techBackendAndData', technologies: ['Python', 'FastAPI', 'MySQL'] },
+    ],
     repository: 'https://github.com/SrSpooderman/ReHuse',
   },
 ];

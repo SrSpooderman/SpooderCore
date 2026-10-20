@@ -140,7 +140,7 @@
 :root[data-theme='light'] .detail-lede,
 :root[data-theme='light'] .project-features ul,
 :root[data-theme='light'] .project-contribution-description,
-:root[data-theme='light'] .detail-technology-groups,
+:root[data-theme='light'] .detail-technology-group b,
 :root[data-theme='light'] .footer-links a,
 :root[data-theme='light'] .footer-bio {
   color: #5f5d57;

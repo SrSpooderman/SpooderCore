@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProject } from '../../data/projects';
 import { messages, localizedPath, type Locale } from '../../i18n/locales';
+import { formatReleaseDate, formatReleaseSize } from '../../utils/format';
 
 const { slug, readmeHtml, releases, locale } = Astro.props as {
   slug: string;
@@ -50,16 +51,6 @@ const project = {
   })),
   team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
 };
-
-function formatSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  const megabytes = bytes / (1024 * 1024);
-  return megabytes < 1 ? `${Math.round(bytes / 1024)} KB` : `${megabytes.toFixed(1)} MB`;
-}
-
-function formatDate(date: string): string {
-  return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(date));
-}
 ---
 
 <BaseLayout locale={locale} title={project.name} description={project.summary} active="/projects">
@@ -272,7 +263,9 @@ function formatDate(date: string): string {
               <a class="project-release-title" href={release.url} target="_blank" rel="noreferrer">
                 {release.name}
               </a>
-              <time datetime={release.publishedAt}>{formatDate(release.publishedAt)}</time>
+              <time datetime={release.publishedAt}>
+                {formatReleaseDate(release.publishedAt, locale)}
+              </time>
             </div>
             <ul class="project-release-assets">
               {release.assets.map((asset) => (
@@ -280,7 +273,7 @@ function formatDate(date: string): string {
                   <a href={asset.url} target="_blank" rel="noreferrer" download>
                     <span>{asset.name}</span>
                     <span class="project-release-asset-size">
-                      {formatSize(asset.size)} · {t.download} ↓
+                      {formatReleaseSize(asset.size)} · {t.download} ↓
                     </span>
                   </a>
                 </li>

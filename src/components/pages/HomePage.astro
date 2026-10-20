@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProject } from '../../data/projects';
 import { messages, localizedPath, type Locale } from '../../i18n/locales';
 const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'home');
@@ -80,28 +81,28 @@ const projects = [
     number: '01',
     name: 'Cliponomicon API',
     description: t.projectCliponomicon,
-    stack: 'FastAPI · MySQL · Redis · FFmpeg',
+    stack: getProject('cliponomicon-api')!.stack.join(' · '),
     href: 'https://github.com/SrSpooderman/CliponomiconAPI',
   },
   {
     number: '02',
     name: 'SpiderFinance',
     description: t.projectSpiderfinance,
-    stack: 'React · FastAPI · PostgreSQL · Docker',
+    stack: getProject('spiderfinance')!.stack.join(' · '),
     href: 'https://github.com/SrSpooderman/SpiderFinance',
   },
   {
     number: '03',
     name: 'SpiderToMP3',
     description: t.projectSpidertomp3,
-    stack: 'Python · PySide6 · yt-dlp · FFmpeg',
+    stack: getProject('spidertomp3')!.stack.join(' · '),
     href: 'https://github.com/SrSpooderman/SpiderToMP3',
   },
   {
     number: '04',
     name: 'ReHuse',
     description: t.projectRehuse,
-    stack: 'Python · FastAPI · MySQL',
+    stack: getProject('rehuse')!.stack.join(' · '),
     href: 'https://github.com/SrSpooderman/ReHuse',
   },
 ];

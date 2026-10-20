@@ -409,14 +409,13 @@
 .detail-technology-groups {
   display: grid;
   gap: 12px;
-  color: #cfcdc6;
-  text-align: right;
+  min-width: 0;
 }
 .detail-technology-group {
   display: grid;
-  gap: 4px;
+  gap: 3px;
 }
-.detail-technology-groups b {
+.detail-technology-group b {
   color: #85847c;
   font-size: 12px;
   font-weight: 500;
