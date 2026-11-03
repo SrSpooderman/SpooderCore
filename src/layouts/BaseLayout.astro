@@ -41,6 +41,12 @@ function siteUrl() {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#111110" />
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geom:wght@300..900&display=swap"
+      rel="stylesheet"
+    />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
@@ -73,9 +79,7 @@ function siteUrl() {
       <div class="header-inner wrap">
         <a class="wordmark" href={localized('/')} aria-label={t.brandHome}>
           <img class="brand-logo" src="/brand/spoodercore.png" alt="" width="32" height="32" />
-          <span>
-            spooder<span class="wordmark-light">core</span>
-          </span>
+          <span class="wordmark-text"><strong>Spooder</strong><span class="wordmark-light">core</span></span>
         </a>
         <nav class="main-nav" aria-label={t.navigation}>
           {nav.map((item) => (
@@ -158,9 +162,7 @@ function siteUrl() {
       <div class="wrap footer-top">
         <div>
           <a class="wordmark footer-wordmark" href={localized('/')}>
-            <span>
-              spooder<span class="wordmark-light">core</span>
-            </span>
+            <span class="wordmark-text"><strong>Spooder</strong><span class="wordmark-light">core</span></span>
           </a>
           <p class="footer-bio">
             <span>{t.footerBio}</span>

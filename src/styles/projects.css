@@ -42,7 +42,6 @@
   color: #aaa69e;
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.12em;
 }
 .featured-project-number {
   top: 19px;
@@ -90,7 +89,6 @@
   margin: 6px 0 0;
   font-size: clamp(23px, 2.4vw, 30px);
   font-weight: 500;
-  letter-spacing: -0.055em;
 }
 .featured-project-arrow {
   display: grid;
@@ -123,7 +121,6 @@
   color: #b1ada5;
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 .project-team {
@@ -211,7 +208,6 @@
   margin: 0 0 5px;
   font-size: 18px;
   font-weight: 500;
-  letter-spacing: -0.04em;
 }
 .other-project-row h3 span {
   margin-left: 8px;
@@ -231,20 +227,6 @@
   padding-top: 34px;
   padding-bottom: 66px;
   border-bottom: 1px solid var(--line);
-}
-.project-back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--muted);
-  font-size: 14px;
-}
-.project-back-link span {
-  color: var(--red);
-  font-size: 18px;
-}
-.project-back-link:hover {
-  color: var(--ink);
 }
 .project-hero-grid {
   display: grid;
@@ -270,7 +252,6 @@
   font-family: var(--display);
   font-size: clamp(58px, 7.4vw, 106px);
   font-weight: 600;
-  letter-spacing: -0.085em;
   line-height: 0.98;
   overflow-wrap: anywhere;
 }
@@ -331,7 +312,6 @@
   color: var(--muted);
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 .project-hero-art-index {
@@ -348,7 +328,6 @@
   font-family: var(--display);
   font-size: clamp(150px, 18vw, 230px);
   font-weight: 600;
-  letter-spacing: -0.12em;
   transform: translateX(-0.06em);
 }
 .project-overview {
@@ -372,7 +351,6 @@
   color: var(--red);
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.08em;
 }
 .project-description {
   max-width: 760px;
@@ -450,7 +428,6 @@
   color: var(--muted);
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 .project-fact-value,
@@ -494,7 +471,6 @@
   margin: 12px 0 8px;
   font-size: 28px;
   font-weight: 500;
-  letter-spacing: -0.05em;
 }
 .detail-team-description {
   color: #b0ada5;
@@ -764,7 +740,6 @@
   margin: 7px 0 0;
   font-size: 34px;
   font-weight: 500;
-  letter-spacing: -0.06em;
 }
 .project-downloads-details {
   width: 100%;
@@ -787,7 +762,6 @@
   width: max-content;
   font-size: 34px;
   font-weight: 500;
-  letter-spacing: -0.06em;
 }
 .project-downloads-title-row {
   display: flex;
@@ -873,7 +847,6 @@
   margin: 1.8em 0 0.7em;
   color: #f0eee8;
   font-weight: 550;
-  letter-spacing: -0.045em;
   line-height: 1.25;
 }
 .project-readme-content h1 {
@@ -937,7 +910,7 @@
 .project-detail-title { display: flex; align-items: center; gap: 22px; margin-top: 38px; }
 .project-detail-title > img { width: 68px; height: 68px; object-fit: contain; }
 .project-detail-logo-fallback { display: grid; flex: 0 0 68px; width: 68px; height: 68px; place-items: center; border: 1px solid var(--line); color: var(--red); font-family: var(--display); font-size: 34px; }
-.project-detail-title h1 { margin: 5px 0 0; font-family: var(--display); font-size: clamp(42px, 6vw, 76px); letter-spacing: -.07em; line-height: 1; }
+.project-detail-title h1 { margin: 5px 0 0; font-family: var(--display); font-size: clamp(42px, 6vw, 76px); line-height: 1; }
 .project-detail-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 18px; color: var(--muted); font-size: 14px; }
 .project-version { font-family: var(--mono); }
 .project-detail-header .project-hero-summary { margin-top: 20px; }

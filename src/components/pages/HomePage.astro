@@ -4,8 +4,18 @@ import { getProject } from '../../data/projects';
 import { messages, localizedPath, type Locale } from '../../i18n/locales';
 const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'home');
+const bioParagraphs = [
+  { prefix: t.bioFocusPrefix, emphasis: t.bioFocus, suffix: t.bioFocusSuffix },
+  { prefix: t.bioWorkflow },
+];
 
-const focusAreas = [t.focusBackend, t.focusApis, t.focusDatabases, t.focusArchitecture];
+const focusAreas = [
+  t.focusBackend,
+  t.focusApis,
+  t.focusArchitecture,
+  t.focusDatabases,
+  t.focusDeployments,
+];
 const technologyGroups = [
   {
     category: t.backendArchitecture,
@@ -111,25 +121,19 @@ const projects = [
 <BaseLayout locale={locale} active="/" title={t.title} description={t.description}>
   <section class="profile-hero wrap">
     <div class="profile-intro">
-      <p class="eyebrow profile-kicker">
-        <span class="profile-kicker-mark"></span> {t.kicker}
-      </p>
       <p class="profile-name-label">{t.hello}</p>
       <h1>
-        Francisco
-        <br />
-        <span>Valencia.</span>
+        Francisco <span>Valencia.</span>
       </h1>
       <p class="profile-role">{t.profileRole}</p>
-      <p class="profile-bio">{t.bio}</p>
+      <div class="profile-bio">
+        {bioParagraphs.map((paragraph) => (
+          <p>{paragraph.prefix}{paragraph.emphasis && <strong>{paragraph.emphasis}</strong>}{paragraph.suffix}</p>
+        ))}
+      </div>
       <div class="profile-actions">
-        <a
-          class="button button-primary"
-          href="https://github.com/SrSpooderman"
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub <span aria-hidden="true">↗</span>
+        <a class="button button-primary" href="mailto:francisco.valeespa@gmail.com">
+          {t.emailAction} <span aria-hidden="true">↗</span>
         </a>
         <a
           class="button button-outline"
@@ -165,21 +169,6 @@ const projects = [
         <img class="profile-card-logo" src="/brand/spoodercore.png" alt="" width="46" height="46" />
       </div>
       <h2>SrSpooderman</h2>
-      <p class="profile-card-name">Francisco Valencia</p>
-      <p class="profile-card-role">{t.softwareDeveloper}</p>
-      <div class="profile-card-specialties">
-        <span>{t.focusBackend}</span>
-        <span>{t.apiDevelopment}</span>
-        <span class="profile-card-specialty--wide">{t.focusArchitecture}</span>
-      </div>
-      <a
-        class="profile-card-link"
-        href="https://github.com/SrSpooderman"
-        target="_blank"
-        rel="noreferrer"
-      >
-        {t.viewGithub} <span aria-hidden="true">↗</span>
-      </a>
     </aside>
   </section>
 
@@ -253,7 +242,7 @@ const projects = [
     <p class="eyebrow">{t.professionalContact}</p>
     <h2>{t.contactHeading}</h2>
     <div class="profile-actions">
-      <a class="button button-primary" href="mailto:francisco.valeespa@hotmail.com">
+      <a class="button button-primary" href="mailto:francisco.valeespa@gmail.com">
         {t.emailContact} <span aria-hidden="true">↗</span>
       </a>
       <a
@@ -263,9 +252,6 @@ const projects = [
         rel="noreferrer"
       >
         LinkedIn <span aria-hidden="true">↗</span>
-      </a>
-      <a class="text-link" href="https://github.com/SrSpooderman" target="_blank" rel="noreferrer">
-        {t.exploreGithub} <span aria-hidden="true">→</span>
       </a>
     </div>
   </section>
