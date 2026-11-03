@@ -6,6 +6,7 @@ export interface Project {
   number: string;
   logo?: string;
   repository?: string;
+  demoUrl?: string;
   releaseRepository?: string;
   statusKey?: string;
   featureKeys?: string[];
@@ -13,10 +14,12 @@ export interface Project {
   contributionKey?: string;
   quoteKey?: string;
   scopeNoteKey?: string;
+  interestingKey?: string;
+  interestingTitleKey?: string;
   contributionSources?: string[];
   documentation?: { labelKey: string; url: string }[];
   screenshots?: { src: string; altKey: string }[];
-  team?: { name: string; roleKey: string }[];
+  team?: { name: string; roleKey: string; links?: { label: string; url: string }[] }[];
 }
 
 export const projects: Project[] = [
@@ -34,14 +37,10 @@ export const projects: Project[] = [
     ],
     statusKey: 'spiderfinanceStatus',
     featureKeys: [
-      'spiderfinanceFeatureAccounts',
       'spiderfinanceFeaturePlanning',
       'spiderfinanceFeatureForecasts',
-      'spiderfinanceFeatureSavings',
-      'spiderfinanceFeatureInvestments',
-      'spiderfinanceFeatureImportExport',
+      'spiderfinanceFeatureAccounts',
     ],
-    contributionKey: 'spiderfinanceContribution',
     contributionSources: [
       'https://github.com/SrSpooderman/SpiderFinance/commit/d076d337f2d2e4aed8e41b3b25516fd7324decb4',
       'https://github.com/SrSpooderman/SpiderFinance/commit/c58842d9854f89be8158cd8e4f0a1f31f9621a9c',
@@ -70,17 +69,10 @@ export const projects: Project[] = [
         src: 'https://raw.githubusercontent.com/SrSpooderman/SpiderFinance/main/docs/screenshots/resumen.png',
         altKey: 'spiderfinanceOverviewScreenshot',
       },
-      {
-        src: 'https://raw.githubusercontent.com/SrSpooderman/SpiderFinance/main/docs/screenshots/cuentas.png',
-        altKey: 'spiderfinanceAccountsScreenshot',
-      },
-      {
-        src: 'https://raw.githubusercontent.com/SrSpooderman/SpiderFinance/main/docs/screenshots/inicio-sesion.png',
-        altKey: 'spiderfinanceLoginScreenshot',
-      },
     ],
     logo: '/brand/spiderfinance.png',
     repository: 'https://github.com/SrSpooderman/SpiderFinance',
+    demoUrl: 'https://spoodercore.com/demo/spiderfinance/',
     releaseRepository: 'SrSpooderman/SpiderFinance',
   },
   {
@@ -99,16 +91,7 @@ export const projects: Project[] = [
       },
     ],
     statusKey: 'cliponomiconApiStatus',
-    featureKeys: [
-      'cliponomiconApiFeatureUpload',
-      'cliponomiconApiFeatureProcessing',
-      'cliponomiconApiFeaturePlayback',
-      'cliponomiconApiFeatureAuth',
-      'cliponomiconApiFeatureSteam',
-      'cliponomiconApiFeatureBackoffice',
-    ],
-    contributionKey: 'cliponomiconApiContribution',
-    quoteKey: 'cliponomiconApiQuote',
+    featureKeys: ['cliponomiconApiFeatureUpload', 'cliponomiconApiFeatureProcessing', 'cliponomiconApiFeaturePlayback', 'cliponomiconApiFeatureBackoffice'],
     contributionSources: [
       'https://github.com/SrSpooderman/CliponomiconAPI/commit/8f9da2286ccb28a9655c22c121351b5f90d0492c',
       'https://github.com/SrSpooderman/CliponomiconAPI/commit/161dc1472b6d538eb7cdd7e7aed30806aacf3a84',
@@ -131,7 +114,7 @@ export const projects: Project[] = [
     logo: '/brand/cliponomicon.png',
     repository: 'https://github.com/SrSpooderman/CliponomiconAPI',
     team: [
-      { name: 'Francisco Valencia (SrSpooderman)', roleKey: 'backendRole' },
+      { name: 'Francisco Valencia (SrSpooderman)', roleKey: 'backendRole', links: [{ label: 'GitHub', url: 'https://github.com/SrSpooderman' }] },
       { name: 'Lluis Xavier Obrador Artigues', roleKey: 'devopsRole' },
       { name: 'Joan Vicens Muntaner', roleKey: 'frontendRole' },
     ],
@@ -142,6 +125,8 @@ export const projects: Project[] = [
     stack: ['React', 'Puck', 'FastAPI', 'PostgreSQL'],
     featured: false,
     number: '05',
+    statusKey: 'spiderportfolioStatus',
+    featureKeys: ['spiderportfolioFeatureContent', 'spiderportfolioFeaturePreview', 'spiderportfolioFeaturePublishing'],
     technologyGroups: [
       { labelKey: 'techVisualEditor', technologies: ['React', 'Puck'] },
       { labelKey: 'techBackendAndData', technologies: ['FastAPI', 'PostgreSQL'] },
@@ -159,16 +144,11 @@ export const projects: Project[] = [
       { labelKey: 'techMedia', technologies: ['yt-dlp', 'FFmpeg', 'Mutagen'] },
     ],
     statusKey: 'spidertomp3Status',
+    interestingKey: 'spidertomp3Interesting',
     featureKeys: [
-      'spidertomp3FeatureFormats',
       'spidertomp3FeaturePlaylists',
-      'spidertomp3FeatureQueue',
-      'spidertomp3FeatureLists',
-      'spidertomp3FeaturePodcasts',
-      'spidertomp3FeatureUpdates',
+      'spidertomp3FeatureFormats',
     ],
-    contributionKey: 'spidertomp3Contribution',
-    quoteKey: 'spidertomp3Quote',
     scopeNoteKey: 'spidertomp3ScopeNote',
     contributionSources: [
       'https://github.com/SrSpooderman/SpiderToMP3/commit/df1c1c28cea43105743fd78372733045ed5ae35a',
@@ -206,6 +186,9 @@ export const projects: Project[] = [
     stack: ['Python', 'Kivy', 'Java'],
     featured: false,
     number: '06',
+    statusKey: 'spiderawakeStatus',
+    featureKeys: ['spiderawakeFeatureAlarm', 'spiderawakeFeatureChallenges'],
+    interestingKey: 'spiderawakeInteresting',
     technologyGroups: [{ labelKey: 'techAndroid', technologies: ['Python', 'Kivy', 'Java'] }],
     repository: 'https://github.com/SrSpooderman/SpiderAwake',
   },
@@ -215,6 +198,8 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'MySQL'],
     featured: true,
     number: '04',
+    featureKeys: ['rehuseFeatureTemplates', 'rehuseFeaturePersonalize', 'rehuseFeaturePdf'],
+    interestingKey: 'rehuseInteresting',
     technologyGroups: [
       { labelKey: 'techBackendAndData', technologies: ['Python', 'FastAPI', 'MySQL'] },
     ],

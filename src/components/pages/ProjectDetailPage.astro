@@ -17,277 +17,128 @@ const project = {
   ...sourceProject,
   summary: t[`${prefix}Summary`],
   description: t[`${prefix}Description`],
-  eyebrow: t[`${prefix}Eyebrow`],
-  status: sourceProject.statusKey
-    ? t[sourceProject.statusKey]
-    : sourceProject.featured
-      ? t.featured
-      : t.catalog,
-  contribution: sourceProject.contributionKey
-    ? t[sourceProject.contributionKey]
-    : sourceProject.slug === 'cliponomicon-api'
-      ? t.cliponomiconApiContribution
-      : undefined,
-  quote: sourceProject.quoteKey ? t[sourceProject.quoteKey] : undefined,
-  scopeNote: sourceProject.scopeNoteKey ? t[sourceProject.scopeNoteKey] : undefined,
-  featuresTitle: t[`${prefix}FeaturesTitle`],
-  contributionEvidenceTitle: t[`${prefix}ContributionEvidence`],
-  resourcesTitle: t[`${prefix}ResourcesTitle`],
-  screenshotsTitle: t[`${prefix}ScreenshotsTitle`],
+  status: sourceProject.statusKey ? t[sourceProject.statusKey] : t.catalog,
   features: sourceProject.featureKeys?.map((key) => t[key]),
+  featuresTitle: t[`${prefix}FeaturesTitle`],
+  interesting: sourceProject.interestingKey ? t[sourceProject.interestingKey] : undefined,
+  interestingTitle: sourceProject.interestingTitleKey ? t[sourceProject.interestingTitleKey] : undefined,
   technologyGroups: sourceProject.technologyGroups?.map((group) => ({
-    label: t[group.labelKey],
-    technologies: group.technologies,
+    label: t[group.labelKey], technologies: group.technologies,
   })),
   documentation: sourceProject.documentation
     ?.filter((item) => !readmeHtml || !item.url.endsWith('/README.md'))
-    .map((item) => ({
-      label: t[item.labelKey],
-      url: item.url,
-    })),
-  screenshots: sourceProject.screenshots?.map((image) => ({
-    ...image,
-    alt: t[image.altKey],
-  })),
+    .map((item) => ({ label: t[item.labelKey], url: item.url })),
+  screenshots: sourceProject.screenshots?.map((image) => ({ ...image, alt: t[image.altKey] })),
   team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
 };
+const latestRelease = releases.find((release) => !release.prerelease) ?? releases[0];
 ---
 
 <BaseLayout locale={locale} title={project.name} description={project.summary} active="/projects">
-  <section class="detail-hero wrap">
-    <a class="back-link" href={localizedPath(locale, '/projects')}>
-      {t.backToProjects}
-    </a>
-    <div class="detail-layout">
-      <div class="detail-layout-copy">
-        <p class="eyebrow">
-          {t.projectLabel} / {project.number}
-        </p>
-        <h1>
-          {project.name}
-          <span class="period">.</span>
-        </h1>
-        <p class="detail-lede">{project.summary}</p>
-        <div class="detail-status">
-          <span class="status">
-            <i></i>
-            {project.status}
-          </span>
-          <span class="tag">{project.eyebrow}</span>
-        </div>
+  <header class="project-detail-header wrap">
+    <a class="project-back-link" href={localizedPath(locale, '/projects')}><span aria-hidden="true">←</span> {t.backToProjects}</a>
+    <div class="project-detail-title">
+      {project.logo ? <img src={project.logo} alt={t.projectLogo.replace('{name}', project.name)} /> : <span class="project-detail-logo-fallback" aria-hidden="true">{project.name.slice(0, 1)}</span>}
+      <div>
+        <p class="eyebrow">{t.projectLabel} / {project.number}</p>
+        <h1>{project.name}<span class="period">.</span></h1>
       </div>
-      {project.logo ? (
-        <div class="detail-project-logo">
-          <img src={project.logo} alt={t.projectLogo.replace('{name}', project.name)} />
-        </div>
-      ) : (
-        <div class="detail-glyph" aria-hidden="true">
-          <span>{project.name.slice(0, 1)}</span>
-          <b>SC—{project.number}</b>
-        </div>
-      )}
     </div>
-  </section>
-  <section class="detail-body wrap">
-    <div class="detail-main">
-      <p class="eyebrow">{t.aboutProject}</p>
-      <p class="detail-description">{project.description}</p>
-      {project.quote && <blockquote class="project-quote">“{project.quote}”</blockquote>}
-      {project.features && (
-        <div class="project-features">
-          <p class="eyebrow">{project.featuresTitle}</p>
-          <ul>
-            {project.features.map((feature) => (
-              <li>{feature}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {project.scopeNote && <p class="project-scope-note">{project.scopeNote}</p>}
-      {project.contribution && (
-        <div class="project-contribution">
-          <p class="eyebrow">{t.contribution}</p>
-          <p class="project-contribution-description">{project.contribution}</p>
-          {sourceProject.contributionSources && (
-            <div class="project-contribution-links">
-              <span>{project.contributionEvidenceTitle}:</span>
-              {sourceProject.contributionSources.map((url, index) => (
-                <a href={url} target="_blank" rel="noreferrer">
-                  #{index + 1}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+    <div class="project-detail-meta">
+      {latestRelease && <span class="project-version">{t.latestVersion}: {latestRelease.tag}</span>}
+      <span class="status"><i></i>{project.status}</span>
     </div>
-    <aside class="detail-aside">
-      <p class="eyebrow">{t.details}</p>
-      <div class="detail-row">
-        <span class="detail-row-label">{t.status}</span>
-        <span class="detail-row-value">{project.status}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-row-label">{t.area}</span>
-        <span class="detail-row-value">{project.eyebrow}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-row-label">{t.technologies}</span>
-        {project.technologyGroups ? (
-          <div class="detail-technology-groups detail-row-value">
-            {project.technologyGroups.map((group) => (
-              <div class="detail-technology-group">
-                <b>{group.label}</b>
-                <span>{group.technologies.join(', ')}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <span class="detail-row-value">{project.stack.join(', ')}</span>
-        )}
-      </div>
-      {project.repository && (
-        <a
-          class="detail-repository-link"
-          href={project.repository}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t.openRepository} <span aria-hidden="true">↗</span>
-        </a>
-      )}
-    </aside>
-  </section>
-  {project.documentation && (
-    <section class="project-doc-links wrap">
-      <p class="eyebrow">{project.resourcesTitle}</p>
-      <ul>
-        {project.documentation.map((item) => (
-          <li>
-            <a class="project-documentation-link" href={item.url} target="_blank" rel="noreferrer">
-              {item.label} ↗
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
-  {project.screenshots && (
-    <section class="project-screenshots wrap">
-      <p class="eyebrow">{project.screenshotsTitle}</p>
-      <div class="project-screenshot-grid">
-        {project.screenshots.map((image, index) => (
-          <figure class:list={{ 'project-screenshot-featured': index === 0 }}>
-            <a href={image.src} target="_blank" rel="noreferrer">
-              <img src={image.src} alt={image.alt} loading="lazy" />
-            </a>
-            <figcaption>{image.alt}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </section>
-  )}
-  {(readmeHtml || releases.length > 0) && (
-    <nav class="project-resource-nav wrap" aria-label={t.contents}>
-      {readmeHtml && (
-        <a href="#readme">
-          README <span aria-hidden="true">↓</span>
-        </a>
-      )}
-      {releases.length > 0 && (
-        <a href="#descargas">
-          {t.downloads} <span aria-hidden="true">↓</span>
-        </a>
-      )}
+    <p class="project-hero-summary">{project.summary}</p>
+    <nav class="project-hero-actions" aria-label={t.projectLinks}>
+      {project.demoUrl && <a class="button button-primary" href={project.demoUrl} target="_blank" rel="noreferrer">{t.openDemo}<span aria-hidden="true">↗</span></a>}
+      {project.repository && <a class="button button-outline" href={project.repository} target="_blank" rel="noreferrer">{t.openRepository}<span aria-hidden="true">↗</span></a>}
     </nav>
-  )}
-  {project.team && (
-    <section class="detail-team wrap">
-      <div class="detail-team-heading">
-        <p class="eyebrow">{t.collaborative}</p>
-        <h2>{t.teamContributions}</h2>
-        <p class="detail-team-description">{t.teamDescription}</p>
-      </div>
-      <ul class="detail-team-list">
-        {project.team.map((member) => (
-          <li>
-            <span class="detail-team-name">{member.name}</span>
-            <span class="detail-team-role">{member.role}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
-  {readmeHtml && (
-    <section class="project-readme wrap" id="readme">
-      <div class="project-resource-heading">
-        <div class="project-resource-title">
-          <p class="eyebrow">{t.repositoryDocs}</p>
-          <h2>README</h2>
+  </header>
+
+  <main class="project-detail-layout wrap">
+    <div class="project-detail-main">
+      <section class="project-detail-section project-origin">
+        <p class="eyebrow">{t.whyMade}</p>
+        <p class="project-description">{project.description}</p>
+      </section>
+
+      {project.features?.length > 0 && <section class="project-detail-section project-detail-features">
+        <p class="eyebrow">{project.featuresTitle ?? t.features}</p>
+        <ul>{project.features.map((feature) => <li>{feature}</li>)}</ul>
+      </section>}
+
+      {project.screenshots?.length > 0 && <section class="project-detail-section project-detail-gallery">
+        <p class="eyebrow">{t.gallery}</p>
+        <div class="project-screenshot-grid">
+          {project.screenshots.map((image, index) => <figure>
+            <button class="project-screenshot-button" type="button" data-image={image.src} data-alt={image.alt} aria-label={`${t.enlargeImage}: ${image.alt}`}>
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </button>
+            <figcaption>{image.alt}</figcaption>
+          </figure>)}
         </div>
-        <a class="project-resource-link" href={project.repository} target="_blank" rel="noreferrer">
-          {t.viewOnGithub} ↗
-        </a>
-      </div>
-      <details class="project-readme-details">
-        <summary class="project-readme-summary">
-          <span>{t.expandReadme}</span>
-          <span class="project-readme-icon" aria-hidden="true">
-            +
-          </span>
-        </summary>
-        <article class="project-readme-content" set:html={readmeHtml} />
-      </details>
-    </section>
-  )}
-  {releases.length > 0 && (
-    <section class="project-downloads wrap" id="descargas">
-      <div class="project-resource-heading">
-        <div>
-          <p class="eyebrow">{t.releaseAssets}</p>
-          <h2>{t.downloads}</h2>
-        </div>
-        <a
-          class="project-resource-link"
-          href={`${project.repository}/releases`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t.allReleases} ↗
-        </a>
-      </div>
-      <div class="project-release-list">
-        {releases.map((release) => (
-          <article class="project-release">
-            <div class="project-release-heading">
-              <a class="project-release-title" href={release.url} target="_blank" rel="noreferrer">
-                {release.name}
-              </a>
-              <time datetime={release.publishedAt}>
-                {formatReleaseDate(release.publishedAt, locale)}
-              </time>
-            </div>
-            <ul class="project-release-assets">
-              {release.assets.map((asset) => (
-                <li>
-                  <a href={asset.url} target="_blank" rel="noreferrer" download>
-                    <span>{asset.name}</span>
-                    <span class="project-release-asset-size">
-                      {formatReleaseSize(asset.size)} · {t.download} ↓
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
-  <section class="detail-next wrap">
-    <p class="eyebrow">{t.title}</p>
-    <a class="detail-next-link" href={localizedPath(locale, '/projects')}>
-      {t.backToList} <span>↗</span>
-    </a>
-  </section>
+        <dialog class="project-image-dialog" aria-label={t.gallery}>
+          <button class="project-image-close" type="button" aria-label={t.close}>×</button>
+          <img alt="" />
+        </dialog>
+      </section>}
+
+      {project.team?.length > 0 && <section class="project-detail-section project-detail-team">
+        <p class="eyebrow">{t.team}</p>
+        <ul>{project.team.map((member) => <li>
+          <span class="detail-team-avatar" aria-hidden="true">{member.name.split(/\s+/).map((part) => part[0]).slice(0, 2).join('')}</span>
+          <span class="detail-team-person"><b>{member.name}</b><small>{member.role}</small></span>
+          {member.links?.map((link) => <a href={link.url} aria-label={`${link.label}: ${member.name}`} target="_blank" rel="noreferrer">{link.label} ↗</a>)}
+        </li>)}</ul>
+      </section>}
+
+      {project.interesting && <section class="project-detail-section project-interesting">
+        <p class="eyebrow">{project.interestingTitle ?? t.interestingAspects}</p>
+        <p>{project.interesting}</p>
+      </section>}
+
+      {project.documentation?.length > 0 && <nav class="project-detail-section project-doc-links" aria-label={t.projectResources}>
+        <p class="eyebrow">{t.projectResources}</p>
+        <ul>{project.documentation.map((item) => <li><a href={item.url} target="_blank" rel="noreferrer">{item.label} ↗</a></li>)}</ul>
+      </nav>}
+
+      {readmeHtml && <section class="project-readme" id="readme">
+        <div class="project-resource-heading"><div><p class="eyebrow">{t.repositoryDocs}</p><h2>README</h2></div>
+          <a class="project-resource-link" href={project.repository} target="_blank" rel="noreferrer">{t.viewOnGithub} ↗</a></div>
+        <details class="project-readme-details"><summary><span>{t.expandReadme}</span><span class="project-readme-icon" aria-hidden="true">+</span></summary>
+          <article class="project-readme-content" set:html={readmeHtml} /></details>
+      </section>}
+
+      {latestRelease && latestRelease.assets.length > 0 && <section class="project-downloads" id="descargas">
+        <div class="project-downloads-heading"><details class="project-downloads-details">
+          <summary><span class="project-downloads-copy"><span class="eyebrow">{t.latestReleaseAssets} · {latestRelease.tag}</span><span class="project-downloads-title-row"><span class="project-downloads-title">{t.downloads}</span><span class="project-downloads-toggle" aria-hidden="true">+</span></span></span></summary>
+          <ul class="project-release-assets">{latestRelease.assets.map((asset) => <li><a href={asset.url} target="_blank" rel="noreferrer" download>
+            <span>{asset.name}</span><span class="project-release-asset-size">{formatReleaseSize(asset.size)} · {t.download} ↓</span>
+          </a></li>)}</ul>
+        </details><a class="project-resource-link" href={localizedPath(locale, '/downloads')}>{t.allReleases} ↗</a></div>
+      </section>}
+    </div>
+
+    <aside class="project-facts">
+      <p class="eyebrow">{t.technicalSheet}</p>
+      {project.technologyGroups ? project.technologyGroups.map((group) => <div class="project-fact"><span class="project-fact-label">{group.label}</span><span class="project-fact-value">{group.technologies.join(' · ')}</span></div>) :
+        <div class="project-fact"><span class="project-fact-label">{t.technologies}</span><span class="project-fact-value">{project.stack.join(' · ')}</span></div>}
+    </aside>
+  </main>
+  <section class="detail-next wrap"><p class="eyebrow">{t.title}</p><a class="detail-next-link" href={localizedPath(locale, '/projects')}>{t.backToList} <span>↗</span></a></section>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.project-screenshot-button').forEach((button) => {
+    const dialog = button.closest('.project-detail-gallery')?.querySelector<HTMLDialogElement>('.project-image-dialog');
+    const image = dialog?.querySelector('img');
+    button.addEventListener('click', () => {
+      if (!dialog || !image) return;
+      image.src = button.dataset.image ?? '';
+      image.alt = button.dataset.alt ?? '';
+      dialog.showModal();
+    });
+    dialog?.querySelector('.project-image-close')?.addEventListener('click', () => dialog.close());
+    dialog?.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  });
+</script>
