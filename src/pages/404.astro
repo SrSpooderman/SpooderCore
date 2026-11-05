@@ -59,17 +59,6 @@ const t = translations.es;
     const label = link.querySelector('span');
     if (label && navLabels[index]) label.textContent = navLabels[index];
   });
-  document.querySelectorAll('.footer-link-group').forEach((group, index) => {
-    const label = group.querySelector('.footer-label');
-    if (label) label.textContent = index === 0 ? copy.explore : copy.connect;
-    if (index === 0) {
-      group.querySelectorAll('a').forEach((link, linkIndex) => {
-        if (navLabels[linkIndex]) link.textContent = navLabels[linkIndex];
-      });
-    }
-  });
-  document.querySelector('.footer-bio span').textContent = copy.footerBio;
-  document.querySelector('.footer-bottom-note').textContent = copy.footerCopyright;
   document
     .querySelector('.language-switcher > summary')
     .setAttribute('aria-label', copy.switchLanguage);

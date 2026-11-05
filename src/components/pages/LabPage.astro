@@ -4,43 +4,55 @@ import { messages, type Locale } from '../../i18n/locales';
 const { locale } = Astro.props as { locale: Locale };
 const t = messages(locale, 'lab');
 
+const hostSpecs = [
+  { label: t.operatingSystem, value: 'Ubuntu 26.04.1 LTS' },
+  { label: t.architecture, value: 'x86_64' },
+  { label: t.cpuCores, value: '6' },
+  { label: t.memoryCapacity, value: '15 GB' },
+];
 const metrics = [
-  { key: 'cpu', name: t.cpu, description: t.cpuDescription },
-  { key: 'memory', name: t.memory, description: t.memoryDescription },
-  { key: 'storage', name: t.storage, description: t.storageDescription },
+  { key: 'cpu', name: t.cpu },
+  { key: 'memory', name: t.memory },
+  { key: 'storage', name: t.storage },
 ];
 ---
 
 <BaseLayout locale={locale} active="/lab" title={t.title} description={t.description}>
-  <section class="page-hero wrap">
-    <p class="eyebrow">{t.eyebrow}</p>
-    <h1>{t.heading}</h1>
-    <p class="page-lede">{t.lede}</p>
-    <div class="page-hero-line">
-      <span>{t.source}</span>
-      <span>{t.freshness}</span>
+  <section class="page-hero lab-hero wrap">
+    <h1>SpooderServer MK1</h1>
+  </section>
+
+  <section class="lab-overview wrap" aria-label={t.serverSpecs}>
+    <figure class="lab-server-visual">
+      <img
+        src="/brand/homeLab/ThinkCentre%20Mini%20en%20fondo%20transparente.png"
+        alt={t.serverImageAlt}
+        width="1488"
+        height="1057"
+        loading="lazy"
+      />
+    </figure>
+    <div class="lab-spec-card">
+      <p class="eyebrow">{t.serverSpecs}</p>
+      <h2>ThinkCentre Mini</h2>
+      <dl class="lab-spec-list">
+        {hostSpecs.map((spec) => (
+          <div class="lab-spec-row">
+            <dt>{spec.label}</dt>
+            <dd>{spec.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   </section>
 
   <section class="section wrap lab-section" data-messages={JSON.stringify(t)}>
-    <div class="lab-heading">
-      <div>
-        <p class="eyebrow">{t.resources}</p>
-        <h2>{t.usageHeading}</h2>
-      </div>
-    </div>
-
     <div class="tech-grid server-metric-grid">
       {metrics.map((metric, index) => (
         <article
           class:list={['tech-card', 'server-metric-card', `server-metric-card--${metric.key}`]}
         >
-          <span class="tech-index">
-            0{index + 1} / {t.hostLabel}
-          </span>
-          <span class="eyebrow">{t.currentUsage}</span>
           <h3>{metric.name}</h3>
-          <p>{metric.description}</p>
           <div class="server-metric-readout">
             <span class="server-metric-value" id={`metric-${index}`} aria-label={t.loadingData}>
               —
@@ -67,38 +79,13 @@ const metrics = [
       </span>
       <div class="metrics-copy">
         <p class="eyebrow">{t.sourceStatus}</p>
-        <h3 id="metrics-status" aria-live="polite">
-          {t.checkingServer}
-        </h3>
         <p class="metrics-timestamp">
           <time id="metrics-timestamp">{t.waitingTimestamp}</time>
         </p>
-        <p class="metrics-detail" id="metrics-detail" aria-live="polite">
-          {t.checkingServer}
-        </p>
       </div>
-      <span class="coming-chip" id="metrics-freshness">
+      <span class="coming-chip" id="metrics-freshness" aria-live="polite">
         {t.loading}
       </span>
-    </div>
-
-    <div class="metrics-note services-note">
-      <span class="metrics-mark" aria-hidden="true">
-        ⌁
-      </span>
-      <div class="metrics-copy">
-        <p class="eyebrow">{t.services}</p>
-        <h3>{t.noServiceMetrics}</h3>
-        <p>{t.servicesDescription}</p>
-      </div>
-      <a
-        class="metrics-source-link"
-        href="https://github.com/SrSpooderman/SpooderServerMetrics"
-        target="_blank"
-        rel="noreferrer"
-      >
-        {t.contract} ↗
-      </a>
     </div>
   </section>
 </BaseLayout>
@@ -115,10 +102,8 @@ const metrics = [
     };
   }
 
-  const status = document.querySelector<HTMLElement>('#metrics-status');
   const freshness = document.querySelector<HTMLElement>('#metrics-freshness');
   const timestamp = document.querySelector<HTMLTimeElement>('#metrics-timestamp');
-  const detail = document.querySelector<HTMLElement>('#metrics-detail');
   const copy = JSON.parse(
     document.querySelector<HTMLElement>('.lab-section')?.dataset.messages ?? '{}',
   ) as Record<string, string>;
@@ -129,10 +114,8 @@ const metrics = [
   }
 
   function showUnavailable(): void {
-    if (status) status.textContent = copy.unavailable;
     if (freshness) freshness.textContent = copy.offline;
     if (timestamp) timestamp.textContent = copy.sampleUnavailable;
-    if (detail) detail.textContent = copy.unavailableDescription;
     [0, 1, 2].forEach((index) => {
       const target = document.querySelector<HTMLElement>(`#metric-${index}`);
       if (target) target.setAttribute('aria-label', copy.unavailable);
@@ -188,9 +171,7 @@ const metrics = [
       timestamp.dateTime = data.sampled_at;
       timestamp.textContent = `${copy.lastSample}: ${sampledAt.toLocaleString(dateLocale)}.`;
     }
-    if (status) status.textContent = data.stale ? copy.stale : copy.current;
     if (freshness) freshness.textContent = data.stale ? copy.staleLabel : copy.currentLabel;
-    if (detail) detail.textContent = data.stale ? copy.staleDescription : copy.currentDescription;
   } catch {
     showUnavailable();
   }

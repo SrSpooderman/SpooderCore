@@ -103,37 +103,45 @@
     display: block;
     margin-bottom: 28px;
   }
-  .section-heading h2,
-  .lab-heading h2 {
+  .section-heading h2 {
     font-size: 42px;
   }
   .section-intro {
     margin-top: 18px;
     font-size: 15px;
   }
-  .footer-top {
+  .lab-overview {
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding-top: 24px;
-    padding-bottom: 18px;
-  }
-  .footer-links {
-    grid-template-columns: 1.4fr 1fr;
-    gap: 18px;
-    margin-top: 0;
-  }
-  .footer-bottom {
     gap: 10px;
-    padding-top: 9px;
-    padding-bottom: 12px;
-    font-size: 10px;
+    margin-top: 16px;
   }
-  .footer-bottom-note {
-    text-align: right;
+  .lab-server-visual {
+    height: 170px;
+  }
+  .lab-server-visual img {
+    width: 90%;
+  }
+  .lab-spec-card {
+    padding: 16px;
+  }
+  .lab-spec-row {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .footer-compact {
+    flex-wrap: wrap;
+    gap: 7px;
+    min-height: 54px;
+    padding-block: 11px;
+    font-size: 12px;
   }
   .page-hero {
     padding-top: 70px;
     padding-bottom: 31px;
+  }
+  .lab-hero {
+    padding-top: 40px;
+    padding-bottom: 16px;
   }
   .page-hero .eyebrow {
     font-size: 12px;
@@ -141,6 +149,9 @@
   }
   .page-hero h1 {
     font-size: clamp(58px, 14vw, 82px);
+  }
+  .page-hero.lab-hero h1 {
+    font-size: clamp(36px, 8vw, 48px);
   }
   .page-lede {
     margin: 18px 0 35px;
@@ -152,19 +163,21 @@
     font-size: 11px;
   }
   .downloads-section,
-  .lab-section,
   .demos-section {
     padding-top: 49px;
   }
-  .lab-heading {
-    display: block;
-    margin-bottom: 25px;
+  .lab-section {
+    padding-top: 22px;
   }
   .tech-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .tech-card {
     min-height: 190px;
+    padding: 14px;
+  }
+  .server-metric-card {
+    min-height: 150px;
     padding: 14px;
   }
   .tech-index {
@@ -182,22 +195,10 @@
     gap: 12px;
     padding: 17px;
   }
-  .metrics-source-link {
-    margin-left: 47px;
-  }
   .metrics-mark {
     flex-basis: 35px;
     height: 35px;
     font-size: 17px;
-  }
-  .metrics-note h3 {
-    font-size: 16px;
-  }
-  .metrics-detail {
-    font-size: 13px;
-  }
-  .coming-chip {
-    display: none;
   }
   .demo-empty {
     grid-template-columns: 1fr;

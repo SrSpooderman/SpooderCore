@@ -103,8 +103,6 @@
 :root[data-theme='light'] .header-github:hover {
   color: #111;
 }
-:root[data-theme='light'] .footer-links a:hover,
-:root[data-theme='light'] .metrics-source-link:hover,
 :root[data-theme='light'] .release-project-heading:hover h2,
 :root[data-theme='light'] .release-project-links a:hover,
 :root[data-theme='light'] .release-tag:hover,
@@ -120,6 +118,7 @@
 :root[data-theme='light'] .tech-card,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .profile-card,
+:root[data-theme='light'] .lab-spec-card,
 :root[data-theme='light'] .project-facts,
 :root[data-theme='light'] .metrics-note,
 :root[data-theme='light'] .release-project,
@@ -135,6 +134,9 @@
 :root[data-theme='light'] .site-footer {
   background: #eeede8;
 }
+:root[data-theme='light'] .footer-brand span {
+  color: #67655f;
+}
 :root[data-theme='light'] .profile-card-top,
 :root[data-theme='light'] .profile-name-label,
 :root[data-theme='light'] .github-stat-label,
@@ -146,8 +148,7 @@
 :root[data-theme='light'] .project-features ul,
 :root[data-theme='light'] .project-contribution-description,
 :root[data-theme='light'] .project-technology-group b,
-:root[data-theme='light'] .footer-links a,
-:root[data-theme='light'] .footer-bio {
+:root[data-theme='light'] .footer-description {
   color: #5f5d57;
 }
 :root[data-theme='light'] .github-stat-value {
@@ -190,10 +191,6 @@
 :root[data-theme='light'] .project-release-assets a:hover {
   background-color: #f0efeb;
 }
-:root[data-theme='light'] .footer-bottom {
-  border-color: #d8d5cd;
-  color: #67655f;
-}
 @media (max-width: 680px) {
   .header-controls {
     margin-left: auto;
@@ -210,6 +207,7 @@
 :root[data-theme='light'] .profile-card,
 :root[data-theme='light'] .featured-project-visual,
 :root[data-theme='light'] .tech-card,
+:root[data-theme='light'] .lab-spec-card,
 :root[data-theme='light'] .profile-tech-group,
 :root[data-theme='light'] .demo-visual,
 :root[data-theme='light'] .project-facts,
@@ -220,6 +218,16 @@
 :root[data-theme='light'] .featured-project-card {
   background: #fff;
   box-shadow: 0 14px 45px rgb(36 32 25 / 7%);
+}
+:root[data-theme='light'] .lab-server-visual {
+  border-color: #d8d5cd;
+  background: radial-gradient(ellipse at center, #eeede8, #fff 74%);
+}
+:root[data-theme='light'] .lab-spec-row {
+  border-color: #e4e2dc;
+}
+:root[data-theme='light'] .lab-spec-row dd {
+  color: #292824;
 }
 :root[data-theme='light'] .profile-stack-band,
 :root[data-theme='light'] .profile-about,
@@ -234,8 +242,6 @@
 :root[data-theme='light'] .profile-tech-group-index,
 :root[data-theme='light'] .featured-project-number,
 :root[data-theme='light'] .featured-project-type,
-:root[data-theme='light'] .footer-label,
-:root[data-theme='light'] .footer-bottom,
 :root[data-theme='light'] .status,
 :root[data-theme='light'] .tag {
   color: #625f58;
@@ -244,7 +250,6 @@
 :root[data-theme='light'] .profile-about-description,
 :root[data-theme='light'] .profile-bio,
 :root[data-theme='light'] .page-lede,
-:root[data-theme='light'] .metrics-detail,
 :root[data-theme='light'] .demo-empty-description,
 :root[data-theme='light'] .featured-project-summary,
 :root[data-theme='light'] .other-project-row p,
@@ -266,7 +271,6 @@
 }
 :root[data-theme='light'] .main-nav a,
 :root[data-theme='light'] .mobile-nav a,
-:root[data-theme='light'] .footer-links a,
 :root[data-theme='light'] .text-link,
 :root[data-theme='light'] .profile-all-projects,
 :root[data-theme='light'] .project-resource-heading a,
@@ -320,8 +324,7 @@
   color: #4f4d47;
 }
 :root[data-theme='light'] .tech-card p,
-:root[data-theme='light'] .server-metric-value,
-:root[data-theme='light'] .metrics-source-link {
+:root[data-theme='light'] .server-metric-value {
   color: #4f4d47;
 }
 :root[data-theme='light'] .tech-index,
@@ -346,7 +349,6 @@
 :root[data-theme='light'] .project-readme-content h2,
 :root[data-theme='light'] .project-readme-content h3,
 :root[data-theme='light'] .profile-tech-group h3,
-:root[data-theme='light'] .metrics-note h3,
 :root[data-theme='light'] .metrics-timestamp,
 :root[data-theme='light'] .release-latest,
 :root[data-theme='light'] .demo-empty h2 {

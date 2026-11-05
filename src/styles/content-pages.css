@@ -4,6 +4,75 @@
   padding-bottom: 47px;
   border-bottom: 1px solid #2c2c29;
 }
+.lab-hero {
+  padding-top: 52px;
+  padding-bottom: 16px;
+}
+.page-hero.lab-hero h1 {
+  font-size: clamp(44px, 5vw, 66px);
+  line-height: 1.05;
+}
+.lab-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 20px;
+}
+.lab-server-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 220px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #343431;
+  background: radial-gradient(ellipse at center, #242421, #171716 74%);
+}
+.lab-server-visual img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 85%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+.lab-spec-card {
+  padding: 20px;
+  border: 1px solid #343431;
+  background: #171716;
+}
+.lab-spec-card .eyebrow {
+  margin-bottom: 6px;
+  color: #969088;
+}
+.lab-spec-card h2 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-size: clamp(24px, 2.5vw, 30px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+.lab-spec-list {
+  margin: 0;
+}
+.lab-spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid #30302d;
+}
+.lab-spec-row dt {
+  color: #96958e;
+}
+.lab-spec-row dd {
+  margin: 0;
+  color: #eceae3;
+  text-align: right;
+}
 .page-hero .eyebrow {
   margin-bottom: 24px;
 }
@@ -36,14 +105,7 @@
   line-height: 1.04;
 }
 .lab-section {
-  padding-top: 80px;
-}
-.lab-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
-  margin-bottom: 40px;
+  padding-top: 24px;
 }
 .tech-grid {
   display: grid;
@@ -82,7 +144,8 @@
   line-height: 1.65;
 }
 .server-metric-card {
-  min-height: 238px;
+  min-height: 155px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
 }
@@ -98,7 +161,7 @@
   display: flex;
   align-items: baseline;
   min-height: 57px;
-  margin-top: 20px;
+  margin-top: 8px;
 }
 .server-metric-track {
   height: 7px;
@@ -129,8 +192,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-top: 29px;
-  padding: 25px;
+  margin-top: 12px;
+  padding: 12px 14px;
   border: 1px solid #343431;
   background: #171716;
 }
@@ -151,20 +214,8 @@
   color: #969088;
   font-size: 13px;
 }
-.metrics-note h3 {
-  margin: 5px 0;
-  font-family: var(--display);
-  font-size: 18px;
-  font-weight: 500;
-}
-.metrics-detail {
-  margin: 0;
-  color: #898880;
-  font-size: 16px;
-  line-height: 1.6;
-}
 .metrics-timestamp {
-  margin: 4px 0;
+  margin: 0;
   color: #b5b2aa;
   font-size: 16px;
 }
@@ -173,14 +224,6 @@
   border: 1px solid #46413a;
   color: #aaa293;
   font-size: 12px;
-}
-.metrics-source-link {
-  color: #c6c4bd;
-  font-size: 14px;
-  white-space: nowrap;
-}
-.metrics-source-link:hover {
-  color: white;
 }
 .demos-section {
   padding-top: 80px;

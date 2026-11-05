@@ -172,34 +172,12 @@ function siteUrl() {
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="wrap footer-top">
-        <div>
-          <a class="wordmark footer-wordmark" href={localized('/')}>
-            <span class="wordmark-text"><strong>Spooder</strong><span class="wordmark-light">core</span></span>
-          </a>
-          <p class="footer-bio">
-            <span>{t.footerBio}</span>
-          </p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-link-group">
-            <span class="footer-label">{t.explore}</span>
-            <a href={localized('/')}>{t.home}</a>
-            <a href={localized('/projects')}>{t.projects}</a>
-            <a href={localized('/downloads')}>{t.downloads}</a>
-            <a href={localized('/lab')}>{t.lab}</a>
-          </div>
-          <div class="footer-link-group">
-            <span class="footer-label">{t.connect}</span>
-            <a href={site.github} target="_blank" rel="noreferrer">
-              GitHub ↗
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="wrap footer-bottom">
-        <span>© {new Date().getFullYear()} SpooderCore</span>
-        <span class="footer-bottom-note">{t.footerCopyright}</span>
+      <div class="wrap footer-compact">
+        <a class="footer-brand" href={localized('/')} aria-label={t.brandHome}>
+          <strong>Spooder</strong><span>Core</span>
+        </a>
+        <span class="footer-separator" aria-hidden="true">|</span>
+        <span class="footer-description">{t.footerBio}</span>
       </div>
     </footer>
     <script>
