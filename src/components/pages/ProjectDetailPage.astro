@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProject } from '../../data/projects';
 import { messages, localizedPath, type Locale } from '../../i18n/locales';
-import { formatReleaseDate, formatReleaseSize } from '../../utils/format';
+import { formatReleaseSize } from '../../utils/format';
 
 const { slug, readmeHtml, releases, locale } = Astro.props as {
   slug: string;
@@ -18,7 +18,7 @@ const project = {
   summary: t[`${prefix}Summary`],
   description: t[`${prefix}Description`],
   status: sourceProject.statusKey ? t[sourceProject.statusKey] : t.catalog,
-  features: sourceProject.featureKeys?.map((key) => t[key]),
+  features: sourceProject.featureKeys?.map((key) => t[key]) ?? [],
   featuresTitle: t[`${prefix}FeaturesTitle`],
   interesting: sourceProject.interestingKey ? t[sourceProject.interestingKey] : undefined,
   interestingTitle: sourceProject.interestingTitleKey
@@ -28,11 +28,13 @@ const project = {
     label: t[group.labelKey],
     technologies: group.technologies,
   })),
-  documentation: sourceProject.documentation
-    ?.filter((item) => !readmeHtml || !item.url.endsWith('/README.md'))
-    .map((item) => ({ label: t[item.labelKey], url: item.url })),
-  screenshots: sourceProject.screenshots?.map((image) => ({ ...image, alt: t[image.altKey] })),
-  team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })),
+  documentation:
+    sourceProject.documentation
+      ?.filter((item) => !readmeHtml || !item.url.endsWith('/README.md'))
+      .map((item) => ({ label: t[item.labelKey], url: item.url })) ?? [],
+  screenshots:
+    sourceProject.screenshots?.map((image) => ({ ...image, alt: t[image.altKey] })) ?? [],
+  team: sourceProject.team?.map((member) => ({ ...member, role: t[member.roleKey] })) ?? [],
 };
 const latestRelease = releases.find((release) => !release.prerelease) ?? releases[0];
 ---
@@ -107,7 +109,7 @@ const latestRelease = releases.find((release) => !release.prerelease) ?? release
         <section class="project-detail-section project-detail-gallery">
           <p class="eyebrow">{t.gallery}</p>
           <div class="project-screenshot-grid">
-            {project.screenshots.map((image, index) => (
+            {project.screenshots.map((image) => (
               <figure>
                 <button
                   class="project-screenshot-button"
