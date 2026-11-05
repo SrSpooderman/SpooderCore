@@ -122,34 +122,21 @@ const technologyGroups = [
     technologies: [
       'Python',
       'FastAPI',
-      'SQL',
-      'Java',
-      'Spring',
-      'Django',
-      'REST APIs',
+      t.restApis,
       t.hexagonalArchitecture,
-      t.domainModeling,
-      t.authentication,
+      'Monolith',
     ],
   },
   {
     category: t.dataInfrastructure,
     technologies: [
+      'SQL',
       'PostgreSQL',
       'MySQL',
       'Redis',
-      'SQLAlchemy',
-      'Alembic',
       'Docker',
-      'Docker Compose',
       'Linux',
-      'Ubuntu Server',
-      'Nginx',
-      'Coolify',
-      'Traefik',
-      'Cloudflare',
-      'Keycloak',
-      'Self-hosting',
+      'NGINX',
     ],
   },
   {
@@ -160,29 +147,17 @@ const technologyGroups = [
       'JavaScript',
       'HTML',
       'CSS',
-      'Vite',
-      'Puck',
-      'PySide6',
-      'Kivy',
+      'AngularJS',
     ],
   },
   {
-    category: t.automationTools,
+    category: t.integrationsAutomation,
     technologies: [
+      t.mcpServers,
+      t.apiIntegration,
       'Git',
-      'GitHub',
       'GitHub Actions',
-      'GitLab',
-      'VS Code',
       'CI/CD',
-      t.testing,
-      t.deployment,
-      'FFmpeg',
-      'yt-dlp',
-      'RQ',
-      'MCP',
-      t.embeddedSystems,
-      t.microcontrollers,
     ],
   },
 ];
@@ -307,10 +282,6 @@ const projects = [
     <div class="wrap profile-stack-inner">
       <div class="profile-stack-heading">
         <p class="eyebrow">{t.technologiesLabel}</p>
-        <h2>
-          {t.stackTitle}
-          <span class="period">.</span>
-        </h2>
       </div>
       <div class="profile-tech-groups">
         {technologyGroups.map((group, index) => (

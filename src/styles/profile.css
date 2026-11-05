@@ -216,12 +216,8 @@
   padding-bottom: 58px;
 }
 .profile-stack-heading > .eyebrow {
+  margin-bottom: 24px;
   color: #77766f;
-}
-.profile-stack-heading h2 {
-  margin: 8px 0 24px;
-  font-size: 33px;
-  font-weight: 500;
 }
 .profile-tech-groups {
   display: grid;
@@ -400,9 +396,8 @@
   .profile-stack-inner {
     padding-block: 38px 42px;
   }
-  .profile-stack-heading h2 {
+  .profile-stack-heading > .eyebrow {
     margin-bottom: 18px;
-    font-size: 28px;
   }
   .profile-tech-groups {
     grid-template-columns: 1fr;
