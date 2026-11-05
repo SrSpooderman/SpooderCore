@@ -18,8 +18,14 @@
   display: block;
 }
 html {
+  zoom: 1.2;
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
+}
+@media (max-width: 680px) {
+  html {
+    zoom: 1;
+  }
 }
 body {
   margin: 0;
