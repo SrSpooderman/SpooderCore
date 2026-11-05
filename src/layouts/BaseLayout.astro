@@ -49,14 +49,21 @@ function siteUrl() {
     />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/brand/spoodercore/logo%20spoodercore_icono%20color.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/brand/spoodercore/logo%20spoodercore_icono%20color.svg"
+    />
     <link rel="apple-touch-icon" href="/brand/spoodercore/logo%20spoodercore_icono%20color.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content="https://www.spoodercore.com/brand/spoodercore/logo%20spoodercore_icono%20color.svg" />
+    <meta
+      property="og:image"
+      content="https://www.spoodercore.com/brand/spoodercore/logo%20spoodercore_icono%20color.svg"
+    />
     <meta property="og:image:type" content="image/svg+xml" />
     <meta property="og:image:width" content="842" />
     <meta property="og:image:height" content="595" />
@@ -92,7 +99,10 @@ function siteUrl() {
             width="32"
             height="32"
           />
-          <span class="wordmark-text"><strong>Spooder</strong><span class="wordmark-light">core</span></span>
+          <span class="wordmark-text">
+            <strong>Spooder</strong>
+            <span class="wordmark-light">core</span>
+          </span>
         </a>
         <nav class="main-nav" aria-label={t.navigation}>
           {nav.map((item) => (
@@ -174,9 +184,12 @@ function siteUrl() {
     <footer class="site-footer">
       <div class="wrap footer-compact">
         <a class="footer-brand" href={localized('/')} aria-label={t.brandHome}>
-          <strong>Spooder</strong><span>Core</span>
+          <strong>Spooder</strong>
+          <span>Core</span>
         </a>
-        <span class="footer-separator" aria-hidden="true">|</span>
+        <span class="footer-separator" aria-hidden="true">
+          |
+        </span>
         <span class="footer-description">{t.footerBio}</span>
       </div>
     </footer>

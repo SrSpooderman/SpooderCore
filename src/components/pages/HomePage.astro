@@ -75,7 +75,9 @@ function formatDate(date: string, options: Intl.DateTimeFormatOptions): string {
 }
 
 const todayMadrid = datePartsInMadrid(new Date());
-const activityStart = new Date(`${todayMadrid.year}-${todayMadrid.month}-${todayMadrid.day}T12:00:00Z`);
+const activityStart = new Date(
+  `${todayMadrid.year}-${todayMadrid.month}-${todayMadrid.day}T12:00:00Z`,
+);
 activityStart.setUTCDate(activityStart.getUTCDate() - 27);
 const activityCounts = new Map<string, number>();
 for (const event of githubEvents) {
@@ -119,46 +121,19 @@ const focusAreas = [
 const technologyGroups = [
   {
     category: t.backendArchitecture,
-    technologies: [
-      'Python',
-      'FastAPI',
-      t.restApis,
-      t.hexagonalArchitecture,
-      'Monolith',
-    ],
+    technologies: ['Python', 'FastAPI', t.restApis, t.hexagonalArchitecture, 'Monolith'],
   },
   {
     category: t.dataInfrastructure,
-    technologies: [
-      'SQL',
-      'PostgreSQL',
-      'MySQL',
-      'Redis',
-      'Docker',
-      'Linux',
-      'NGINX',
-    ],
+    technologies: ['SQL', 'PostgreSQL', 'MySQL', 'Redis', 'Docker', 'Linux', 'NGINX'],
   },
   {
     category: t.frontendDesktop,
-    technologies: [
-      'React',
-      'TypeScript',
-      'JavaScript',
-      'HTML',
-      'CSS',
-      'AngularJS',
-    ],
+    technologies: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'AngularJS'],
   },
   {
     category: t.integrationsAutomation,
-    technologies: [
-      t.mcpServers,
-      t.apiIntegration,
-      'Git',
-      'GitHub Actions',
-      'CI/CD',
-    ],
+    technologies: [t.mcpServers, t.apiIntegration, 'Git', 'GitHub Actions', 'CI/CD'],
   },
 ];
 const projects = [
@@ -203,7 +178,11 @@ const projects = [
       <p class="profile-role">{t.profileRole}</p>
       <div class="profile-bio">
         {bioParagraphs.map((paragraph) => (
-          <p>{paragraph.prefix}{paragraph.emphasis && <strong>{paragraph.emphasis}</strong>}{paragraph.suffix}</p>
+          <p>
+            {paragraph.prefix}
+            {paragraph.emphasis && <strong>{paragraph.emphasis}</strong>}
+            {paragraph.suffix}
+          </p>
         ))}
       </div>
       <div class="profile-actions">
@@ -251,9 +230,13 @@ const projects = [
       <h2>SrSpooderman</h2>
       <div class="github-stats" aria-label={t.githubStatsLabel}>
         <section class="github-stat github-stat-total">
-          <strong class="github-stat-value">{githubStats?.totalContributions.toLocaleString(locale) ?? '—'}</strong>
+          <strong class="github-stat-value">
+            {githubStats?.totalContributions.toLocaleString(locale) ?? '—'}
+          </strong>
           <span class="github-stat-label">{t.totalContributions}</span>
-          <span class="github-stat-range">{contributionStart} – {t.present}</span>
+          <span class="github-stat-range">
+            {contributionStart} – {t.present}
+          </span>
         </section>
         <section class="github-stat github-stat-activity">
           <span class="github-stat-label">{t.recentActivity}</span>

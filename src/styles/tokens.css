@@ -12,6 +12,7 @@
   --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   --sans:
     'Geom', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --display: 'Geom', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --display:
+    'Geom', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --wrap: 1360px;
 }

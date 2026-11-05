@@ -91,7 +91,12 @@ export const projects: Project[] = [
       },
     ],
     statusKey: 'cliponomiconApiStatus',
-    featureKeys: ['cliponomiconApiFeatureUpload', 'cliponomiconApiFeatureProcessing', 'cliponomiconApiFeaturePlayback', 'cliponomiconApiFeatureBackoffice'],
+    featureKeys: [
+      'cliponomiconApiFeatureUpload',
+      'cliponomiconApiFeatureProcessing',
+      'cliponomiconApiFeaturePlayback',
+      'cliponomiconApiFeatureBackoffice',
+    ],
     contributionSources: [
       'https://github.com/SrSpooderman/CliponomiconAPI/commit/8f9da2286ccb28a9655c22c121351b5f90d0492c',
       'https://github.com/SrSpooderman/CliponomiconAPI/commit/161dc1472b6d538eb7cdd7e7aed30806aacf3a84',
@@ -114,7 +119,11 @@ export const projects: Project[] = [
     logo: '/brand/cliponomicon.png',
     repository: 'https://github.com/SrSpooderman/CliponomiconAPI',
     team: [
-      { name: 'Francisco Valencia (SrSpooderman)', roleKey: 'backendRole', links: [{ label: 'GitHub', url: 'https://github.com/SrSpooderman' }] },
+      {
+        name: 'Francisco Valencia (SrSpooderman)',
+        roleKey: 'backendRole',
+        links: [{ label: 'GitHub', url: 'https://github.com/SrSpooderman' }],
+      },
       { name: 'Lluis Xavier Obrador Artigues', roleKey: 'devopsRole' },
       { name: 'Joan Vicens Muntaner', roleKey: 'frontendRole' },
     ],
@@ -126,7 +135,11 @@ export const projects: Project[] = [
     featured: false,
     number: '05',
     statusKey: 'spiderportfolioStatus',
-    featureKeys: ['spiderportfolioFeatureContent', 'spiderportfolioFeaturePreview', 'spiderportfolioFeaturePublishing'],
+    featureKeys: [
+      'spiderportfolioFeatureContent',
+      'spiderportfolioFeaturePreview',
+      'spiderportfolioFeaturePublishing',
+    ],
     technologyGroups: [
       { labelKey: 'techVisualEditor', technologies: ['React', 'Puck'] },
       { labelKey: 'techBackendAndData', technologies: ['FastAPI', 'PostgreSQL'] },
@@ -145,10 +158,7 @@ export const projects: Project[] = [
     ],
     statusKey: 'spidertomp3Status',
     interestingKey: 'spidertomp3Interesting',
-    featureKeys: [
-      'spidertomp3FeaturePlaylists',
-      'spidertomp3FeatureFormats',
-    ],
+    featureKeys: ['spidertomp3FeaturePlaylists', 'spidertomp3FeatureFormats'],
     scopeNoteKey: 'spidertomp3ScopeNote',
     contributionSources: [
       'https://github.com/SrSpooderman/SpiderToMP3/commit/df1c1c28cea43105743fd78372733045ed5ae35a',
