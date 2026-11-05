@@ -137,6 +137,7 @@
 }
 :root[data-theme='light'] .profile-card-top,
 :root[data-theme='light'] .profile-name-label,
+:root[data-theme='light'] .github-stat-label,
 :root[data-theme='light'] .profile-focus span,
 :root[data-theme='light'] .profile-tech-list span,
 :root[data-theme='light'] .section-intro,
@@ -148,6 +149,35 @@
 :root[data-theme='light'] .footer-links a,
 :root[data-theme='light'] .footer-bio {
   color: #5f5d57;
+}
+:root[data-theme='light'] .github-stat-value {
+  color: #282723;
+}
+:root[data-theme='light'] .github-stat-range {
+  color: #77746d;
+}
+:root[data-theme='light'] .github-stat + .github-stat {
+  border-color: #c9c6be;
+}
+:root[data-theme='light'] .github-activity-day {
+  border-color: #d8d5cd;
+  background: #eeece6;
+}
+:root[data-theme='light'] .github-activity-day[data-level='1'] {
+  border-color: #e3aaa3;
+  background: #f5d4d0;
+}
+:root[data-theme='light'] .github-activity-day[data-level='2'] {
+  border-color: #df8077;
+  background: #f1b5af;
+}
+:root[data-theme='light'] .github-activity-day[data-level='3'] {
+  border-color: #d85a4f;
+  background: #e97970;
+}
+:root[data-theme='light'] .github-activity-day[data-level='4'] {
+  border-color: #c43d33;
+  background: #f04438;
 }
 :root[data-theme='light'] .tag,
 :root[data-theme='light'] .profile-tech-list span,

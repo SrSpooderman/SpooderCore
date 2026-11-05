@@ -8,6 +8,15 @@
   height: 32px;
   object-fit: contain;
 }
+.brand-logo-light-theme {
+  display: none;
+}
+:root[data-theme='light'] .brand-logo-dark-theme {
+  display: none;
+}
+:root[data-theme='light'] .brand-logo-light-theme {
+  display: block;
+}
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
