@@ -24,12 +24,12 @@ const t = messages(locale, 'demos');
         <span class="demo-circle circle-a"></span>
         <span class="demo-circle circle-b"></span>
         <span class="demo-plus">+</span>
-        <span class="demo-coordinate">DEMO_001 / STANDBY</span>
+        <span class="demo-coordinate">{t.demoPlaceholder}</span>
       </div>
-      <div>
+      <div class="demo-empty-copy">
         <p class="eyebrow">{t.unavailable}</p>
         <h2>{t.emptyHeading}</h2>
-        <p>{t.emptyDescription}</p>
+        <p class="demo-empty-description">{t.emptyDescription}</p>
         <a class="button button-outline" href={localizedPath(locale, '/projects')}>
           {t.viewProjects} <span>↗</span>
         </a>

@@ -1,5 +1,5 @@
 import type { Project } from './projects';
-import { ELEMENT_NODE, parse, renderSync, walkSync } from 'ultrahtml';
+import { ELEMENT_NODE, parse, renderSync, walkSync, type ElementNode } from 'ultrahtml';
 import sanitize from 'ultrahtml/transformers/sanitize';
 
 interface GitHubAsset {
@@ -50,7 +50,7 @@ interface GitHubRepository {
   default_branch: string;
 }
 
-interface ProjectRepository {
+export interface ProjectRepository {
   path: string;
   ref?: string;
 }
@@ -230,7 +230,9 @@ async function getReleasesFromPage(repository: string): Promise<ProjectRelease[]
   return releases;
 }
 
-function projectRepository(repositoryUrl: string | undefined): ProjectRepository | null {
+export function parseProjectRepository(
+  repositoryUrl: string | undefined,
+): ProjectRepository | null {
   if (!repositoryUrl) return null;
   try {
     const url = new URL(repositoryUrl);
@@ -256,7 +258,7 @@ function projectRepository(repositoryUrl: string | undefined): ProjectRepository
 }
 
 export async function getProjectPageContent(project: Project): Promise<ProjectPageContent> {
-  const repository = projectRepository(project.repository);
+  const repository = parseProjectRepository(project.repository);
   if (!repository) return { readmeHtml: null, releases: [] };
   const readmeEndpoint = new URL(`https://api.github.com/repos/${repository.path}/readme`);
   if (repository.ref) readmeEndpoint.searchParams.set('ref', repository.ref);
@@ -294,11 +296,44 @@ export async function getProjectPageContent(project: Project): Promise<ProjectPa
       readmeHtml = null;
     }
   }
+  if (!readmeHtml) readmeHtml = await getReadmeFromRepositoryPage(repository);
 
   return {
     readmeHtml,
     releases: (releaseResult[0]?.releases ?? []).filter((release) => release.assets.length > 0),
   };
+}
+
+async function getReadmeFromRepositoryPage(repository: ProjectRepository): Promise<string | null> {
+  try {
+    const branchPath = repository.ref
+      ? `/tree/${repository.ref.split('/').map(encodeURIComponent).join('/')}`
+      : '';
+    const response = await fetch(`https://github.com/${repository.path}${branchPath}`, {
+      headers: { 'User-Agent': 'SpooderCore-portal' },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!response.ok) return null;
+
+    const html = await response.text();
+    const document = parse(html);
+    let readme: ElementNode | null = null;
+    walkSync(document, (node) => {
+      if (
+        node.type === ELEMENT_NODE &&
+        node.name === 'article' &&
+        node.attributes.class?.split(/\s+/).includes('markdown-body')
+      ) {
+        readme = node;
+      }
+    });
+
+    const branch = repository.ref ?? html.match(/"defaultBranch"\s*:\s*"([^"]+)"/)?.[1] ?? null;
+    if (!readme || !branch) return null;
+    return sanitizeReadme(renderSync(readme), repository.path, branch);
+  } catch {
+    return null;
+  }
 }
 
 async function sanitizeReadme(

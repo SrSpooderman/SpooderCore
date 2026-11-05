@@ -10,6 +10,8 @@
     "dev": "astro dev",
     "build": "npm run check:i18n && astro check && astro build",
     "check:i18n": "node scripts/check-i18n.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier --write \"**/*.{astro,css,js,mjs,ts,json,yml,md}\"",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1"
+    "prettier-plugin-astro": "^1.1.1",
+    "vitest": "^5.0.4"
   }
 }

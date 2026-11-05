@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
+---
+
+<BaseLayout
+  title="Proyectos"
+  description="Proyectos de Francisco Valencia: APIs, aplicaciones y herramientas de software."
+>
+  <header class="page-hero shell">
+    <p class="eyebrow">Francisco Valencia / Proyectos</p>
+    <h1>Proyectos.</h1>
+    <p class="lede">Desarrollo backend, APIs, bases de datos y arquitectura de software.</p>
+  </header>
+  <section class="section shell">
+    <div class="project-grid">
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

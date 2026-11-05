@@ -1,20 +1,104 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { messages } from '../i18n/locales';
+
+const translations = {
+  es: messages('es', 'common'),
+  en: messages('en', 'common'),
+};
+const t = translations.es;
 ---
 
-<BaseLayout title="Página no encontrada">
+<BaseLayout locale="es" title={t.notFoundTitle} description={t.notFoundDescription} noindex>
   <section class="not-found wrap">
-    <p class="eyebrow">ERROR 404 / RUTA PERDIDA</p>
+    <p class="eyebrow" id="not-found-eyebrow">
+      {t.notFoundEyebrow}
+    </p>
     <h1>
-      Esta página
+      <span id="not-found-heading-start">{t.notFoundHeadingStart}</span>
       <br />
       <span class="accent-word">
-        no existe<span class="period">.</span>
+        <span id="not-found-heading-end">{t.notFoundHeadingEnd}</span>
+        <span class="period">.</span>
       </span>
     </h1>
-    <p>Puede que el enlace haya cambiado o que todavía no hayamos llegado hasta aquí.</p>
-    <a class="button button-primary" href="/">
-      Volver al inicio <span>↗</span>
+    <p class="not-found-description" id="not-found-description">
+      {t.notFoundDescription}
+    </p>
+    <a class="button button-primary" id="not-found-home" href="/">
+      <span id="not-found-home-label">{t.backToProfile}</span> <span aria-hidden="true">↗</span>
     </a>
   </section>
 </BaseLayout>
+
+<script define:vars={{ translations }}>
+  const locale = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : 'es';
+  const copy = translations[locale];
+  const home = locale === 'en' ? '/en' : '/';
+  const homeUrl = new URL(home, location.origin).toString();
+  const internalPaths = ['/', '/projects', '/downloads', '/lab'];
+
+  document.documentElement.lang = locale;
+  document.title = `${copy.notFoundTitle} — SpooderCore`;
+  document.querySelector('#not-found-eyebrow').textContent = copy.notFoundEyebrow;
+  document.querySelector('#not-found-heading-start').textContent = copy.notFoundHeadingStart;
+  document.querySelector('#not-found-heading-end').textContent = copy.notFoundHeadingEnd;
+  document.querySelector('#not-found-description').textContent = copy.notFoundDescription;
+  document.querySelector('#not-found-home-label').textContent = copy.backToProfile;
+  document.querySelector('#not-found-home').href = home;
+  document.querySelector('.skip-link').textContent = copy.skipToContent;
+  document.querySelector('.wordmark').setAttribute('aria-label', copy.brandHome);
+  document.querySelector('.main-nav').setAttribute('aria-label', copy.navigation);
+  document.querySelector('.mobile-nav').setAttribute('aria-label', copy.mobileNavigation);
+
+  const navLabels = [copy.home, copy.projects, copy.downloads, copy.lab];
+  document.querySelectorAll('.main-nav a span').forEach((link, index) => {
+    if (navLabels[index]) link.textContent = navLabels[index];
+  });
+  document.querySelectorAll('.mobile-nav a:not([target])').forEach((link, index) => {
+    const label = link.querySelector('span');
+    if (label && navLabels[index]) label.textContent = navLabels[index];
+  });
+  document
+    .querySelector('.language-switcher > summary')
+    .setAttribute('aria-label', copy.switchLanguage);
+
+  const themeButton = document.querySelector('[data-theme-toggle]');
+  if (themeButton) {
+    themeButton.dataset.lightLabel = copy.lightMode;
+    themeButton.dataset.darkLabel = copy.darkMode;
+    themeButton.dataset.lightTitle = copy.lightModeTitle;
+    themeButton.dataset.darkTitle = copy.darkModeTitle;
+    themeButton.setAttribute('aria-label', copy.themeToggle);
+    themeButton.title = copy.themeToggle;
+  }
+  const menuButton = document.querySelector('.menu-toggle');
+  if (menuButton) {
+    menuButton.dataset.openLabel = copy.openMenu;
+    menuButton.dataset.closeLabel = copy.closeMenu;
+    menuButton.setAttribute('aria-label', copy.openMenu);
+  }
+
+  document.querySelectorAll('a[href]').forEach((link) => {
+    const path = link.getAttribute('href');
+    if (path && internalPaths.includes(path)) {
+      link.setAttribute('href', locale === 'en' ? (path === '/' ? '/en' : `/en${path}`) : path);
+    }
+  });
+  document.querySelectorAll('link[hreflang]').forEach((link) => {
+    const alternateHome = link.getAttribute('hreflang') === 'en' ? '/en' : '/';
+    link.setAttribute('href', new URL(alternateHome, location.origin).toString());
+  });
+  document.querySelectorAll('.language-options a').forEach((link, index) => {
+    link.setAttribute('href', index === 1 ? '/en' : '/');
+  });
+  document.querySelector('link[rel="canonical"]').setAttribute('href', homeUrl);
+  document.querySelector('meta[property="og:url"]').setAttribute('content', homeUrl);
+  document.querySelector('meta[property="og:title"]').setAttribute('content', document.title);
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', copy.notFoundDescription);
+  document
+    .querySelector('meta[property="og:description"]')
+    .setAttribute('content', copy.notFoundDescription);
+</script>

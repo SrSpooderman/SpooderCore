@@ -7,8 +7,10 @@ interface Props {
   description?: string;
   active?: string;
   locale?: Locale;
+  noindex?: boolean;
 }
 const { title = site.name, active = '', locale = 'es' } = Astro.props;
+const { noindex = false } = Astro.props;
 const t = messages(locale, 'common');
 const description = Astro.props.description ?? t.siteDescription;
 const pageTitle = title === site.name ? title : `${title} — ${site.name}`;
@@ -39,18 +41,32 @@ function siteUrl() {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#111110" />
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geom:wght@300..900&display=swap"
+      rel="stylesheet"
+    />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/brand/spoodercore.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/brand/spoodercore/logo%20spoodercore_icono%20color.svg"
+    />
+    <link rel="apple-touch-icon" href="/brand/spoodercore/logo%20spoodercore_icono%20color.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content="https://www.spoodercore.com/brand/spoodercore.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1254" />
-    <meta property="og:image:height" content="1254" />
+    <meta
+      property="og:image"
+      content="https://www.spoodercore.com/brand/spoodercore/logo%20spoodercore_icono%20color.svg"
+    />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:width" content="842" />
+    <meta property="og:image:height" content="595" />
     <meta property="og:image:alt" content={t.brandAlt} />
     <meta name="twitter:card" content="summary" />
     {languages.map(({ code }) => (
@@ -69,9 +85,23 @@ function siteUrl() {
     <header class="site-header">
       <div class="header-inner wrap">
         <a class="wordmark" href={localized('/')} aria-label={t.brandHome}>
-          <img class="brand-logo" src="/brand/spoodercore.png" alt="" width="32" height="32" />
-          <span>
-            spooder<span class="wordmark-light">core</span>
+          <img
+            class="brand-logo brand-logo-dark-theme"
+            src="/brand/spoodercore/logo%20spoodercore_icono%20blanco.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
+          <img
+            class="brand-logo brand-logo-light-theme"
+            src="/brand/spoodercore/logo%20spoodercore_icono%20negro.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
+          <span class="wordmark-text">
+            <strong>Spooder</strong>
+            <span class="wordmark-light">core</span>
           </span>
         </a>
         <nav class="main-nav" aria-label={t.navigation}>
@@ -135,11 +165,16 @@ function siteUrl() {
         {nav.map((item) => (
           <a href={localized(item.href)}>
             <span>{item.label}</span>
-            <span aria-hidden="true">↗</span>
+            <span class="mobile-nav-arrow" aria-hidden="true">
+              ↗
+            </span>
           </a>
         ))}
         <a href={site.github} target="_blank" rel="noreferrer">
-          GitHub<span aria-hidden="true">↗</span>
+          GitHub
+          <span class="mobile-nav-arrow" aria-hidden="true">
+            ↗
+          </span>
         </a>
       </nav>
     </header>
@@ -147,36 +182,15 @@ function siteUrl() {
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="wrap footer-top">
-        <div>
-          <a class="wordmark footer-wordmark" href={localized('/')}>
-            <span>
-              spooder<span class="wordmark-light">core</span>
-            </span>
-          </a>
-          <p>
-            <span>{t.footerBio}</span>
-          </p>
-        </div>
-        <div class="footer-links">
-          <div>
-            <span class="footer-label">{t.explore}</span>
-            <a href={localized('/')}>{t.home}</a>
-            <a href={localized('/projects')}>{t.projects}</a>
-            <a href={localized('/downloads')}>{t.downloads}</a>
-            <a href={localized('/lab')}>{t.lab}</a>
-          </div>
-          <div>
-            <span class="footer-label">{t.connect}</span>
-            <a href={site.github} target="_blank" rel="noreferrer">
-              GitHub ↗
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="wrap footer-bottom">
-        <span>© {new Date().getFullYear()} SpooderCore</span>
-        <span>{t.footerCopyright}</span>
+      <div class="wrap footer-compact">
+        <a class="footer-brand" href={localized('/')} aria-label={t.brandHome}>
+          <strong>Spooder</strong>
+          <span>Core</span>
+        </a>
+        <span class="footer-separator" aria-hidden="true">
+          |
+        </span>
+        <span class="footer-description">{t.footerBio}</span>
       </div>
     </footer>
     <script>
